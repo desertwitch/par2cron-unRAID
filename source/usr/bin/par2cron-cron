@@ -65,8 +65,9 @@ if [ "$PARITYSTART" != "enable" ] && [ -r "/var/local/emhttp/var.ini" ]; then
     fi
 fi
 
-sync
 sleep 1
+sync
+sleep1
 
 rm -f /tmp/dwpar2cron.log
 rm -f /tmp/dwpar2cron.json
@@ -85,6 +86,10 @@ if [ "$CRONCREATE" == "enable" ]; then
         >> /tmp/dwpar2cron.log \
         2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
     RET=$?
+
+    sleep 1
+    sync
+    sleep1
 
     CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
     CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
@@ -114,8 +119,9 @@ if [ "$CRONCREATE" == "enable" ]; then
     esac
 fi
 
-sync
 sleep 1
+sync
+sleep1
 
 echo "verify: started" | logger -s -t "par2cron-cron"
 
