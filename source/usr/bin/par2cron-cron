@@ -64,7 +64,7 @@ if [ "$PARITYSTART" != "enable" ] && [ -r "/var/local/emhttp/var.ini" ]; then
         exit 0
     fi
 fi
-# test
+
 sync
 sleep 1
 
