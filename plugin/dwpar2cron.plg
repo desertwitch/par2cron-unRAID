@@ -66,6 +66,7 @@ rm -rf &plgPATH;
 rm -rf &emhttp;
 
 rm -f /tmp/dwpar2cron.json
+rm -f /tmp/dwpar2cron.log
 rm -f /boot/config/plugins/dynamix/dwpar2cron.cron
 
 sleep 1

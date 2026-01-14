@@ -17,14 +17,11 @@
 #
 umask 000
 
-echo "Starting par2cron (Info Mode)..."
-echo "Starting par2cron (Info Mode)..." | logger -t "par2cron-plugin"
+echo "Collecting information..."
 
-nohup /usr/bin/par2cron info \
+/usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     /mnt/user \
-    </dev/null \
-    > >(tee -a /tmp/dwpar2cron.log) \
-    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log) &
+    2>&1
 
 sleep 1
