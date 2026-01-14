@@ -31,7 +31,14 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     <input type="hidden" id="dwpar2cron-set-cmd" name="#command" value="/usr/local/emhttp/plugins/dwpar2cron/scripts/write_config">
 
     <dl>
-        <dt>par2cron:</dt>
+        <dt>par2cron Version:</dt>
+        <dd>
+            <strong><?= isset($dwpar2cron_par2cron_version) && $dwpar2cron_par2cron_version ? $dwpar2cron_par2cron_version : "n/a" ?></strong>
+        </dd>
+    </dl>
+
+   <dl>
+        <dt>par2cmdline Version:</dt>
         <dd>
             <strong><?= isset($dwpar2cron_binaries) && $dwpar2cron_binaries ? $dwpar2cron_binaries : "n/a" ?></strong>
         </dd>
@@ -40,7 +47,14 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     <dl>
         <dt>par2cron Backend:</dt>
         <dd>
-            <strong><?= isset($dwpar2cron_backend) && $dwpar2cron_backend ? $dwpar2cron_backend : "n/a" ?></strong>
+            <strong><?= isset($dwpar2cron_par2cron_backend) && $dwpar2cron_par2cron_backend ? $dwpar2cron_par2cron_backend : "n/a" ?></strong>
+        </dd>
+    </dl>
+
+    <dl>
+        <dt>par2cmdline Backend:</dt>
+        <dd>
+            <strong><?= isset($dwpar2cron_par2_backend) && $dwpar2cron_par2_backend ? $dwpar2cron_par2_backend : "n/a" ?></strong>
         </dd>
     </dl>
 

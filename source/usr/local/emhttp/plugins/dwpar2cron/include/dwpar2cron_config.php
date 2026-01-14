@@ -32,7 +32,9 @@ $dwpar2cron_startnotify = trim(isset($dwpar2cron_cfg['STARTNOTIFY']) ? htmlspeci
 $dwpar2cron_finishnotify = trim(isset($dwpar2cron_cfg['FINISHNOTIFY']) ? htmlspecialchars($dwpar2cron_cfg['FINISHNOTIFY']) : 'disable');
 $dwpar2cron_errornotify = trim(isset($dwpar2cron_cfg['ERRORNOTIFY']) ? htmlspecialchars($dwpar2cron_cfg['ERRORNOTIFY']) : 'enable');
 
-$dwpar2cron_backend = htmlspecialchars(trim(shell_exec("find /var/log/packages/ -type f -iname 'par2cron-*' -printf '%f\n' 2> /dev/null") ?? "n/a"));
-$dwpar2cron_binaries = htmlspecialchars(trim(shell_exec("command -v par2cron 2> /dev/null") ?? "n/a"));
 $dwpar2cron_running = !empty(shell_exec("pgrep -x par2cron 2>/dev/null"));
+$dwpar2cron_par2_version = htmlspecialchars(trim(shell_exec("par2 -V 2> /dev/null") ?? "n/a"));
+$dwpar2cron_par2_backend = htmlspecialchars(trim(shell_exec("find /var/log/packages/ -type f -iname 'par2cmdline-*' -printf '%f\n' 2> /dev/null") ?? "n/a"));
+$dwpar2cron_par2cron_version = htmlspecialchars(trim(shell_exec("par2cron -v 2> /dev/null") ?? "n/a"));
+$dwpar2cron_par2cron_backend = htmlspecialchars(trim(shell_exec("find /var/log/packages/ -type f -iname 'par2cron-*' -printf '%f\n' 2> /dev/null") ?? "n/a"));
 ?>
