@@ -67,7 +67,7 @@ fi
 
 sleep 1
 sync
-sleep1
+sleep 1
 
 rm -f /tmp/dwpar2cron.log
 rm -f /tmp/dwpar2cron.json
@@ -89,7 +89,7 @@ if [ "$CRONCREATE" == "enable" ]; then
 
     sleep 1
     sync
-    sleep1
+    sleep 1
 
     CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
     CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
@@ -121,7 +121,7 @@ fi
 
 sleep 1
 sync
-sleep1
+sleep 1
 
 echo "verify: started" | logger -s -t "par2cron-cron"
 
@@ -139,7 +139,7 @@ RET=$?
 
 sleep 1
 sync
-sleep1
+sleep 1
 
 TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
 TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
