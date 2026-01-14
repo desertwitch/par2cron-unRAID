@@ -107,11 +107,9 @@ Markdown="false"
                     <div class="ms-filter-actions">
                         <span class="ms-filter-btn" id="ms-select-all">Select All</span>
                         <span class="ms-filter-btn" id="ms-select-none">Select None</span>
-                        <? if(file_exists("/tmp/dwpar2cron.log")): ?>
                         <span class="ms-filter-btn" id="ms-download-logs">
                             <a href="/plugins/dwpar2cron/include/dwpar2cron_download.php" style="all: unset; cursor: pointer;" target="_blank">Download Full</a>
                         </span>
-                        <? endif; ?>
                         <span class="ms-filter-btn" id="ms-refresh-now">Refresh Now</span>
                     </div>
                 </div>
