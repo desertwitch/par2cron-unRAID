@@ -131,7 +131,7 @@ Markdown="false"
                         <i class="fa fa-spinner fa-spin"></i> Loading...
                     </div>
                     <div id="scrollArea" class="clusterize-scroll">
-                        <div id="contentArea" class="clusterize-content">
+                        <div id="contentArea">
                             <div class="ms-loading-state">
                                 <h3>Loading...</h3>
                                 <div align="center">Please wait while the logs are fetched.</div>
@@ -247,7 +247,7 @@ $(document).ready(function() {
 
         initClusterize: function() {
             // Create proper table structure for Clusterize
-            this.$elements.contentArea.html('<table class="dwpar2cron-log-table"><tbody id="clusterize-content"></tbody></table>');
+            this.$elements.contentArea.html('<table class="dwpar2cron-log-table"><tbody id="clusterize-content" class="clusterize-content"></tbody></table>');
 
             this.clusterize = new Clusterize({
                 rows: [],
