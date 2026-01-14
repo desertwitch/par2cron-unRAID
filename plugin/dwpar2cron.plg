@@ -1,0 +1,84 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "dwpar2cron">
+<!ENTITY author    "desertwitch">
+<!ENTITY version   "2026.01.14">
+<!ENTITY launch    "Settings/dwpar2cron">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
+<!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
+<!ENTITY pkgURL    "&gitURL;/packages">
+<!ENTITY plgPATH   "/boot/config/plugins/&name;">
+<!ENTITY plgNAME   "mirsht-2025.08.21-x86_64-1">
+<!ENTITY plgMD5    "e807eb9fa34c1648f38901560847e50b">
+<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="" min="6.10">
+
+<CHANGES>
+## par2cron for UNRAID
+###2026.01.14
+- release note: welcome to the first version of the par2cron package.
+- release note: please report any problems in the support topic.
+</CHANGES>
+
+<FILE Name="&plgPATH;/par2cmdline-1.0.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cmdline-1.0.0-x86_64-1.txz</URL>
+<MD5>bf28a10b8977f87e0f7e1a606b5ebf30</MD5>
+</FILE>
+
+<FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&gitURL;/archive/&plgNAME;.txz</URL>
+<MD5>&plgMD5;</MD5>
+</FILE>
+
+<!--
+run the post-installation scripts
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+echo ""
+
+if [ -x /usr/local/emhttp/plugins/dwpar2cron/scripts/write_config ]; then
+    /usr/local/emhttp/plugins/dwpar2cron/scripts/write_config
+fi
+
+echo ""
+echo "-------------------------------------------------------------"
+echo " par2cron for UNRAID has been installed."
+echo " Version: &version; / Plugin Maintainer: &author;"
+echo "-------------------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+<!--
+definition for uninstallation of the plugin
+-->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+killall par2cron >/dev/null 2>&amp;1
+
+removepkg &plgPATH;/*.txz
+
+rm -rf &plgPATH;
+rm -rf &emhttp;
+
+rm -f /tmp/dwpar2cron.json
+rm -f /boot/config/plugins/dynamix/dwpar2cron.cron
+
+sleep 1
+update_cron
+sleep 1
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " par2cron for UNRAID has been removed."
+echo " Version: &version; / Plugin Maintainer: &author;"
+echo "-----------------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+</PLUGIN>

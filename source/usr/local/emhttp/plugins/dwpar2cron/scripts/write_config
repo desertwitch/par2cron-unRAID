@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Copyright Derek Macias (parts of code from NUT package)
+# Copyright macester (parts of code from NUT package)
+# Copyright gfjardim (parts of code from NUT package)
+# Copyright SimonF (parts of code from NUT package)
+# Copyright Lime Technology (any and all other parts of Unraid)
+#
+# Copyright desertwitch (as author and maintainer of this file)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License 2
+# as published by the Free Software Foundation.
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+
+DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
+source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+
+echo "Writing par2cron configuration..."
+echo "Writing par2cron configuration..." | logger -t "par2cron-plugin"
+
+rm -f "/boot/config/plugins/dynamix/dwpar2cron.cron"
+
+if [ "$CRON" == "hourly" ]; then
+    cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i '/dwpar2cron-cron/s,^\*,0,' "/boot/config/plugins/dynamix/dwpar2cron.cron"
+elif [ "$CRON" == "daily" ]; then
+    cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i "/dwpar2cron-cron/s,^\* \*,0 ${CRONHOUR}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
+elif [ "$CRON" == "weekly" ]; then
+    cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i "/dwpar2cron-cron/s,^\* \* \* \* \*,0 ${CRONHOUR} \* \* ${CRONDOW}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
+elif [ "$CRON" == "monthly" ]; then
+    cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i "/dwpar2cron-cron/s,^\* \* \*,0 ${CRONHOUR} ${CRONDOM}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
+else
+    rm -f "/boot/config/plugins/dynamix/dwpar2cron.cron"
+fi
+
+sleep 1
+update_cron
+sleep 1

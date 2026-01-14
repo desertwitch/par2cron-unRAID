@@ -1,0 +1,323 @@
+.dwpar2cron-log-container {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0;
+    position: relative;
+}
+
+.dwpar2cron-log-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.dwpar2cron-log-table td {
+    line-height: 1.5rem;
+}
+
+.ms-log-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+    display: table-row;
+}
+
+.ms-log-row:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.ms-log-cell {
+    padding: 12px 15px;
+    vertical-align: top;
+    display: table-cell;
+}
+
+.ms-timestamp {
+    width: 200px;
+    font-size: 0.85em;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.ms-level {
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+.ms-level-error {
+    background: #f14c4c;
+    color: white;
+}
+
+.ms-level-warn {
+    background: #ff9800;
+    color: white;
+}
+
+.ms-level-info {
+    background: #2196f3;
+    color: white;
+}
+
+.ms-level-debug {
+    background: #9c27b0;
+    color: white;
+}
+
+.ms-level-default {
+    background: #666;
+    color: white;
+}
+
+.ms-message {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ms-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 15px;
+    font-size: 0.85em;
+}
+
+.ms-detail-item {
+    display: inline-flex;
+    align-items: baseline;
+    min-width: 0;
+    flex-shrink: 1;
+    flex-grow: 0;
+    margin-bottom: 2px;
+}
+
+.ms-detail-key {
+    opacity: 0.8;
+    font-weight: bold;
+    margin-right: 6px;
+    white-space: nowrap;
+}
+
+.ms-detail-value {
+    opacity: 0.9;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.ms-loading-state {
+    text-align: center;
+    padding: 60px 20px;
+    opacity: 0.7;
+}
+
+.ms-error-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #f14c4c;
+}
+
+.ms-row-warn {
+    background-color: rgba(255, 152, 0, 0.1) !important;
+}
+
+.ms-row-error {
+    background-color: rgba(244, 67, 54, 0.1) !important;
+}
+
+.ms-row-warn:hover {
+    background-color: rgba(255, 152, 0, 0.15) !important;
+}
+
+.ms-row-error:hover {
+    background-color: rgba(244, 67, 54, 0.15) !important;
+}
+
+.ms-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 5px;
+}
+
+.ms-refresh-control {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ms-refresh-control:hover {
+    opacity: 0.8;
+}
+
+.ms-refresh-control.paused {
+    opacity: 0.6;
+}
+
+.ms-status-info {
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+/* Clusterize styles */
+.clusterize-scroll {
+    height: 400px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.clusterize-content {
+    width: 100%;
+}
+
+.clusterize-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Filter styles */
+.ms-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    align-items: center;
+}
+
+.ms-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ms-filter-label {
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
+.ms-level-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    user-select: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+}
+
+.ms-level-checkbox:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ms-level-checkbox input[type="checkbox"] {
+    margin: 0;
+}
+
+.ms-level-checkbox-label {
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.ms-level-checkbox-error .ms-level-checkbox-label {
+    color: #f14c4c;
+}
+
+.ms-level-checkbox-warn .ms-level-checkbox-label {
+    color: #ff9800;
+}
+
+.ms-level-checkbox-info .ms-level-checkbox-label {
+    color: #2196f3;
+}
+
+.ms-level-checkbox-debug .ms-level-checkbox-label {
+    color: #9c27b0;
+}
+
+.ms-level-checkbox-default .ms-level-checkbox-label {
+    color: #666;
+}
+
+.ms-filter-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.ms-filter-btn {
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    background: #777;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.ms-filter-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Search input */
+.ms-search-input {
+    padding: 4px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    font-size: 0.9em;
+    width: 200px;
+}
+
+/* Performance optimization styles */
+.ms-virtual-row {
+    will-change: transform;
+}
+
+/* Scrollbar styles */
+.clusterize-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.clusterize-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.clusterize-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+}
+
+.clusterize-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Loading indicator */
+.ms-loading-indicator {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    z-index: 1000;
+}
+
+.ms-loading-indicator.active {
+    display: block;
+}

@@ -1,0 +1,594 @@
+Menu="Utilities"
+Type="xmenu"
+Title="par2cron"
+Icon="dwpar2cron.png"
+Tag="adjust"
+Markdown="false"
+---
+<?
+/* Copyright Derek Macias (parts of code from NUT package)
+ * Copyright macester (parts of code from NUT package)
+ * Copyright gfjardim (parts of code from NUT package)
+ * Copyright SimonF (parts of code from NUT package)
+ * Copyright Dan Landon (parts of code from Web GUI)
+ * Copyright Bergware International (parts of code from Web GUI)
+ * Copyright Lime Technology (any and all other parts of Unraid)
+ *
+ * Copyright desertwitch (as author and maintainer of this file)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License 2
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ */
+?>
+
+<link type="text/css" rel="stylesheet" href="<?=autov('/plugins/dwpar2cron/css/dwpar2cron.css');?>">
+<script src="<?=autov('/plugins/dwpar2cron/js/clusterize.min.js');?>"></script>
+
+<style>
+    .ms-collapsible-bar {
+        cursor: pointer;
+        height: 3px !important;
+        text-align: center !important;
+        font-size: 8px !important;
+        color: #666;
+        line-height: 1;
+        padding: 0;
+    }
+</style>
+
+<table class="tablesorter shift" autofocus>
+    <tbody>
+        <tr id="ms-collapsible">
+            <td style="width: 300px; text-align: center; vertical-align: middle; white-space: nowrap;">
+                <div style="margin:15px;">
+                    <img src="/plugins/dwpar2cron/images/dwpar2cron.png" alt="Logo" style="width: 160px;">
+                    <div style="margin-top:10px;">
+                    <span style="font-size:1.5rem;font-weight:bold;">par2cron</span><br>
+                    PAR2 creation and verification automation.
+                    </div>
+                </div>
+            </td>
+
+            <td style="width: 100%;"></td>
+
+            <td style="text-align: right; vertical-align:middle; white-space: nowrap;font-size:1.5rem;">
+                <a href="https://github.com/desertwitch/par2cron#readme" style="margin: 0 15px;" target="_blank">Documentation</a><br>
+                <a href="https://pkg.go.dev/github.com/desertwitch/par2cron" style="margin: 0 15px;" target="_blank">Go Reference Website</a><br>
+                <a href="" style="margin: 0 15px;" target="_blank">Support Thread (Forums)</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="ms-collapsible-bar" id="ms-collapsible-toggle" onClick="dwpar2cronToggleCollapsible(true)">
+                &#9650;
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div class="ms-filter-container">
+                    <div class="ms-filter-group">
+                        <span class="ms-filter-label">Filter Levels:</span>
+
+                        <label class="ms-level-checkbox ms-level-checkbox-error">
+                            <input type="checkbox" id="ms-filter-error" value="error" checked>
+                            <span class="ms-level-checkbox-label">ERROR</span>
+                        </label>
+
+                        <label class="ms-level-checkbox ms-level-checkbox-warn">
+                            <input type="checkbox" id="ms-filter-warn" value="warn" checked>
+                            <span class="ms-level-checkbox-label">WARN</span>
+                        </label>
+
+                        <label class="ms-level-checkbox ms-level-checkbox-info">
+                            <input type="checkbox" id="ms-filter-info" value="info" checked>
+                            <span class="ms-level-checkbox-label">INFO</span>
+                        </label>
+
+                        <label class="ms-level-checkbox ms-level-checkbox-debug">
+                            <input type="checkbox" id="ms-filter-debug" value="debug" checked>
+                            <span class="ms-level-checkbox-label">DEBUG</span>
+                        </label>
+
+                        <label class="ms-level-checkbox ms-level-checkbox-default">
+                            <input type="checkbox" id="ms-filter-other" value="other" checked>
+                            <span class="ms-level-checkbox-label">OTHER</span>
+                        </label>
+                    </div>
+
+                    <div class="ms-filter-group">
+                        <span class="ms-filter-label">Search:</span>
+                        <input type="text" id="ms-search-input" class="ms-search-input" placeholder="Search...">
+                    </div>
+
+                    <div class="ms-filter-actions">
+                        <span class="ms-filter-btn" id="ms-select-all">Select All</span>
+                        <span class="ms-filter-btn" id="ms-select-none">Select None</span>
+                        <? if(file_exists("/tmp/dwpar2cron.log")): ?>
+                        <span class="ms-filter-btn" id="ms-download-logs">
+                            <a href="/plugins/dwpar2cron/include/dwpar2cron_download.php" style="all: unset; cursor: pointer;" target="_blank">Download Full</a>
+                        </span>
+                        <? endif; ?>
+                        <span class="ms-filter-btn" id="ms-refresh-now">Refresh Now</span>
+                    </div>
+                </div>
+
+                <div class="ms-controls">
+                    <div class="ms-status-info">
+                        <span id="ms-status">Auto-Updating</span>
+                        <span id="ms-logCount"></span>
+                        <span id="ms-visibleCount"></span>
+                    </div>
+                    <div class="ms-refresh-control" id="ms-refreshControl">
+                        <i id="ms-refreshIcon" class="fa fa-pause"></i>
+                        <strong id="ms-refreshText">Pause Updates</strong>
+                    </div>
+                </div>
+
+                <div class="dwpar2cron-log-container">
+                    <div class="ms-loading-indicator" id="ms-loadingIndicator">
+                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                    </div>
+                    <div id="scrollArea" class="clusterize-scroll">
+                        <div id="contentArea" class="clusterize-content">
+                            <div class="ms-loading-state">
+                                <h3>Loading...</h3>
+                                <div align="center">Please wait while the logs are fetched.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="margin-right:15px;">
+    <form markdown="0" id="dwpar2cron-operations" name="dwpar2cron_operations" method="POST" action="/update.php" target="progressFrame">
+        <input type="hidden" id="dwpar2cron-ops-cmd" name="#command" value="/usr/local/emhttp/plugins/dwpar2cron/scripts/none">
+
+        <span style="float:right;text-align:right;">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-create" value="MANUAL CREATE" title="Mirrors the structure of the configured target directory into the configured mirror directory.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-verify" value="MANUAL VERIFY" title="Moves any new content inside the configured mirror directory into the respective locations within the configured target directory.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-info" value="MANUAL INFO" title="Moves any new content inside the configured mirror directory into the respective locations within the configured target directory.">
+            <input class="dwpar2cron-notrun dwpar2cron-tip" type="button" id="dwpar2cron-stop" value="STOP PROGRAM" title="Stops any running MirrorShuttle instances, this is generally safe to use without causing data loss or corruption.">
+            <div style="text-align:right;margin-right:15px;">Please always read and understand the documentation <strong>before</strong> running any operations.</div>
+            <br>
+        </span>
+    </form>
+</div>
+
+<script>
+function dwpar2cronToggleCollapsible(toggle) {
+  const $collapsible = $('#ms-collapsible');
+  const $toggle = $('#ms-collapsible-toggle');
+
+  if (toggle) {
+    const isVisible = $collapsible.is(':visible');
+    $collapsible.toggle();
+    $toggle.html(!isVisible ? '&#9650;' : '&#9660;');
+    $.cookie('dwpar2cronCollapsed', !isVisible ? 'false' : 'true', { expires: 1, path: '/' });
+  } else {
+    const collapsed = $.cookie('dwpar2cronCollapsed') === 'true';
+    $collapsible.toggle(!collapsed);
+    $toggle.html(!collapsed ? '&#9650;' : '&#9660;');
+  }
+}
+
+
+$(document).ready(function() {
+    const dwpar2cronGUI = {
+        allLogs: [],
+        clusterize: null,
+        filteredLogs: [],
+        isLoading: false,
+        isRefreshing: true,
+        lastLoadTime: 0,
+        loadInterval: null,
+        totalLogCount: 0,
+
+        filterState: {
+            error: true,
+            warn: true,
+            info: true,
+            debug: true,
+            other: true
+        },
+
+        searchTerm: '',
+        $elements: {},
+
+        config: {
+            refreshInterval: 1000,
+            loadLimit: 5000
+        },
+
+        init: function() {
+            this.cacheElements();
+            this.initClusterize();
+            this.bindEvents();
+            this.updateUI();
+            this.loadLogs();
+            this.startAutoRefresh();
+            this.pollStatus();
+
+            this.statusInterval = setInterval(() => this.pollStatus(), 3000);
+
+            $(window).on('beforeunload', () => this.cleanup());
+        },
+
+        // Cache jQuery elements for performance
+        cacheElements: function() {
+            this.$elements = {
+                refreshControl: $('#ms-refreshControl'),
+                refreshIcon: $('#ms-refreshIcon'),
+                refreshText: $('#ms-refreshText'),
+                status: $('#ms-status'),
+                logCount: $('#ms-logCount'),
+                visibleCount: $('#ms-visibleCount'),
+                scrollArea: $('#scrollArea'),
+                contentArea: $('#contentArea'),
+                loadingIndicator: $('#ms-loadingIndicator'),
+                searchInput: $('#ms-search-input'),
+                filterCheckboxes: {
+                    error: $('#ms-filter-error'),
+                    warn: $('#ms-filter-warn'),
+                    info: $('#ms-filter-info'),
+                    debug: $('#ms-filter-debug'),
+                    other: $('#ms-filter-other')
+                },
+                selectAllBtn: $('#ms-select-all'),
+                selectNoneBtn: $('#ms-select-none'),
+                refreshNowBtn: $('#ms-refresh-now')
+            };
+        },
+
+        initClusterize: function() {
+            // Create proper table structure for Clusterize
+            this.$elements.contentArea.html('<table class="dwpar2cron-log-table"><tbody id="clusterize-content"></tbody></table>');
+
+            this.clusterize = new Clusterize({
+                rows: [],
+                scrollId: 'scrollArea',
+                contentId: 'clusterize-content',
+                rows_in_block: 50,
+                blocks_in_cluster: 4,
+                show_no_data_row: false,
+                tag: 'tr',
+            });
+        },
+
+        bindEvents: function() {
+            // Refresh control
+            this.$elements.refreshControl.on('click', (e) => {
+                e.preventDefault();
+                this.toggleRefresh();
+            });
+
+            // Filter checkboxes
+            $.each(this.$elements.filterCheckboxes, (level, $checkbox) => {
+                if ($checkbox.length) {
+                    $checkbox.on('change', () => this.debounceFilter());
+                }
+            });
+
+            // Search input
+            this.$elements.searchInput.on('input', () => this.debounceFilter());
+
+            // Filter buttons
+            this.$elements.selectAllBtn.on('click', () => this.selectAllFilters());
+            this.$elements.selectNoneBtn.on('click', () => this.selectNoneFilters());
+            this.$elements.refreshNowBtn.on('click', () => this.loadLogs(true));
+        },
+
+        // Debounced filter application
+        debounceFilter: function() {
+            if (this.filterTimeout) clearTimeout(this.filterTimeout);
+            this.filterTimeout = setTimeout(() => this.applyFilters(), 200);
+        },
+
+        // Update UI state
+        updateUI: function() {
+            if (this.isRefreshing) {
+                this.$elements.refreshIcon.removeClass('fa-play').addClass('fa-pause');
+                this.$elements.refreshText.text('Pause Updates');
+                this.$elements.refreshControl.removeClass('paused');
+                this.$elements.status.html('<i class="fa fa-refresh fa-spin"></i> Auto-Updating');
+            } else {
+                this.$elements.refreshIcon.removeClass('fa-pause').addClass('fa-play');
+                this.$elements.refreshText.text('Resume Updates');
+                this.$elements.refreshControl.addClass('paused');
+                this.$elements.status.html('<i class="fa fa-pause"></i> Paused');
+            }
+        },
+
+        // Show/hide loading indicator
+        setLoading: function(loading) {
+            // Do not show if low refresh interval (flickering)
+            if (this.config.refreshInterval < 3000) {
+                return;
+            }
+            if (loading) {
+                this.$elements.loadingIndicator.addClass('active');
+            } else {
+                this.$elements.loadingIndicator.removeClass('active');
+            }
+        },
+
+        // Update visible count display
+        updateVisibleCount: function() {
+            const visibleCount = this.filteredLogs.length;
+
+            if (this.totalLogCount >= 0) {
+                this.$elements.logCount.text(` (last ${this.totalLogCount} entries)`);
+                if (visibleCount !== this.totalLogCount) {
+                    this.$elements.visibleCount.text(` - ${visibleCount} visible`);
+                } else {
+                    this.$elements.visibleCount.text('');
+                }
+            } else {
+                this.$elements.logCount.text('');
+                this.$elements.visibleCount.text('');
+            }
+        },
+
+        // Get log level from row HTML
+        getLogLevel: function(rowHtml) {
+            const match = rowHtml.match(/data-level="([^"]+)"/);
+            return match ? match[1] : 'other';
+        },
+
+        // Apply filters
+        applyFilters: function() {
+            // Update label filters
+            $.each(this.$elements.filterCheckboxes, (level, $checkbox) => {
+                if ($checkbox.length) {
+                    this.filterState[level] = $checkbox.prop('checked');
+                }
+            });
+
+            // Update search term
+            this.searchTerm = this.$elements.searchInput.val().toLowerCase().trim();
+
+            // Filter logs efficiently
+            this.filteredLogs = this.allLogs.filter(rowHtml => {
+                const level = this.getLogLevel(rowHtml);
+
+                // Level filter
+                if (!this.filterState[level]) {
+                    return false;
+                }
+
+                // Search filter
+                if (this.searchTerm && !rowHtml.toLowerCase().includes(this.searchTerm)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Update Clusterize with filtered data
+            this.clusterize.update(this.filteredLogs);
+            this.updateVisibleCount();
+        },
+
+        // Filter button handlers
+        selectAllFilters: function() {
+            $.each(this.$elements.filterCheckboxes, (level, $checkbox) => {
+                if ($checkbox.length) $checkbox.prop('checked', true);
+            });
+            this.applyFilters();
+        },
+
+        selectNoneFilters: function() {
+            $.each(this.$elements.filterCheckboxes, (level, $checkbox) => {
+                if ($checkbox.length) $checkbox.prop('checked', false);
+            });
+            this.applyFilters();
+        },
+
+        // Toggle refresh state
+        toggleRefresh: function() {
+            this.isRefreshing = !this.isRefreshing;
+
+            if (this.isRefreshing) {
+                this.startAutoRefresh();
+            } else {
+                this.stopAutoRefresh();
+            }
+
+            this.updateUI();
+        },
+
+        // Start auto refresh
+        startAutoRefresh: function() {
+            if (this.loadInterval) return;
+
+            this.loadInterval = setInterval(() => {
+                if (this.isRefreshing && !this.isLoading) {
+                    this.loadLogs(false);
+                }
+            }, this.config.refreshInterval);
+        },
+
+        // Stop auto refresh
+        stopAutoRefresh: function() {
+            if (this.loadInterval) {
+                clearInterval(this.loadInterval);
+                this.loadInterval = null;
+            }
+        },
+
+        // Build URL with filters
+        buildUrl: function(action = 'load') {
+            const params = new URLSearchParams();
+            params.append('action', action);
+            params.append('file', '/tmp/dwpar2cron.json');
+            params.append('limit', this.config.loadLimit);
+            params.append('t', Date.now());
+
+            // Add level filters
+            const activeLevels = [];
+            $.each(this.filterState, (level, active) => {
+                if (active) activeLevels.push(level);
+            });
+            if (activeLevels.length > 0 && activeLevels.length < 5) {
+                params.append('levels', activeLevels.join(','));
+            }
+
+            // Add search filter
+            if (this.searchTerm) {
+                params.append('search', this.searchTerm);
+            }
+
+            return `/plugins/dwpar2cron/include/dwpar2cron_loader.php?${params.toString()}`;
+        },
+
+        // Load logs
+        loadLogs: function(forceRefresh = false) {
+            if (this.isLoading) return;
+
+            this.isLoading = true;
+            this.setLoading(true);
+
+            const url = this.buildUrl('load');
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                timeout: 15000,
+                cache: false
+            })
+            .done((data) => {
+                if (!data || !data.success) {
+                    this.showError(data?.error || 'Failed to load logs');
+                    return;
+                }
+
+                if (!data.fileExists) {
+                    this.showError('Log file not found');
+                    return;
+                }
+
+                if (data.rows && Array.isArray(data.rows)) {
+                    // Update logs
+                    this.allLogs = data.rows;
+                    this.totalLogCount = data.logCount || data.rows.length;
+
+                    // Apply filters and update display
+                    this.applyFilters();
+                    this.lastLoadTime = Date.now();
+                } else {
+                    this.showEmpty();
+                }
+
+                this.updateVisibleCount();
+                this.updateUI();
+            })
+            .fail((xhr, status, error) => {
+                console.error('Error loading logs:', error);
+
+                let errorMessage = 'Failed to load logs';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                } else if (status === 'timeout') {
+                    errorMessage = 'Request timeout - the log file might be too large';
+                } else if (status === 'error') {
+                    errorMessage = 'Network error - please check your connection';
+                }
+
+                this.showError(errorMessage);
+                this.$elements.status.text('Error');
+            })
+            .always(() => {
+                this.isLoading = false;
+                this.setLoading(false);
+            });
+        },
+
+        // Show error state
+        showError: function(message) {
+            const errorHtml = `<tr class="ms-error-state"><td colspan="3" style="text-align: center; padding: 60px 20px; color: #f14c4c;"><h3>Error</h3><div align="center">${message}</div></td></tr>`;
+            this.clusterize.update([errorHtml]);
+            this.totalLogCount = 0;
+            this.updateVisibleCount();
+        },
+
+        // Show empty state
+        showEmpty: function() {
+            this.allLogs = [];
+            this.filteredLogs = [];
+            this.totalLogCount = 0;
+            this.clusterize.clear();
+            this.updateVisibleCount();
+        },
+
+        // Handle if the program is running or not
+        pollStatus: function() {
+            $.ajax({
+                url: '/plugins/dwpar2cron/include/dwpar2cron_status.php',
+                method: 'GET',
+                dataType: 'json',
+                success: (response) => {
+                    if (response.running) {
+                        $('.dwpar2cron-run').prop('disabled', true);
+                        $('.dwpar2cron-notrun').prop('disabled', false);
+                    } else {
+                        $('.dwpar2cron-run').prop('disabled', false);
+                        $('.dwpar2cron-notrun').prop('disabled', true);
+
+                        if (this.isRefreshing) {
+                            setTimeout(() => {
+                                if (this.isRefreshing) {
+                                    this.toggleRefresh();
+                                }
+                            }, 5000);
+                        }
+                    }
+                },
+                error: () => {
+                    $('.dwpar2cron-run').prop('disabled', false);
+                    $('.dwpar2cron-notrun').prop('disabled', false);
+                }
+            });
+        },
+
+        // Cleanup
+        cleanup: function() {
+            this.stopAutoRefresh();
+            if (this.statusInterval) clearInterval(this.statusInterval);
+            if (this.filterTimeout) clearTimeout(this.filterTimeout);
+            if (this.clusterize) {
+                this.clusterize.destroy(true);
+            }
+        }
+    };
+
+    $('#dwpar2cron-create').click(function(){
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_create');
+        $('#dwpar2cron-operations').submit();
+    });
+
+    $('#dwpar2cron-verify').click(function(){
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_verify');
+        $('#dwpar2cron-operations').submit();
+    });
+
+    $('#dwpar2cron-info').click(function(){
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_info');
+        $('#dwpar2cron-operations').submit();
+    });
+
+    $('#dwpar2cron-stop').click(function(){
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/stop');
+        $('#dwpar2cron-operations').submit();
+    });
+
+    dwpar2cronGUI.init();
+    dwpar2cronToggleCollapsible(false);
+});
+</script>

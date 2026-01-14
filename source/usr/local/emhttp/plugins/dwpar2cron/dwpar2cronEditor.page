@@ -1,0 +1,113 @@
+Menu="dwpar2cron:2"
+Title="par2cron Configuration"
+Tag="code"
+Markdown="false"
+---
+<?
+/* Copyright Derek Macias (parts of code from NUT package)
+ * Copyright macester (parts of code from NUT package)
+ * Copyright gfjardim (parts of code from NUT package)
+ * Copyright SimonF (parts of code from NUT package)
+ * Copyright Dan Landon (parts of code from Web GUI)
+ * Copyright Bergware International (parts of code from Web GUI)
+ * Copyright Lime Technology (any and all other parts of Unraid)
+ *
+ * Copyright desertwitch (as author and maintainer of this file)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License 2
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ */
+?>
+
+<link type="text/css" rel="stylesheet" href="<?=autov('/webGui/styles/jquery.filetree.css');?>">
+<link type="text/css" rel="stylesheet" href="<?=autov('/plugins/dwpar2cron/css/codemirror.min.css');?>">
+<link type="text/css" rel="stylesheet" href="<?=autov('/plugins/dwpar2cron/css/dracula.min.css');?>">
+
+<style type="text/css">
+    .CodeMirror { border: 1px solid #eee; cursor: text; margin-top: 15px; margin-bottom: 10px; }
+    .CodeMirror pre.CodeMirror-placeholder { color: #999; }
+    .errortext {color: #EF3D47;display: none;}
+    .fileTree {color:#486dba;width:305px;max-height:150px;overflow:scroll;position:absolute;z-index:100;display:none;}
+</style>
+
+<div style="margin-left:10px;">
+    <strong>Please refer to the <a href="https://github.com/desertwitch/par2cron#readme" target="_blank">extensive documentation</a> for more information and example configurations.</strong>
+</div><br>
+
+<form id="editform" method="POST">
+    <img id="editfolder" style="cursor:pointer;margin-left: 10px;" src="/webGui/images/explore.png" >
+
+    <input id="editfile" type="text" name="editfile" value="" readonly="" data-picktop="/boot/config/plugins/dwpar2cron" data-pickcloseonfile="true" data-pickfilter="yaml" data-pickroot="/boot/config/plugins/dwpar2cron" data-pickfolders="false" required="required" >
+
+    <textarea id="editdata" name="editdata" placeholder="Select a configuration file to modify."></textarea>
+    <input type="hidden" name="commit" value="1" />
+    <dl>
+        <dt></dt>
+        <dd>
+            <span>
+                <input type="button" value="Save" id="btnSubmit" class="dwpar2cron-tip" title="Save the configuration changes." />
+                <input type="button" value="Cancel" id="btnCancel" />
+            </span>
+        </dd>
+    </dl>
+</form>
+
+<script src="<?=autov('/webGui/javascript/jquery.filetree.js');?>"></script>
+<script src="<?=autov('/plugins/dwpar2cron/js/codemirror.min.js');?>"></script>
+<script src="<?=autov('/plugins/dwpar2cron/js/autorefresh.min.js');?>"></script>
+<script src="<?=autov('/plugins/dwpar2cron/js/yaml.min.js');?>"></script>
+
+<script>
+$(function(){
+    $('#btnCancel').click(function() {
+        location = '/Settings/dwpar2cron';
+    });
+
+    var editor = CodeMirror.fromTextArea($('#editdata')[0], {
+        theme: '<?=($display["theme"] == 'white' || $display["theme"] == 'azure') ? "default" : "dracula";?>',
+        mode: 'yaml',
+        lineNumbers: true,
+        autoRefresh: true
+    });
+
+    editor.setSize(null, 600);
+
+    $('#editfile').fileTreeAttach(null, null, function(file) {
+        $('#editfile').val(file);
+    });
+
+    $('#editfile').on('change', function () {
+        var Editfile = $('#editfile').val();
+        $.getJSON('/plugins/dwpar2cron/include/dwpar2cron_edit.php', {editfile: Editfile}, function (data) {
+                editor.setValue(data);
+            }
+        );
+    });
+
+    $('#editfile').val("/boot/config/plugins/dwpar2cron/config.yaml");
+    var EditfileDefault = $('#editfile').val();
+    $.getJSON('/plugins/dwpar2cron/include/dwpar2cron_edit.php', {editfile: EditfileDefault}, function (data) {
+            editor.setValue(data);
+        }
+    );
+
+    $('#btnSubmit').click(function () {
+        editor.save();
+        $.post('/plugins/dwpar2cron/include/dwpar2cron_save.php', $('#editform').serializeArray(), function (data) {
+            var Title = 'Configuration ';
+
+            if(data.success)
+                swal({title: Title+'Saved', text: data.saved+'\n\nIt will be active on next execution.', timer: 3500, showConfirmButton: false, type:'success'
+                });
+            if(data.error)
+                swal({title:Title+'Error', text: data.error+'\n\nThere was an error saving the configuration file.', type:'error'});
+
+        }, 'json');
+    });
+});
+</script>
