@@ -173,7 +173,7 @@ try {
             'fileExists' => false
         ]);
     }
-} catch (\Thorwable $t) {
+} catch (\Throwable $t) {
         $return = json_encode([
             'success' => false,
             'error' => htmlspecialchars($t->getMessage()),
