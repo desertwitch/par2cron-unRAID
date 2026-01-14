@@ -37,17 +37,17 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </dd>
     </dl>
 
-   <dl>
-        <dt>par2cmdline Version:</dt>
-        <dd>
-            <strong><?= isset($dwpar2cron_par2_version) && $dwpar2cron_par2_version ? $dwpar2cron_par2_version : "n/a" ?></strong>
-        </dd>
-    </dl>
-
     <dl>
         <dt>par2cron Backend:</dt>
         <dd>
             <strong><?= isset($dwpar2cron_par2cron_backend) && $dwpar2cron_par2cron_backend ? $dwpar2cron_par2cron_backend : "n/a" ?></strong>
+        </dd>
+    </dl>
+
+   <dl>
+        <dt>par2cmdline Version:</dt>
+        <dd>
+            <strong><?= isset($dwpar2cron_par2_version) && $dwpar2cron_par2_version ? $dwpar2cron_par2_version : "n/a" ?></strong>
         </dd>
     </dl>
 
