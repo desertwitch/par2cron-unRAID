@@ -82,8 +82,8 @@ if [ "$CRONCREATE" == "enable" ]; then
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
         /tmp \
-        > >(tee -a /tmp/dwpar2cron.log) \
-        2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log)
+        >> /tmp/dwpar2cron.log \
+        2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
     RET=$?
 
     CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
@@ -127,8 +127,8 @@ fi
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
     /tmp \
-    > >(tee -a /tmp/dwpar2cron.log) \
-    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log)
+    >> /tmp/dwpar2cron.log \
+    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
 RET=$?
 
 TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)

@@ -28,7 +28,7 @@ nohup /usr/bin/par2cron create \
     --json \
     /tmp \
     </dev/null \
-    > >(tee -a /tmp/dwpar2cron.log) \
-    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log) &
+    >> /tmp/dwpar2cron.log \
+    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
 
 sleep 1
