@@ -61,6 +61,7 @@ function formatTime($time) {
 
 function formatValue($value) {
     if (is_bool($value)) return $value ? 'true' : 'false';
+    if (is_array($value)) return htmlspecialchars(json_encode($value));
     return htmlspecialchars((string) $value);
 }
 

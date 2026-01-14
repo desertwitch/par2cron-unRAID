@@ -20,6 +20,9 @@ umask 000
 echo "Starting par2cron (Create Mode)..."
 echo "Starting par2cron (Create Mode)..." | logger -t "par2cron-plugin"
 
+rm -f /tmp/dwpar2cron.json
+rm -f /tmp/dwpar2cron.log
+
 nohup /usr/bin/par2cron create \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
