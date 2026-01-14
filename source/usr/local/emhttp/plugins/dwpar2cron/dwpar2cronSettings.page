@@ -59,7 +59,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </dl>
 
     <dl>
-        <dt><strong>par2cron Schedule:</strong></dt>
+        <dt><strong>Schedule:</strong></dt>
         <dd>
             <select class="dwpar2cron-run" id="CRON" name="CRON" size="1">
                 <?=mk_option($dwpar2cron_cron, "disable", "Never");?>
@@ -77,7 +77,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <div id="CRONDOWSETTING">
         <dl>
-            <dt>par2cron Schedule - Day of Week:</dt>
+            <dt>Schedule - Day of Week:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="CRONDOW" name="CRONDOW" size="1">
                     <?=mk_option($dwpar2cron_crondow, "0", "Sunday");?>
@@ -94,7 +94,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <div id="CRONDOMSETTING">
         <dl>
-            <dt>par2cron Schedule - Day of Month:</dt>
+            <dt>Schedule - Day of Month:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="CRONDOM" name="CRONDOM" size="1">
                     <?=dwpar2cron_dom_options($dwpar2cron_crondom);?>
@@ -109,7 +109,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <div id="CRONHOURSETTING">
         <dl>
-            <dt>par2cron Schedule - Hour:</dt>
+            <dt>Schedule - Hour:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="CRONHOUR" name="CRONHOUR" size="1">
                     <?=dwpar2cron_hour_options($dwpar2cron_cronhour);?>
@@ -124,7 +124,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <div id="CRONSETTINGS">
         <dl>
-            <dt>par2cron Schedule - Create on Schedule:</dt>
+            <dt>Schedule - Create on Schedule:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="CRONCREATE" name="CRONCREATE" size="1">
                     <?=mk_option($dwpar2cron_croncreate, "disable", "No");?>
@@ -139,7 +139,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>par2cron Schedule - Verify on Schedule:</dt>
+            <dt>Schedule - Verify on Schedule:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="CRONVERIFY" name="CRONVERIFY" size="1">
                     <?=mk_option($dwpar2cron_cronverify, "disable", "No");?>
@@ -154,7 +154,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>par2cron Schedule - Start when Mover Running:</dt>
+            <dt>Schedule - Start when Mover Running:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="MOVERSTART" name="MOVERSTART" size="1">
                     <?=mk_option($dwpar2cron_moverstart, "disable", "No");?>
@@ -168,7 +168,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>par2cron Schedule - Start when Parity Running:</dt>
+            <dt>Schedule - Start when Parity Running:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="PARITYSTART" name="PARITYSTART" size="1">
                     <?=mk_option($dwpar2cron_paritystart, "disable", "No");?>
@@ -182,7 +182,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>par2cron Schedule - Started Notifications:</dt>
+            <dt>Schedule - Started Notifications:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="STARTNOTIFY" name="STARTNOTIFY" size="1">
                     <?=mk_option($dwpar2cron_startnotify, "disable", "No");?>
@@ -197,7 +197,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>par2cron Schedule - Success Notifications:</dt>
+            <dt>Schedule - Success Notifications:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="FINISHNOTIFY" name="FINISHNOTIFY" size="1">
                     <?=mk_option($dwpar2cron_finishnotify, "disable", "No");?>
@@ -212,7 +212,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>par2cron Schedule - Failure Notifications:</dt>
+            <dt>Schedule - Failure Notifications:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="ERRORNOTIFY" name="ERRORNOTIFY" size="1">
                     <?=mk_option($dwpar2cron_errornotify, "disable", "No");?>
