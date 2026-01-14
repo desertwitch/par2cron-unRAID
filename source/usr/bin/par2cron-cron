@@ -86,9 +86,9 @@ if [ "$CRONCREATE" == "enable" ]; then
         2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log)
     RET=$?
 
-    CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
-    CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
-    CREATE_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+    CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
+    CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
+    CREATE_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null)
 
     case "$RET" in
     0)
@@ -131,14 +131,14 @@ fi
     2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log)
 RET=$?
 
-TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
-TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
-TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
+TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
+TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null)
 
 VERIFY_STARTED=$((TOTAL_STARTED - CREATE_STARTED))
 VERIFY_SUCCESS=$((TOTAL_SUCCESS - CREATE_SUCCESS))
 VERIFY_FAILED=$((TOTAL_FAILED - CREATE_FAILED))
-VERIFY_CORRUPTED=$(grep -c '"msg":"Job completed with corruption detected"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+VERIFY_CORRUPTED=$(grep -c '"msg":"Job completed with corruption detected"' /tmp/dwpar2cron.json 2>/dev/null)
 
 case "$RET" in
   0)
