@@ -15,8 +15,8 @@
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
 #
-echo "Clearing par2cron screen..."
-echo "Clearing par2cron screen..." | logger -t "par2cron-plugin"
+echo "Clearing par2cron logfiles..."
+echo "Clearing par2cron logfiles..." | logger -t "par2cron-plugin"
 
 rm -f /tmp/dwpar2cron.json
 rm -f /tmp/dwpar2cron.log
