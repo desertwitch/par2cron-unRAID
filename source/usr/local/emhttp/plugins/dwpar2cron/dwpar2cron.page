@@ -1,8 +1,8 @@
 Menu="Utilities"
 Type="xmenu"
 Title="par2cron"
-Icon="braille"
-Tag="braille"
+Icon="retweet"
+Tag="retweet"
 Markdown="false"
 ---
 <?
