@@ -32,7 +32,7 @@
     display: table-cell;
 }
 
-.ms-timestamp {
+.ms-timestamp-cell {
     width: 200px;
     font-size: 0.85em;
     opacity: 0.7;
