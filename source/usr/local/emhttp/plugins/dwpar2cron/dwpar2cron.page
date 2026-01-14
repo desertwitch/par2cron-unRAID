@@ -153,8 +153,9 @@ Markdown="false"
         <span style="float:right;text-align:right;">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-create" value="MANUAL CREATE" title="Mirrors the structure of the configured target directory into the configured mirror directory.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-verify" value="MANUAL VERIFY" title="Moves any new content inside the configured mirror directory into the respective locations within the configured target directory.">
-            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-info" value="MANUAL INFO" title="Moves any new content inside the configured mirror directory into the respective locations within the configured target directory.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-info" value="CYCLE INFO" title="Moves any new content inside the configured mirror directory into the respective locations within the configured target directory.">
             <input class="dwpar2cron-notrun dwpar2cron-tip" type="button" id="dwpar2cron-stop" value="STOP PROGRAM" title="Stops any running MirrorShuttle instances, this is generally safe to use without causing data loss or corruption.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-clear" value="CLEAR SCREEN" title="Moves any new content inside the configured mirror directory into the respective locations within the configured target directory.">
             <div style="text-align:right;margin-right:15px;">Please always read and understand the documentation <strong>before</strong> running any operations.</div>
             <br>
         </span>
@@ -567,6 +568,11 @@ $(document).ready(function() {
             }
         }
     };
+
+    $('#dwpar2cron-clear').click(function(){
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/clear');
+        $('#dwpar2cron-operations').submit();
+    });
 
     $('#dwpar2cron-create').click(function(){
         $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_create');

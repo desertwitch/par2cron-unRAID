@@ -15,7 +15,6 @@
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
 #
-
 DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
 
