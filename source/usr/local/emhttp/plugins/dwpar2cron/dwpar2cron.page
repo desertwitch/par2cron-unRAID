@@ -49,7 +49,7 @@ Markdown="false"
                     <img src="/plugins/dwpar2cron/images/dwpar2cron.png" alt="Logo" style="width: 160px;">
                     <div style="margin-top:10px;">
                     <span style="font-size:1.5rem;font-weight:bold;">par2cron</span><br>
-                    PAR2 creation and verification automation.
+                    Integrity management for directory trees.
                     </div>
                 </div>
             </td>
@@ -585,7 +585,7 @@ $(document).ready(function() {
     });
 
     $('#dwpar2cron-info').click(function(){
-        openBox('/plugins/dwpar2cron/scripts/run_info', 'par2cron', 600, 600, false);
+        openBox('/plugins/dwpar2cron/scripts/run_info', 'Cycle Information', 600, 600, false);
     });
 
     $('#dwpar2cron-stop').click(function(){
