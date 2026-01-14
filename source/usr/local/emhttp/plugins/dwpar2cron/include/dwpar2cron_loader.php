@@ -86,7 +86,7 @@ function generateLogRow($log) {
 
     return '<tr class="ms-log-row ms-virtual-row ' . $rowClassAttr . '" data-level="' . strtolower($level) . '">
         <td class="ms-log-cell ms-timestamp">' . $timestamp . '</td>
-        <td class="ms-log-cell ms-level-cell"><span class="ms-level ' . $levelClass . '">' . strtoupper(htmlspecialchars($level)) . '</span></td>
+        <td class="ms-log-cell"><span class="ms-level ' . $levelClass . '">' . strtoupper(htmlspecialchars($level)) . '</span></td>
         <td class="ms-log-cell">
             <div class="ms-message">' . $message . '</div>
             <div class="ms-details">' . $details . '</div>
@@ -98,7 +98,7 @@ function generateRawFileRow($rawContent) {
     $safe = htmlspecialchars($rawContent);
     return '<tr class="ms-log-row ms-virtual-row ms-row-error" data-level="error">
         <td class="ms-log-cell ms-timestamp">' . formatTime(time()) . '</td>
-        <td class="ms-log-cell ms-level-cell"><span class="ms-level ms-level-error">ERROR</span></td>
+        <td class="ms-log-cell"><span class="ms-level ms-level-error">ERROR</span></td>
         <td class="ms-log-cell">
             <div class="ms-message">Unable to parse response as JSON.</div>
             <div class="ms-details"><pre style="white-space: pre-wrap; font-family: monospace;">' . $safe . '</pre></div>

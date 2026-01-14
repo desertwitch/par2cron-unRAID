@@ -8,7 +8,6 @@
 .dwpar2cron-log-table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
     margin: 0;
 }
 
@@ -39,12 +38,9 @@
     white-space: nowrap;
 }
 
-.ms-level-cell {
+.ms-level {
     width: 80px;
     text-align: center;
-}
-
-.ms-level {
     font-weight: bold;
     font-size: 0.9em;
     border-radius: 4px;
@@ -180,6 +176,12 @@
 
 .clusterize-content {
     width: 100%;
+}
+
+.clusterize-content table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 /* Filter styles */
