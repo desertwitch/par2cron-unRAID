@@ -24,4 +24,3 @@ echo "Collecting information..."
     /mnt/user \
     2>&1
 
-sleep 1

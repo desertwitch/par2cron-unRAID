@@ -580,7 +580,7 @@ $(document).ready(function() {
 
     $('#dwpar2cron-info').click(function(){
         $('#dwpar2cron-ops-cmd').val('');
-        openBox('/plugins/dwpar2cron/scripts/run_info', 'par2cron Configuration Reset', 600, 600, true);
+        openBox('/plugins/dwpar2cron/scripts/run_info', 'par2cron', 600, 600, true);
     });
 
     $('#dwpar2cron-stop').click(function(){
