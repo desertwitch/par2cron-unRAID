@@ -46,7 +46,7 @@ Markdown="false"
         <tr id="ms-collapsible">
             <td style="width: 300px; text-align: center; vertical-align: middle; white-space: nowrap;">
                 <div style="margin:15px;">
-                    <img src="/plugins/dwpar2cron/images/dwpar2cron.png" alt="Logo" style="width: 160px;">
+                    <img src="/plugins/dwpar2cron/images/logo.png" alt="Logo" style="width: 160px;">
                     <div style="margin-top:10px;">
                     <span style="font-size:1.5rem;font-weight:bold;">par2cron</span><br>
                     Integrity management for directory trees.
