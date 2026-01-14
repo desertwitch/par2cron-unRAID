@@ -124,7 +124,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <div id="CRONSETTINGS">
         <dl>
-            <dt>par2cron Schedule - Execute Create Mode:</dt>
+            <dt>par2cron Schedule - Create on Schedule:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="CRONCREATE" name="CRONCREATE" size="1">
                     <?=mk_option($dwpar2cron_croncreate, "disable", "No");?>
@@ -134,8 +134,23 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </dl>
 
         <blockquote class="inline_help">
-        <p>When enabled, par2cron will run a "create" operation before the "verify" operation.</p>
+        <p>When enabled, par2cron will run a "create" operation as part of the scheduled execution.</p>
         <p>When disabled, you need to manually run any "create" operations from this page instead.</p>
+        </blockquote>
+
+        <dl>
+            <dt>par2cron Schedule - Verify on Schedule:</dt>
+            <dd>
+                <select class="dwpar2cron-run" id="CRONVERIFY" name="CRONVERIFY" size="1">
+                    <?=mk_option($dwpar2cron_cronverify, "disable", "No");?>
+                    <?=mk_option($dwpar2cron_cronverify, "enable", "Yes");?>
+                </select>
+            </dd>
+        </dl>
+
+        <blockquote class="inline_help">
+        <p>When enabled, par2cron will run a "verify" operation as part of the scheduled execution.</p>
+        <p>When disabled, you need to manually run any "verify" operations from this page instead.</p>
         </blockquote>
 
         <dl>
