@@ -137,6 +137,10 @@ fi
     2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
 RET=$?
 
+sleep 1
+sync
+sleep1
+
 TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
 TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
 TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null)
