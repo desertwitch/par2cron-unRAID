@@ -25,16 +25,16 @@ rm -f "/boot/config/plugins/dynamix/dwpar2cron.cron"
 
 if [ "$CRON" == "hourly" ]; then
     cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
-    sed -i '/dwpar2cron-cron/s,^\*,0,' "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i '/par2cron-cron/s,^\*,0,' "/boot/config/plugins/dynamix/dwpar2cron.cron"
 elif [ "$CRON" == "daily" ]; then
     cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
-    sed -i "/dwpar2cron-cron/s,^\* \*,0 ${CRONHOUR}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i "/par2cron-cron/s,^\* \*,0 ${CRONHOUR}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
 elif [ "$CRON" == "weekly" ]; then
     cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
-    sed -i "/dwpar2cron-cron/s,^\* \* \* \* \*,0 ${CRONHOUR} \* \* ${CRONDOW}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i "/par2cron-cron/s,^\* \* \* \* \*,0 ${CRONHOUR} \* \* ${CRONDOW}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
 elif [ "$CRON" == "monthly" ]; then
     cp -f $DOCROOT/defaults/default.cron "/boot/config/plugins/dynamix/dwpar2cron.cron"
-    sed -i "/dwpar2cron-cron/s,^\* \* \*,0 ${CRONHOUR} ${CRONDOM}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
+    sed -i "/par2cron-cron/s,^\* \* \*,0 ${CRONHOUR} ${CRONDOM}," "/boot/config/plugins/dynamix/dwpar2cron.cron"
 else
     rm -f "/boot/config/plugins/dynamix/dwpar2cron.cron"
 fi

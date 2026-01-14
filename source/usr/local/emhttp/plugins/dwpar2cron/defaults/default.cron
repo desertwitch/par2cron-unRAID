@@ -1,2 +1,2 @@
 # dwpar2cron:
-* * * * * /usr/bin/dwpar2cron-cron > /dev/null 2>&1
+* * * * * /usr/bin/par2cron-cron > /dev/null 2>&1

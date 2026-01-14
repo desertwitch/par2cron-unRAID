@@ -140,9 +140,9 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         <dl>
             <dt>par2cron Schedule - Create before Verify:</dt>
             <dd>
-                <select class="dwpar2cron-run" id="INITAFTER" name="INITAFTER" size="1">
-                    <?=mk_option($dwpar2cron_initafter, "disable", "No");?>
-                    <?=mk_option($dwpar2cron_initafter, "enable", "Yes");?>
+                <select class="dwpar2cron-run" id="CRONCREATE" name="CRONCREATE" size="1">
+                    <?=mk_option($dwpar2cron_croncreate, "disable", "No");?>
+                    <?=mk_option($dwpar2cron_croncreate, "enable", "Yes");?>
                 </select>
             </dd>
         </dl>

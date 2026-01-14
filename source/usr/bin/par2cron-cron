@@ -1,0 +1,177 @@
+#!/bin/bash
+#
+# Copyright Derek Macias (parts of code from NUT package)
+# Copyright macester (parts of code from NUT package)
+# Copyright gfjardim (parts of code from NUT package)
+# Copyright SimonF (parts of code from NUT package)
+# Copyright Lime Technology (any and all other parts of Unraid)
+#
+# Copyright desertwitch (as author and maintainer of this file)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License 2
+# as published by the Free Software Foundation.
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+umask 000
+
+NOTIFY_BIN="/usr/local/emhttp/plugins/dynamix/scripts/notify"
+HOST=$(echo "$HOSTNAME" | awk '{print toupper($0)}')
+EVENT="par2cron"
+SUBJECT="[${HOST}] par2cron:"
+
+CREATE_STARTED=0
+CREATE_SUCCESS=0
+CREATE_FAILED=0
+TOTAL_STARTED=0
+TOTAL_SUCCESS=0
+TOTAL_FAILED=0
+VERIFY_STARTED=0
+VERIFY_SUCCESS=0
+VERIFY_FAILED=0
+VERIFY_CORRUPTED=0
+
+if pgrep -x par2cron &>/dev/null; then
+    echo "par2cron is already running; exiting" | logger -s -t "par2cron-cron"
+    exit 0
+fi
+
+if [ ! -r "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg" ]; then
+    echo "configuration file cannot be read; exiting" | logger -s -t "par2cron-cron"
+    exit 0
+fi
+
+# shellcheck disable=SC1091
+source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+
+if [[ "$CRON" != "hourly" && "$CRON" != "daily" && "$CRON" != "weekly" && "$CRON" != "monthly" ]]; then
+    exit 0
+fi
+
+if [ "$MOVERSTART" != "enable" ] && [ -e "/var/run/mover.pid" ]; then
+    echo "mover is running; exiting" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "${SUBJECT} has failed (mover is running)." -i "alert"
+    exit 0
+fi
+
+if [ "$PARITYSTART" != "enable" ] && [ -r "/var/local/emhttp/var.ini" ]; then
+    PARITYPOS=$(grep "mdResyncPos=" < /var/local/emhttp/var.ini | cut -d'"' -f2)
+    if [ -n "$PARITYPOS" ] && [ "$PARITYPOS" -gt 0 ]; then
+        echo "parity operation is running; exiting" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "${SUBJECT} has failed (parity operation in progress)." -i "alert"
+        exit 0
+    fi
+fi
+
+sync
+sleep 1
+
+rm -f /tmp/dwpar2cron.log
+rm -f /tmp/dwpar2cron.json
+
+if [ "$CRONCREATE" == "enable" ]; then
+    echo "create: started" | logger -s -t "par2cron-cron"
+
+    if [ "$STARTNOTIFY" == "enable" ]; then
+        "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Started" -d "${SUBJECT} creation has been started according to schedule." -i "warning"
+    fi
+
+    /usr/bin/par2cron create \
+        -c /boot/config/plugins/dwpar2cron/config.yaml \
+        --json \
+        /tmp \
+        > >(tee -a /tmp/dwpar2cron.log) \
+        2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log)
+    RET=$?
+
+    CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+    CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+    CREATE_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+
+    case "$RET" in
+    0)
+        echo "create: finished (return code: $RET - success) ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$FINISHNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Finished" -d "${SUBJECT} creation has finished with success ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)." -i "normal"
+        ;;
+    2)
+        echo "create: finished (return code: $RET - mode failure) ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Failure" -d "${SUBJECT} could not create all jobs, check the logfiles ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)." -i "alert"
+        ;;
+    4)
+        echo "create: finished (return code: $RET - bad invocation) ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Bad Invocation" -d "${SUBJECT} returned a bad invocation error, check the logfiles ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)." -i "alert"
+        ;;
+    5)
+        echo "create: finished (return code: $RET - unclassified error) ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Unclassified Error" -d "${SUBJECT} returned an unclassified error, check the logfiles ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)." -i "alert"
+        ;;
+    *)
+        echo "create: finished (return code: $RET - unexpected return code) ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Unexpected Code" -d "${SUBJECT} returned an unexpected return code, check the logfiles ($CREATE_STARTED started, $CREATE_SUCCESS succeeded, $CREATE_FAILED failed)." -i "alert"
+        ;;
+    esac
+fi
+
+sync
+sleep 1
+
+echo "verify: started" | logger -s -t "par2cron-cron"
+
+if [ "$STARTNOTIFY" == "enable" ]; then
+    "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Started" -d "${SUBJECT} verification has been started according to schedule." -i "warning"
+fi
+
+/usr/bin/par2cron verify \
+    -c /boot/config/plugins/dwpar2cron/config.yaml \
+    --json \
+    /tmp \
+    > >(tee -a /tmp/dwpar2cron.log) \
+    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log)
+RET=$?
+
+TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+
+VERIFY_STARTED=$((TOTAL_STARTED - CREATE_STARTED))
+VERIFY_SUCCESS=$((TOTAL_SUCCESS - CREATE_SUCCESS))
+VERIFY_FAILED=$((TOTAL_FAILED - CREATE_FAILED))
+VERIFY_CORRUPTED=$(grep -c '"msg":"Job completed with corruption detected"' /tmp/dwpar2cron.json 2>/dev/null || echo 0)
+
+case "$RET" in
+  0)
+    echo "verify: finished (return code: $RET - success) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$FINISHNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Finished" -d "${SUBJECT} verification has finished with success ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "normal"
+    ;;
+  1)
+    echo "verify: finished (return code: $RET - repairable corruption) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Repairable Corruption" -d "${SUBJECT} verification has detected repairable corruption, check the logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+    ;;
+  2)
+    echo "verify: finished (return code: $RET - mode failure) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Failure" -d "${SUBJECT} could not verify all jobs, check the logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+    ;;
+  3)
+    echo "verify: finished (return code: $RET - unrepairable corruption) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unrepairable Corruption" -d "${SUBJECT} verification has detected unrepairable corruption, check the logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+    ;;
+  4)
+    echo "verify: finished (return code: $RET - bad invocation) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Bad Invocation" -d "${SUBJECT} returned a bad invocation error, check the logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+    ;;
+  5)
+    echo "verify: finished (return code: $RET - unclassified error) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unclassified Error" -d "${SUBJECT} returned an unclassified error, check the logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+    ;;
+  *)
+    echo "verify: finished (return code: $RET - unexpected return code) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unexpected Code" -d "${SUBJECT} returned an unexpected return code, check the logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+    ;;
+esac
+
+sync
+sleep 1
+
+exit 0

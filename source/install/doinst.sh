@@ -18,6 +18,10 @@
 BOOT="/boot/config/plugins/dwpar2cron"
 DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 
+# Update file permissions of binaries
+chmod 755 /usr/bin/par2cron
+chmod 755 /usr/bin/par2cron-cron
+
 # Update file permissions of scripts
 chmod 755 $DOCROOT/event/*
 chmod 755 $DOCROOT/scripts/*
