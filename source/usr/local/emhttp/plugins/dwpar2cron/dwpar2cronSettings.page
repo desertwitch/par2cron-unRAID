@@ -40,7 +40,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
    <dl>
         <dt>par2cmdline Version:</dt>
         <dd>
-            <strong><?= isset($dwpar2cron_binaries) && $dwpar2cron_binaries ? $dwpar2cron_binaries : "n/a" ?></strong>
+            <strong><?= isset($dwpar2cron_par2_version) && $dwpar2cron_par2_version ? $dwpar2cron_par2_version : "n/a" ?></strong>
         </dd>
     </dl>
 
