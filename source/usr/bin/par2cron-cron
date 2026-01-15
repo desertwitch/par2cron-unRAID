@@ -56,7 +56,7 @@ fi
 
 if [ "$MOVERSTART" != "enable" ] && [ -e "/var/run/mover.pid" ]; then
     echo "mover is running; exiting" | logger -s -t "par2cron-cron"
-    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "${SUBJECT} has failed (mover is running)." -i "alert"
+    [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "${EVENT} has failed (mover is running)." -i "alert"
     exit 0
 fi
 
@@ -64,7 +64,7 @@ if [ "$PARITYSTART" != "enable" ] && [ -r "/var/local/emhttp/var.ini" ]; then
     PARITYPOS=$(grep "mdResyncPos=" < /var/local/emhttp/var.ini | cut -d'"' -f2)
     if [ -n "$PARITYPOS" ] && [ "$PARITYPOS" -gt 0 ]; then
         echo "parity operation is running; exiting" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "${SUBJECT} has failed (parity operation in progress)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "${EVENT} has failed (parity operation in progress)." -i "alert"
         exit 0
     fi
 fi
@@ -76,7 +76,7 @@ if [ "$CRONCREATE" == "enable" ]; then
     echo "create: started" | logger -s -t "par2cron-cron"
 
     if [ "$STARTNOTIFY" == "enable" ]; then
-        "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Started" -d "${SUBJECT} creation has been started according to schedule." -i "warning"
+        "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Started" -d "${EVENT} creation has been started according to schedule." -i "warning"
     fi
 
     /usr/bin/par2cron create \
@@ -94,23 +94,23 @@ if [ "$CRONCREATE" == "enable" ]; then
     case "$RET" in
     0)
         echo "create: finished (return code: $RET - success) ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$FINISHNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Finished" -d "${SUBJECT} creation has finished with success ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "normal"
+        [ "$FINISHNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Finished" -d "${EVENT} creation has finished with success ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "normal"
         ;;
     1)
         echo "create: finished (return code: $RET - mode failure) ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Failure" -d "${SUBJECT} could not create all jobs, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Failure" -d "${EVENT} could not create all jobs, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
         ;;
     2)
         echo "create: finished (return code: $RET - bad invocation) ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Bad Invocation" -d "${SUBJECT} returned a bad invocation error, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Bad Invocation" -d "${EVENT} returned a bad invocation error, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
         ;;
     5)
         echo "create: finished (return code: $RET - unclassified error) ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Unclassified Error" -d "${SUBJECT} returned an unclassified error, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Unclassified Error" -d "${EVENT} returned an unclassified error, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
         ;;
     *)
         echo "create: finished (return code: $RET - unexpected return code) ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Unexpected Code" -d "${SUBJECT} returned an unexpected return code, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create Unexpected Code" -d "${EVENT} returned an unexpected return code, check logfiles ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "alert"
         ;;
     esac
 fi
@@ -119,7 +119,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
     echo "verify: started" | logger -s -t "par2cron-cron"
 
     if [ "$STARTNOTIFY" == "enable" ]; then
-        "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Started" -d "${SUBJECT} verification has been started according to schedule." -i "warning"
+        "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Started" -d "${EVENT} verification has been started according to schedule." -i "warning"
     fi
 
     /usr/bin/par2cron verify \
@@ -142,31 +142,31 @@ if [ "$CRONVERIFY" == "enable" ]; then
     case "$RET" in
     0)
         echo "verify: finished (return code: $RET - success) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$FINISHNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Finished" -d "${SUBJECT} verification has finished with success ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "normal"
+        [ "$FINISHNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Finished" -d "${EVENT} verification has finished with success ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "normal"
         ;;
     1)
         echo "verify: finished (return code: $RET - mode failure) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Failure" -d "${SUBJECT} could not verify all jobs, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Failure" -d "${EVENT} could not verify all jobs, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
         ;;
     2)
         echo "verify: finished (return code: $RET - bad invocation) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Bad Invocation" -d "${SUBJECT} returned a bad invocation error, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Bad Invocation" -d "${EVENT} returned a bad invocation error, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
         ;;
     3)
         echo "verify: finished (return code: $RET - repairable corruption) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Repairable Corruption" -d "${SUBJECT} verification has detected repairable corruption, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Repairable Corruption" -d "${EVENT} verification has detected repairable corruption, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
         ;;
     4)
         echo "verify: finished (return code: $RET - unrepairable corruption) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unrepairable Corruption" -d "${SUBJECT} verification has detected unrepairable corruption, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unrepairable Corruption" -d "${EVENT} verification has detected unrepairable corruption, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
         ;;
     5)
         echo "verify: finished (return code: $RET - unclassified error) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unclassified Error" -d "${SUBJECT} returned an unclassified error, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unclassified Error" -d "${EVENT} returned an unclassified error, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
         ;;
     *)
         echo "verify: finished (return code: $RET - unexpected return code) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
-        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unexpected Code" -d "${SUBJECT} returned an unexpected return code, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify Unexpected Code" -d "${EVENT} returned an unexpected return code, check logfiles ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "alert"
         ;;
     esac
 fi
