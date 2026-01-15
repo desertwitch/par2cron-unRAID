@@ -35,6 +35,26 @@ Markdown="false"
     .fileTree {color:#486dba;width:305px;max-height:150px;overflow:scroll;position:absolute;z-index:100;display:none;}
 </style>
 
+<?php
+try {
+    function run_par2cron($cmd, $label) {
+        $output = [];
+        $return_var = 0;
+        exec($cmd . ' 2>&1', $output, $return_var);
+        $result = implode("\n", $output);
+
+        if ($return_var === 0) {
+            echo "<span style='color:green'><i class='fa fa-check-circle'></i> The {$label} has passed for the most recently saved configuration file.</span><br>";
+        } else {
+            echo "<span style='color:red'><i class='fa fa-times-circle '></i> The {$label} has failed for the most recently saved configuration file:<br><pre>" . htmlspecialchars($result) . "</pre></span>";
+        }
+    }
+    run_par2cron('par2cron check-config /boot/config/plugins/dwpar2cron/config.yaml', 'configuration check');
+} catch (\Throwable $t) {
+    error_log($t);
+}
+?>
+
 <div style="margin-left:10px;">
     <strong>Please refer to the <a href="https://github.com/desertwitch/par2cron#readme" target="_blank">extensive documentation</a> for more information and example configurations.</strong>
 </div><br>
@@ -101,11 +121,14 @@ $(function(){
         $.post('/plugins/dwpar2cron/include/dwpar2cron_save.php', $('#editform').serializeArray(), function (data) {
             var Title = 'Configuration ';
 
-            if(data.success)
-                swal({title: Title+'Saved', text: data.saved+'\n\nIt will be active on next execution.', timer: 3500, showConfirmButton: false, type:'success'
+            if(data.success) {
+                swal({title: Title+'Saved', text: data.saved+'\n\nIt will be active on next execution.', timer: 2000, showConfirmButton: false, type:'success'}, function() {
+                    location = '/Settings/dwpar2cron';
                 });
-            if(data.error)
-                swal({title:Title+'Error', text: data.error+'\n\nThere was an error saving the configuration file.', type:'error'});
+            }
+            if(data.error) {
+                swal({title:Title+'Error', text: data.error+'\n\nThere was an error saving the configuration file.', timer: 3500, showConfirmButton: false, type:'error'});
+            }
 
         }, 'json');
     });
