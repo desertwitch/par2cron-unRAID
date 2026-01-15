@@ -18,7 +18,7 @@
 umask 000
 
 echo "Collecting information..."
-echo "This may take a few minutes, keep this window open."
+echo "This may take a few minutes - keep this window open."
 echo ""
 
 /usr/bin/par2cron info \
