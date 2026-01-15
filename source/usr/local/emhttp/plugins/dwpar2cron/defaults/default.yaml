@@ -51,7 +51,7 @@ create:
 verify:
   # args: Set arguments passed directly to the par2 command
   #
-  # Example: ["-m500", "-q"] (memory ceiling of 500MB, quiet mode)
+  # Example: ["-m500", "-q"] (memory ceiling 500MB, quiet mode)
   # Default: [] (empty)
   args: []
 
