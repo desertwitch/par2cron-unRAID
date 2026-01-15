@@ -1,93 +1,130 @@
 # par2cron configuration file
+# All options can also be set via CLI (CLI has precedence over configuration)
 
-# =============================================================================
+# ==============================================================================
 # CREATE COMMAND SETTINGS
-# =============================================================================
+# ==============================================================================
 create:
-  # args: Additional arguments passed directly to the par2 command
-  # Default: ["-r15", "-n1"] (15% redundancy, 1 recovery file)
-  args:
-    - "-r15"  # Recovery block percentage (15%)
-    - "-n1"   # Number of recovery files to create
-
-  # glob: File matching pattern for files to include in PAR2 sets
-  # Default: "*" (all files)
-  glob: "*"
-
-  # verify: Whether to verify PAR2 files immediately after creation
-  # Default: false
-  verify: false
-
-  # mode: PAR2 creation mode
-  # Options: "file" (one PAR2 set per file) or "folder" (one PAR2 set per folder)
-  # Default: "folder"
-  mode: folder
-
-  # log-level: Minimum severity level for log messages
-  # Options: debug, info, warn, error
-  # Default: info
-  log-level: info
-
-# =============================================================================
-# VERIFY COMMAND SETTINGS
-# =============================================================================
-verify:
-  # args: Additional arguments passed directly to the par2 verify command
+  # args: Set arguments passed directly to the par2 command
+  # Changeable as needed for individual sets using the marker configuration
+  #
+  # Example: ["-r15", "-n1"] (15% redundancy, 1 recovery file)
   # Default: [] (empty)
   args: []
 
-  # duration: Time budget per verification run (soft limit)
+  # glob: File matching pattern for files to include in PAR2 sets
+  # Changeable as needed for individual sets using the marker configuration
+  #
+  # Default: "*" (all files)
+  glob: "*"
+
+  # duration: Time budget per creation run (soft limit)
+  # This is a best-effort limit; overshooting creations won't be interrupted
+  #
   # Format: Go duration string (e.g., "1h", "30m", "2h30m")
-  # Default: unset (no time limit)
-  # Note: This is a best-effort limit; overshooting runs won't be interrupted
-  duration: 2h
+  # Default: "" (no time limit)
+  duration: ""
+
+  # mode: PAR2 creation mode
+  # Changeable as needed for individual sets using the marker configuration
+  #
+  # Options: "file" (one PAR2 set per file), "folder" (one PAR2 set per folder)
+  # Default: "folder"
+  mode: "folder"
+
+  # verify: Whether to verify PAR2 files immediately after creation
+  # Changeable as needed for individual sets using the marker configuration
+  # Recommended to enable this always when using --duration in "verify" mode
+  #
+  # Default: false
+  verify: false
+
+  # log-level: Minimum severity level for log messages that are emitted
+  #
+  # Format: "debug", "info", "warn", "error"
+  # Default: "info"
+  log-level: "info"
+
+# ==============================================================================
+# VERIFY COMMAND SETTINGS
+# ==============================================================================
+verify:
+  # args: Set arguments passed directly to the par2 command
+  #
+  # Example: ["-m500", "-q"] (memory ceiling of 500MB, quiet mode)
+  # Default: [] (empty)
+  args: []
 
   # age: Minimum time between re-verifications of the same PAR2 set
-  # Format: Go duration string
-  # Default: unset (always verify)
-  # Files verified more recently than this will be skipped
-  age: 7d
+  # Any PAR2 sets verified more recently than this will be skipped instead
+  #
+  # Format: Go duration string (e.g., "12h", "2d", "7d")
+  # Default: "" (always verify every set)
+  age: ""
 
-  # calc-run-interval: How often you run par2cron verification
-  # Format: Go duration string
-  # Default: "24h"
-  # Used to calculate and warn about verification backlog
-  calc-run-interval: 24h
+  # duration: Time budget per verification run (soft limit)
+  # This is a best-effort limit; overshooting verifications won't be interrupted
+  #
+  # Format: Go duration string (e.g., "1h", "30m", "2h30m")
+  # Default: "" (no time limit)
+  duration: ""
 
   # skip-no-manifest: Skip PAR2 files that don't have a par2cron manifest
+  # Useful to only verify PAR2 sets that were actually created by par2cron
+  # Alternatively use the par2cron-ignore files to exclude certain folders
+  #
   # Default: false
-  # Useful to only verify PAR2 sets created by par2cron
   skip-no-manifest: false
 
   # skip-no-creation-manifest: Skip PAR2 files without a creation manifest
+  # Useful to only verify PAR2 sets that were actually created by par2cron
+  # This is the same as above but even more strict, usually not recommended
+  #
   # Default: false
   skip-no-creation-manifest: false
 
-  # log-level: Minimum severity level for log messages
-  # Options: debug, info, warn, error
-  # Default: info
-  log-level: info
-
-# =============================================================================
-# INFO COMMAND SETTINGS
-# =============================================================================
-info:
-  # duration: Target time budget per verification run (for cycle calculations)
-  # Format: Go duration string
-  # Default: unset
-  duration: 2h
-
-  # age: Target cycle length (time between re-verifications)
-  # Format: Go duration string
-  # Default: unset
-  age: 7d
-
   # calc-run-interval: How often you run par2cron verification
-  # Format: Go duration string
+  # Used to calculate and warn about verification backlog growing
+  # Set this to the interval you run your cronjobs at (usually daily)
+  #
+  # Format: Go duration string (e.g., "12h", "2d", "7d")
   # Default: "24h"
   calc-run-interval: 24h
 
-  # log-level: Minimum severity level for log messages
-  # Options: debug, info, warn, error
-  # Default: info
+  # log-level: Minimum severity level for log messages that are emitted
+  #
+  # Format: "debug", "info", "warn", "error"
+  # Default: "info"
+  log-level: info
+
+# ==============================================================================
+# INFO COMMAND SETTINGS
+# ==============================================================================
+info:
+  # age: Target cycle length between re-verifications (used for calculations)
+  # Set this always to the same value that is used for the "verify" mode.
+  #
+  # Format: Go duration string (e.g., "12h", "2d", "7d")
+  # Default: "" (always verify every set)
+  age: ""
+
+  # duration: Time budget per each verification run (used for calculations)
+  # Set this always to the same value that is used for the "verify" mode.
+  #
+  # Format: Go duration string (e.g., "1h", "30m", "2h30m")
+  # Default: "" (no time limit)
+  duration: ""
+
+  # calc-run-interval: How often you run verification (used for calculations)
+  # Set this to the interval you run your verify cronjobs at (usually daily)
+  # Set this always to the same value that is used for the "verify" mode.
+  #
+  # Format: Go duration string (e.g., "12h", "2d", "7d")
+  # Default: "24h"
+  calc-run-interval: 24h
+
+  # log-level: Minimum severity level for log messages that are emitted
+  #
+  # Format: "debug", "info", "warn", "error"
+  # Default: "info"
   log-level: info
