@@ -78,7 +78,7 @@ verify:
 
   # skip-no-creation-manifest: Skip PAR2 files without a creation manifest
   # Useful to only verify PAR2 sets that were actually created by par2cron
-  # This is the same as above but even more strict, usually not recommended
+  # This is the same as above but even more strict (usually not recommended)
   #
   # Default: false
   skip-no-creation-manifest: false
@@ -102,22 +102,38 @@ verify:
 # ==============================================================================
 info:
   # age: Target cycle length between re-verifications (used for calculations)
-  # Set this always to the same value that is used for the "verify" mode.
+  # Set this always to the same value that is used for the "verify" setting
   #
   # Format: Go duration string (e.g., "12h", "2d", "7d")
   # Default: "" (always verify every set)
   age: ""
 
   # duration: Time budget per each verification run (used for calculations)
-  # Set this always to the same value that is used for the "verify" mode.
+  # Set this always to the same value that is used for the "verify" setting
   #
   # Format: Go duration string (e.g., "1h", "30m", "2h30m")
   # Default: "" (no time limit)
   duration: ""
 
+  # skip-no-manifest: Skip PAR2 files that don't have a par2cron manifest
+  # Useful to only include PAR2 sets that were actually created by par2cron
+  # Alternatively use the par2cron-ignore files to exclude certain folders
+  # Set this always to the same value that is used for the "verify" setting
+  #
+  # Default: false
+  skip-no-manifest: false
+
+  # skip-no-creation-manifest: Skip PAR2 files without a creation manifest
+  # Useful to only include PAR2 sets that were actually created by par2cron
+  # This is the same as above but even more strict (usually not recommended)
+  # Set this always to the same value that is used for the "verify" setting
+  #
+  # Default: false
+  skip-no-creation-manifest: false
+
   # calc-run-interval: How often you run verification (used for calculations)
   # Set this to the interval you run your verify cronjobs at (usually daily)
-  # Set this always to the same value that is used for the "verify" mode.
+  # Set this always to the same value that is used for the "verify" setting
   #
   # Format: Go duration string (e.g., "12h", "2d", "7d")
   # Default: "24h"
