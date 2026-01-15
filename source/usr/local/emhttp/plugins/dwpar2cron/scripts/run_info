@@ -22,6 +22,6 @@ echo ""
 
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
-    /tmp \
+    /mnt/user \
     2>&1
 

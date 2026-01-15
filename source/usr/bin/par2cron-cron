@@ -82,7 +82,7 @@ if [ "$CRONCREATE" == "enable" ]; then
     /usr/bin/par2cron create \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        /tmp \
+        /mnt/user \
         >> /tmp/dwpar2cron.log \
         2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
     RET=$?
@@ -125,7 +125,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
     /usr/bin/par2cron verify \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        /tmp \
+        /mnt/user \
         >> /tmp/dwpar2cron.log \
         2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
     RET=$?

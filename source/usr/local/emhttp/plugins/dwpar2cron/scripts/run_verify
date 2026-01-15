@@ -26,7 +26,7 @@ rm -f /tmp/dwpar2cron.log
 nohup /usr/bin/par2cron verify \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    /tmp \
+    /mnt/user \
     </dev/null \
     >> /tmp/dwpar2cron.log \
     2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
