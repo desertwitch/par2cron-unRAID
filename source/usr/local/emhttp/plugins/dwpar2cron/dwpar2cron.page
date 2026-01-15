@@ -542,6 +542,11 @@ $(document).ready(function() {
                         $('.dwpar2cron-run').prop('disabled', false);
                         $('.dwpar2cron-notrun').prop('disabled', true);
 
+                        // Reload if the program previously running
+                        if ($("#progress").text().includes("Running")) {
+                            window.location.href = "/Settings/dwpar2cron";
+                        }
+
                         if (this.isRefreshing) {
                             setTimeout(() => {
                                 if (this.isRefreshing) {
