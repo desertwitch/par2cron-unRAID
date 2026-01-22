@@ -151,10 +151,10 @@ Markdown="false"
         <input type="hidden" id="dwpar2cron-ops-cmd" name="#command" value="/usr/local/emhttp/plugins/dwpar2cron/scripts/none">
 
         <span style="float:right;text-align:right;">
-            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-create" value="MANUAL CREATE" title="Creates PAR2 sets for each marker file found in the directory tree.">
-            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-verify" value="MANUAL VERIFY" title="Verifies PAR2 sets in the directory tree according to the user-configured settings.">
-            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-repair" value="MANUAL REPAIR" title="Repairs (previously verified as corrupted) PAR2 sets in the directory tree according to the user-configured settings.">
-            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-info" value="MANUAL INFO" title="Refreshes information about the current user configuration and verification cycle.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-create" value="CREATE" title="Creates PAR2 sets for each marker file found in the directory tree.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-verify" value="VERIFY" title="Verifies PAR2 sets in the directory tree according to the user-configured settings.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-repair" value="REPAIR" title="Repairs (previously verified as corrupted) PAR2 sets in the directory tree according to the user-configured settings.">
+            <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-info" value="INFO" title="Refreshes information about the current user configuration and verification cycle.">
             <input class="dwpar2cron-notrun dwpar2cron-tip" type="button" id="dwpar2cron-stop" value="STOP PROGRAM" title="Stops any running par2cron instances, this is generally safe to use without causing data loss or corruption.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-clear" value="CLEAR LOGS" title="Clears the par2cron logfiles and empties the operational output screen.">
             <div style="text-align:right;margin-right:15px;">Please always read and understand the documentation <strong>before</strong> running any operations.</div>
