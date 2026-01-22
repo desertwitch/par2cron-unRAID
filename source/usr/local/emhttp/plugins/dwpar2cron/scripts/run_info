@@ -18,13 +18,11 @@
 umask 000
 
 echo
-echo "PLEASE WAIT WHILE INFORMATION IS BEING COLLECTED"
-echo "THIS MAY TAKE A WHILE TO CRUNCH ALL THESE NUMBERS"
-echo "DO NOT CLOSE THIS WINDOW UNTIL COMPLETION IS REPORTED"
+echo "Please wait while information is being collected..."
+echo "DO NOT CLOSE THE WINDOW UNTIL COMPLETION IS REPORTED"
 echo
 
-echo "info: started"
-echo
+echo "Scanning filesystem for jobs..."
 
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
@@ -34,7 +32,6 @@ echo
     > /usr/local/emhttp/plugins/dwpar2cron/info.json
 RET=$?
 
-echo
 case "$RET" in
 0)
     echo "info: finished (return code: $RET - success)"
@@ -54,8 +51,8 @@ case "$RET" in
 esac
 
 echo
-echo "IT IS NOW SAFE TO CLOSE THE WINDOW"
-echo "YOU CAN FIND THE INFORMATION ONCE THE PAGE REFRESHES"
-echo "THEN SCROLL DOWN TO THE BOTTOM OF THE PAGE TO SEE IT"
+echo "It is now safe to close the window using the button."
+echo "You can find the information report after the page refreshes."
+echo "It is located at the bottom of the page, scroll all the way down."
 echo
 
