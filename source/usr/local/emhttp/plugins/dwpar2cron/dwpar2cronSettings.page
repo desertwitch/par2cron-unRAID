@@ -228,7 +228,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>Schedule - Success Notifications for Zero-Runs:</dt>
+            <dt>Schedule - Zero-Run Notifications:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="FINISHNOTIFYZERO" name="FINISHNOTIFYZERO" size="1">
                     <?=mk_option($dwpar2cron_finishnotify_zero, "disable", "No");?>
