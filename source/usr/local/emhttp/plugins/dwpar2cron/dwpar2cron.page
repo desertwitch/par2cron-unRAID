@@ -1,7 +1,7 @@
 Menu="Utilities"
 Type="xmenu"
 Title="par2cron"
-Icon="retweet"
+Icon="dwpar2cron.png"
 Tag="retweet"
 Markdown="false"
 ---
