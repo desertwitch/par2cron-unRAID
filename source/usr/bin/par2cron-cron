@@ -57,6 +57,10 @@ if [ "$CRONCREATE" != "enable" ] && [ "$CRONVERIFY" != "enable" ]; then
     exit 0
 fi
 
+if ! mountpoint -q /mnt/user; then
+    exit 0
+fi
+
 if [ "$MOVERSTART" != "enable" ] && [ -e "/var/run/mover.pid" ]; then
     echo "mover is running; exiting" | logger -s -t "par2cron-cron"
     [ "$STARTNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Skipped" -d "Schedule was skipped (mover is running)." -i "warning"
