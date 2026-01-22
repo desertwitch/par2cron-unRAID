@@ -1,3 +1,3 @@
 **par2cron for UNRAID**
 
-Periodic Integrity & Self-Repair Scheduler
+Batch Integrity & Self-Repair Manager
