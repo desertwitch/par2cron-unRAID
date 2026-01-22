@@ -243,6 +243,7 @@ fi
 sleep 5
 
 echo "info: started" | logger -s -t "par2cron-cron"
+
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
@@ -250,7 +251,24 @@ echo "info: started" | logger -s -t "par2cron-cron"
     > /usr/local/emhttp/plugins/dwpar2cron/info.json \
     2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
 RET=$?
-echo "info: finished (return code: $RET)" | logger -s -t "par2cron-cron"
+
+case "$RET" in
+0)
+    echo "info: finished (return code: $RET - success)" | logger -s -t "par2cron-cron"
+    ;;
+1)
+    echo "info: finished (return code: $RET - partial failure)" | logger -s -t "par2cron-cron"
+    ;;
+2)
+    echo "info: finished (return code: $RET - bad invocation)" | logger -s -t "par2cron-cron"
+    ;;
+5)
+    echo "info: finished (return code: $RET - unclassified error)" | logger -s -t "par2cron-cron"
+    ;;
+*)
+    echo "info: finished (return code: $RET - unexpected return code)" | logger -s -t "par2cron-cron"
+    ;;
+esac
 
 sync
 exit 0
