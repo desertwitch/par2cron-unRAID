@@ -254,7 +254,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
         <blockquote class="inline_help">
         <p>When enabled you will always get repair notifications, regardless of other settings.</p>
-        <p>Useful if you always want repair notifications even with other notifications disabled.</p>
+        <p>Useful if you always want <strong>all</strong> repair notifications even with other notifications disabled.</p>
         <p>The notifications will be delivered according to Unraid's system-wide notification settings.</p>
         </blockquote>
 
