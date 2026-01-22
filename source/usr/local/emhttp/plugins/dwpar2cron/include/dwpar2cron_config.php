@@ -26,12 +26,14 @@ $dwpar2cron_crondom = trim(isset($dwpar2cron_cfg['CRONDOM']) ? htmlspecialchars(
 
 $dwpar2cron_croncreate = trim(isset($dwpar2cron_cfg['CRONCREATE']) ? htmlspecialchars($dwpar2cron_cfg['CRONCREATE']) : 'enable');
 $dwpar2cron_cronverify = trim(isset($dwpar2cron_cfg['CRONVERIFY']) ? htmlspecialchars($dwpar2cron_cfg['CRONVERIFY']) : 'enable');
+$dwpar2cron_cronrepair = trim(isset($dwpar2cron_cfg['CRONREPAIR']) ? htmlspecialchars($dwpar2cron_cfg['CRONREPAIR']) : 'enable');
 
 $dwpar2cron_moverstart = trim(isset($dwpar2cron_cfg['MOVERSTART']) ? htmlspecialchars($dwpar2cron_cfg['MOVERSTART']) : 'disable');
 $dwpar2cron_paritystart = trim(isset($dwpar2cron_cfg['PARITYSTART']) ? htmlspecialchars($dwpar2cron_cfg['PARITYSTART']) : 'disable');
 
 $dwpar2cron_startnotify = trim(isset($dwpar2cron_cfg['STARTNOTIFY']) ? htmlspecialchars($dwpar2cron_cfg['STARTNOTIFY']) : 'disable');
 $dwpar2cron_finishnotify = trim(isset($dwpar2cron_cfg['FINISHNOTIFY']) ? htmlspecialchars($dwpar2cron_cfg['FINISHNOTIFY']) : 'disable');
+$dwpar2cron_finishnotify_zero = trim(isset($dwpar2cron_cfg['FINISHNOTIFYZERO']) ? htmlspecialchars($dwpar2cron_cfg['FINISHNOTIFYZERO']) : 'disable');
 $dwpar2cron_errornotify = trim(isset($dwpar2cron_cfg['ERRORNOTIFY']) ? htmlspecialchars($dwpar2cron_cfg['ERRORNOTIFY']) : 'enable');
 
 $dwpar2cron_running = !empty(shell_exec("pgrep -x par2cron 2>/dev/null"));

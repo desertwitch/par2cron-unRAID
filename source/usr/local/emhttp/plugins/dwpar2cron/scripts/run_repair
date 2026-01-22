@@ -17,8 +17,18 @@
 #
 umask 000
 
-/usr/bin/par2cron info \
-    -c /boot/config/plugins/dwpar2cron/config.yaml \
-    /mnt/user \
-    2>&1
+echo "Starting par2cron (Repair Mode)..."
+echo "Starting par2cron (Repair Mode)..." | logger -t "par2cron-plugin"
 
+rm -f /tmp/dwpar2cron.json
+rm -f /tmp/dwpar2cron.log
+
+nohup /usr/bin/par2cron repair \
+    -c /boot/config/plugins/dwpar2cron/config.yaml \
+    --json \
+    /mnt/user \
+    </dev/null \
+    >> /tmp/dwpar2cron.log \
+    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1) &
+
+sleep 1
