@@ -18,7 +18,7 @@
 umask 000
 
 echo
-echo "Please wait, this process may take a while"
+echo "Please wait, this process may take a while..."
 echo "DO NOT CLOSE THE WINDOW UNTIL COMPLETION IS REPORTED"
 echo
 
@@ -51,12 +51,12 @@ case "$RET" in
 esac
 
 echo
-echo "It is now safe to close the window using the button"
+echo "It is now safe to close the window using the button."
 if [ "$RET" -eq 0 ]; then
-    echo "You can find the information report after the page refreshes"
-    echo "It is located at the bottom of the page, scroll all the way down"
+    echo "You can find the information report after the page refreshes."
+    echo "It is located at the bottom of the page, scroll all the way down."
 else
-    echo "Please retry later and/or report the failure to the developers"
+    echo "Please retry later and/or report the failure to the developers."
 fi
 echo
 
