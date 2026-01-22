@@ -23,7 +23,7 @@ echo "THIS MAY TAKE A WHILE TO CRUNCH ALL THESE NUMBERS"
 echo "DO NOT CLOSE THIS WINDOW UNTIL COMPLETION IS REPORTED"
 echo
 
-echo "info: started" | logger -s -t "par2cron-cron"
+echo "info: started"
 echo
 
 /usr/bin/par2cron info \
