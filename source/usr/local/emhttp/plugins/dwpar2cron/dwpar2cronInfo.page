@@ -52,7 +52,7 @@ Cond="@filesize('/usr/local/emhttp/plugins/dwpar2cron/info.json')"
 </div>
 
 <div>
-    <i class="fa fa-lightbulb-o"></i> Beware repaired items may still show as corrupted until the next verification run confirms the repair.
+    <i class="fa fa-lightbulb-o"></i> Beware repaired jobs may still show as corrupted until the next verification run confirms the repair.
 </div>
 
 <script>
