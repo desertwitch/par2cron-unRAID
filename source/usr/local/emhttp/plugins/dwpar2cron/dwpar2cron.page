@@ -46,7 +46,7 @@ Markdown="false"
         <tr id="ms-collapsible">
             <td style="width: 300px; text-align: center; vertical-align: middle; white-space: nowrap;">
                 <div style="margin:15px;">
-                    <i class="fa fa-retweet" alt="Logo" style="font-size:60px;"></i>
+                    <img src="/plugins/dwpar2cron/images/dwpar2cron.png" width="100px">
                     <div style="margin-top:10px;">
                     <span style="font-size:1.5rem;font-weight:bold;">par2cron</span><br>
                     Batch Integrity & Self-Repair Engine
