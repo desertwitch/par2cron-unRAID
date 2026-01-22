@@ -86,7 +86,7 @@ $(function() {
         return val != null ? val.toFixed(1) + '%' : 'n/a';
     }
 
-    fetch(jsonPath)
+    fetch(jsonPath + '?t=' + Date.now())
         .then(function(r) {
             if (!r.ok) throw new Error('HTTP ' + r.status);
             return r.json();
