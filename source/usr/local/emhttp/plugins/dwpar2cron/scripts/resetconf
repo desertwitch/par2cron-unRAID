@@ -21,6 +21,10 @@ DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 echo "Resetting par2cron configuration..."
 echo "Resetting par2cron configuration..." | logger -t "par2cron-plugin"
 
+rm -f /tmp/dwpar2cron.json
+rm -f /tmp/dwpar2cron.log
+rm -f /usr/local/emhttp/plugins/dwpar2cron/info.json
+
 cp -f $DOCROOT/default.cfg $BOOT/dwpar2cron.cfg
 cp -f $DOCROOT/defaults/default.yaml $BOOT/config.yaml
 
