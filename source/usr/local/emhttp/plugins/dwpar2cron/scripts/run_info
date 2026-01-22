@@ -18,7 +18,7 @@
 umask 000
 
 echo
-echo "Please wait while information is being collected..."
+echo "Please wait, this process may take a while"
 echo "DO NOT CLOSE THE WINDOW UNTIL COMPLETION IS REPORTED"
 echo
 
@@ -34,25 +34,29 @@ RET=$?
 
 case "$RET" in
 0)
-    echo "info: finished (return code: $RET - success)"
+    echo "Operation finished (return code: $RET - success)"
     ;;
 1)
-    echo "info: finished (return code: $RET - partial failure)"
+    echo "Operation finished (return code: $RET - partial failure)"
     ;;
 2)
-    echo "info: finished (return code: $RET - bad invocation)"
+    echo "Operation finished (return code: $RET - bad invocation)"
     ;;
 5)
-    echo "info: finished (return code: $RET - unclassified error)"
+    echo "Operation finished (return code: $RET - unclassified error)"
     ;;
 *)
-    echo "info: finished (return code: $RET - unexpected return code)"
+    echo "Operation finished (return code: $RET - unexpected return code)"
     ;;
 esac
 
 echo
-echo "It is now safe to close the window using the button."
-echo "You can find the information report after the page refreshes."
-echo "It is located at the bottom of the page, scroll all the way down."
+echo "It is now safe to close the window using the button"
+if [ "$RET" -eq 0 ]; then
+    echo "You can find the information report after the page refreshes"
+    echo "It is located at the bottom of the page, scroll all the way down"
+else
+    echo "Please retry later and/or report the failure to the developers"
+fi
 echo
 
