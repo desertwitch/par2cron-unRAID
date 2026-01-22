@@ -37,7 +37,7 @@ create:
   # Recommended to enable this when using --duration for the "verify" command
   #
   # Default: false
-  verify: false
+  verify: true
 
   # hidden: Create all PAR2 sets and their related files as hidden (dotfiles)
   # Changeable as needed for individual sets using the marker configuration
@@ -119,7 +119,7 @@ repair:
   # Recommended to ensure that performed repairs were successful
   #
   # Default: false
-  verify: false
+  verify: true
 
   # duration: Time budget per run (best effort/soft limit)
   # This is a best-effort limit; overshooting repairs won't be interrupted
