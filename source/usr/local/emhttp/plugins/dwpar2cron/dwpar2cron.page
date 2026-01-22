@@ -596,7 +596,7 @@ $(document).ready(function() {
     });
 
     $('#dwpar2cron-info').click(function(){
-        openBox('/plugins/dwpar2cron/scripts/run_info', 'Collecting Information', 600, 600, true);
+        openBox('/plugins/dwpar2cron/scripts/run_info', 'par2cron', 600, 600, true);
     });
 
     $('#dwpar2cron-stop').click(function(){
