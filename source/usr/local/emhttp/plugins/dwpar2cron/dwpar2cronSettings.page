@@ -215,9 +215,9 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         <dl>
             <dt>Schedule - Success Notifications:</dt>
             <dd>
-                <select class="dwpar2cron-run" id="FINISHNOTIFY" name="FINISHNOTIFY" size="1">
-                    <?=mk_option($dwpar2cron_finishnotify, "disable", "No");?>
-                    <?=mk_option($dwpar2cron_finishnotify, "enable", "Yes");?>
+                <select class="dwpar2cron-run" id="SUCCESSNOTIFY" name="SUCCESSNOTIFY" size="1">
+                    <?=mk_option($dwpar2cron_successnotify, "disable", "No");?>
+                    <?=mk_option($dwpar2cron_successnotify, "enable", "Yes");?>
                 </select>
             </dd>
         </dl>
@@ -228,23 +228,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
 
         <dl>
-            <dt>Schedule - Zero-Run Notifications:</dt>
-            <dd>
-                <select class="dwpar2cron-run" id="FINISHNOTIFYZERO" name="FINISHNOTIFYZERO" size="1">
-                    <?=mk_option($dwpar2cron_finishnotify_zero, "disable", "No");?>
-                    <?=mk_option($dwpar2cron_finishnotify_zero, "enable", "Yes");?>
-                </select>
-            </dd>
-        </dl>
-
-        <blockquote class="inline_help">
-        <p>This setting controls if success notifications should also be sent when nothing was done.</p>
-        <p>It depends on the general success notifications setting to be enabled (to have any effect).</p>
-        <p>The notifications will be delivered according to Unraid's system-wide notification settings.</p>
-        </blockquote>
-
-        <dl>
-            <dt>Schedule - Failure Notifications:</dt>
+            <dt>Schedule - Error Notifications:</dt>
             <dd>
                 <select class="dwpar2cron-run" id="ERRORNOTIFY" name="ERRORNOTIFY" size="1">
                     <?=mk_option($dwpar2cron_errornotify, "disable", "No");?>
@@ -254,8 +238,39 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </dl>
 
         <blockquote class="inline_help">
-        <p>When enabled you will receive notifications when par2cron encounters any failures (errors).</p>
-        <p>This setting can be useful when <strong><em>Success Notifications</em></strong> are disabled and you want to be notified only of par2cron failures (errors).</p>
+        <p>When enabled you will receive notifications when par2cron encounters corruption or other errors.</p>
+        <p>The notifications will be delivered according to Unraid's system-wide notification settings.</p>
+        </blockquote>
+
+        <dl>
+            <dt>Schedule - Repair Notifications:</dt>
+            <dd>
+                <select class="dwpar2cron-run" id="REPAIRNOTIFY" name="REPAIRNOTIFY" size="1">
+                    <?=mk_option($dwpar2cron_repairnotify, "disable", "No");?>
+                    <?=mk_option($dwpar2cron_repairnotify, "enable", "Yes");?>
+                </select>
+            </dd>
+        </dl>
+
+        <blockquote class="inline_help">
+        <p>When enabled you will always get repair notifications, regardless of other settings.</p>
+        <p>Useful if you always want repair notifications even with other notifications disabled.</p>
+        <p>The notifications will be delivered according to Unraid's system-wide notification settings.</p>
+        </blockquote>
+
+        <dl>
+            <dt>Schedule - Zero-Run Notifications:</dt>
+            <dd>
+                <select class="dwpar2cron-run" id="ZERONOTIFY" name="ZERONOTIFY" size="1">
+                    <?=mk_option($dwpar2cron_zeronotify, "disable", "No");?>
+                    <?=mk_option($dwpar2cron_zeronotify, "enable", "Yes");?>
+                </select>
+            </dd>
+        </dl>
+
+        <blockquote class="inline_help">
+        <p>This setting controls if notifications should also be sent when nothing was done.</p>
+        <p>This is useful if you always want to know that par2cron has run - beware it can be noisy.</p>
         <p>The notifications will be delivered according to Unraid's system-wide notification settings.</p>
         </blockquote>
     </div>
