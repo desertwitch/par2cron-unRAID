@@ -47,11 +47,23 @@ Cond="@filesize('/usr/local/emhttp/plugins/dwpar2cron/info.json')"
 }
 </style>
 
-<div id="par2cron-info"></div>
+<div id="par2cron-info">
+    <i class="fa fa-spinner fa-spin"></i> Please wait, retrieving information...
+</div>
+
+<div>
+    <i class="fa fa-lightbulb-o"></i> Beware repaired items may still show as corrupted until the next verification run confirms the repair.
+</div>
 
 <script>
 $(function() {
     const jsonPath = '/plugins/dwpar2cron/info.json';
+
+    function formatTime(isoString) {
+        if (!isoString) return 'n/a';
+        var d = new Date(isoString);
+        return d.toLocaleString();
+    }
 
     function formatDuration(ns) {
         if (!ns) return '0 seconds';
@@ -84,11 +96,16 @@ $(function() {
 
             var html = '';
 
+            html += '<table class="tablesorter shift par2cron-info-table">';
+            html += '<tr><th colspan="2">Report Information</th></tr>';
+            html += row('Generation Time', 'Timestamp of when this report was created', formatTime(data.time));
+            html += '</table>';
+
             // Options
             if (data.options) {
                 var o = data.options;
-                html += '<table class="tablesorter shift par2cron-info-table">';
-                html += '<tr><th colspan="2">Configuration</th></tr>';
+                html += '<table class="tablesorter par2cron-info-table">';
+                html += '<tr><th colspan="2">Command Configuration</th></tr>';
                 if (o.min_age) html += row('Min Age', 'Time between re-verifications', o.min_age);
                 if (o.max_duration) html += row('Max Duration', 'Time budget per run (best effort/soft limit)', o.max_duration);
                 if (o.run_interval) html += row('Run Interval', 'How often par2cron verification runs', o.run_interval);
@@ -101,17 +118,18 @@ $(function() {
             if (data.summary) {
                 var s = data.summary;
                 html += '<table class="tablesorter par2cron-info-table">';
-                html += '<tr><th colspan="2">Summary</th></tr>';
+                html += '<tr><th colspan="2">Verification Summary</th></tr>';
                 html += row('Jobs', 'Total number of jobs found', s.job_count);
                 html += row('Known', 'Jobs with known verification duration', s.known_count);
-                html += row('Unknown', 'Jobs without duration data', s.unknown_count);
+                html += row('Unknown', 'Jobs with unknown verification duration', s.unknown_count);
                 html += row('Healthy', 'Jobs that passed verification', s.healthies);
                 html += row('Repairable', 'Jobs with repairable corruption', s.repairables);
                 html += row('Unrepairable', 'Jobs with unrepairable corruption', s.unrepairables);
                 html += row('Unverified', 'Jobs not yet verified', s.unverifieds);
                 html += row('Avg Duration', 'Average verification duration across known jobs', formatDuration(s.avg_duration_ns));
                 html += row('Total Duration', 'Sum of all known verification durations', formatDuration(s.total_duration_ns));
-                if (s.warning) html += row('Warning', 'Issue with summary data', s.warning);
+                if (s.last_verification) html += row('Last Verification', 'Timestamp of the most recent verification', formatTime(s.last_verification));
+                if (s.warning) html += row('Warning', 'Issues with summary data', s.warning);
                 html += '</table>';
             }
 
@@ -124,8 +142,8 @@ $(function() {
                 html += row('Verified Pct', 'Percentage of total jobs verified within the <code>--age</code> window', pct(c.verified_pct));
                 html += row('Verified Duration', 'Sum of durations for jobs verified within the <code>--age</code> window', formatDuration(c.verified_duration_ns));
                 html += row('Duration Covered Pct', 'Percentage of total known duration verified within the <code>--age</code> window', pct(c.duration_covered_pct));
-                if (c.unknown_count) html += row('Unknown', 'Unknown duration jobs excluded from analysis', c.unknown_count);
-                if (c.warning) html += row('Warning', 'Issue with cycle progress data', c.warning);
+                if (c.unknown_count) html += row('Unknown', 'Unknown duration jobs excluded from cycle analysis', c.unknown_count);
+                if (c.warning) html += row('Warning', 'Issues with cycle progress data', c.warning);
                 html += '</table>';
             }
 
@@ -138,8 +156,8 @@ $(function() {
                 html += row('Capacity', 'Total processing time available per cycle', formatDuration(b.capacity_ns));
                 html += row('Min Required', 'Minimum processing time needed to avoid backlog growth', formatDuration(b.min_required_ns));
                 html += row('Margin', 'Difference between capacity and required (positive is healthy)', formatDuration(b.margin_ns));
-                if (b.unknown_count) html += row('Unknown', 'Unknown duration jobs excluded from analysis', b.unknown_count);
-                if (b.warning) html += row('Warning', 'Backlog health issue', b.warning);
+                if (b.unknown_count) html += row('Unknown', 'Unknown duration jobs excluded from backlog analysis', b.unknown_count);
+                if (b.warning) html += row('Warning', 'Issues with backlog health data', b.warning);
                 html += '</table>';
             }
 
@@ -147,10 +165,10 @@ $(function() {
             if (data.age_info) {
                 var a = data.age_info;
                 html += '<table class="tablesorter par2cron-info-table">';
-                html += '<tr><th colspan="2"><code>--age</code> Analysis</th></tr>';
+                html += '<tr><th colspan="2">Age Argument Analysis</th></tr>';
                 html += row('Runs Per Cycle', 'How many runs fit within the <code>--age</code> window', a.runs_per_cycle);
                 html += row('Min Duration', 'Floor for <code>--duration</code> with this <code>--age</code> window', formatDuration(a.min_duration_ns));
-                if (a.warning) html += row('Warning', 'Configuration issue with <code>--age</code> constraint', a.warning);
+                if (a.warning) html += row('Warning', 'Issues with age argument analysis', a.warning);
                 html += '</table>';
             }
 
@@ -158,12 +176,12 @@ $(function() {
             if (data.duration_info) {
                 var d = data.duration_info;
                 html += '<table class="tablesorter par2cron-info-table">';
-                html += '<tr><th colspan="2"><code>--duration</code> Analysis</th></tr>';
+                html += '<tr><th colspan="2">Duration Argument Analysis</th></tr>';
                 html += row('Runs Needed', 'Number of runs required to verify all jobs', d.runs_needed);
                 html += row('Complete In One Run', 'All jobs can be verified in a single run', d.complete_in_one_run ? 'Yes' : 'No');
                 if (d.full_cycle_every_ns) html += row('Full Cycle Every', 'Time to complete a full verification cycle', formatDuration(d.full_cycle_every_ns));
                 if (d.largest_job) html += row('Largest Job', 'Filename of the largest job that exceeds <code>--duration</code>', d.largest_job);
-                if (d.warning) html += row('Warning', 'Configuration issue with <code>--duration</code> constraint', d.warning);
+                if (d.warning) html += row('Warning', 'Issues with duration argument analysis', d.warning);
                 html += '</table>';
             }
 

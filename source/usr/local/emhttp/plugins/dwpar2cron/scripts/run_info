@@ -17,8 +17,45 @@
 #
 umask 000
 
+echo
+echo "PLEASE WAIT WHILE INFORMATION IS BEING COLLECTED"
+echo "THIS MAY TAKE A WHILE TO CRUNCH ALL THESE NUMBERS"
+echo "DO NOT CLOSE THIS WINDOW UNTIL COMPLETION IS REPORTED"
+echo
+
+echo "info: started" | logger -s -t "par2cron-cron"
+echo
+
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
+    --json \
     /mnt/user \
-    2>&1
+    2>&1 \
+    > /usr/local/emhttp/plugins/dwpar2cron/info.json
+RET=$?
+
+echo
+case "$RET" in
+0)
+    echo "info: finished (return code: $RET - success)"
+    ;;
+1)
+    echo "info: finished (return code: $RET - partial failure)"
+    ;;
+2)
+    echo "info: finished (return code: $RET - bad invocation)"
+    ;;
+5)
+    echo "info: finished (return code: $RET - unclassified error)"
+    ;;
+*)
+    echo "info: finished (return code: $RET - unexpected return code)"
+    ;;
+esac
+
+echo
+echo "IT IS NOW SAFE TO CLOSE THE WINDOW"
+echo "YOU CAN FIND THE INFORMATION ONCE THE PAGE REFRESHES"
+echo "THEN SCROLL DOWN TO THE BOTTOM OF THE PAGE TO SEE IT"
+echo
 
