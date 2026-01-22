@@ -101,7 +101,7 @@ if [ "$CRONCREATE" == "enable" ]; then
     0)
         echo "create: finished (return code: $RET - success) ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
         if [ "$CREATE_STARTED" -gt 0 ] || [ "$ZERONOTIFY" == "enable" ]; then
-            [ "$SUCCESSNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Finished" -d "${EVENT} creation has finished with success ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "normal"
+            [ "$SUCCESSNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Create Success" -d "${EVENT} creation has finished with success ($CREATE_STARTED started, $CREATE_SUCCESS ok, $CREATE_FAILED failed)." -i "normal"
         fi
         ;;
     1)
@@ -156,7 +156,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
     0)
         echo "verify: finished (return code: $RET - success) ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
         if [ "$VERIFY_STARTED" -gt 0 ] || [ "$ZERONOTIFY" == "enable" ]; then
-            [ "$SUCCESSNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Finished" -d "${EVENT} verification has finished with success ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "normal"
+            [ "$SUCCESSNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Verify Success" -d "${EVENT} verification has finished with success ($VERIFY_STARTED started, $VERIFY_SUCCESS ok, $VERIFY_CORRUPTED corrupted, $VERIFY_FAILED failed)." -i "normal"
         fi
         ;;
     1)
@@ -218,7 +218,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
     0)
         echo "repair: finished (return code: $RET - success) ($REPAIR_STARTED started, $REPAIR_SUCCESS ok, $REPAIR_FAILED failed)" | logger -s -t "par2cron-cron"
         if [ "$REPAIR_STARTED" -gt 0 ] || [ "$ZERONOTIFY" == "enable" ]; then
-            [[ "$SUCCESSNOTIFY" == "enable" || "$REPAIRNOTIFY" == "enable" ]] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Repair Finished" -d "${EVENT} repairing has finished with success ($REPAIR_STARTED started, $REPAIR_SUCCESS ok, $REPAIR_FAILED failed)." -i "normal"
+            [[ "$SUCCESSNOTIFY" == "enable" || "$REPAIRNOTIFY" == "enable" ]] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} Repair Success" -d "${EVENT} repairing has finished with success ($REPAIR_STARTED started, $REPAIR_SUCCESS ok, $REPAIR_FAILED failed)." -i "normal"
         fi
         ;;
     1)
