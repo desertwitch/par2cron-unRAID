@@ -164,7 +164,7 @@ repair:
 
 # ==============================================================================
 # INFO COMMAND SETTINGS
-# Set always to the same value used for the "verify" setting (where applicable)
+# Set always to the same values used for "verify" settings (where applicable)
 # ==============================================================================
 info:
   # age: Target cycle length (time between re-verifications)
