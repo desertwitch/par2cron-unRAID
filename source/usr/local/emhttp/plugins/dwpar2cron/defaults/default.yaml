@@ -1,5 +1,5 @@
 # par2cron configuration file
-# All options can also be set via CLI (CLI has precedence over configuration)
+# adapted for use on Unraid systems
 
 # ==============================================================================
 # CREATE COMMAND SETTINGS
@@ -9,8 +9,8 @@ create:
   # Changeable as needed for individual sets using the marker configuration
   #
   # Example: ["-r15", "-n1"] (15% redundancy, 1 recovery file)
-  # Default: [] (empty)
-  args: []
+  # Default: ["-r15", "-n1"] (15% redundancy, 1 recovery file)
+  args: ["-r15", "-n1"]
 
   # glob: File matching pattern for files to include in PAR2 sets
   # Changeable as needed for individual sets using the marker configuration
@@ -32,12 +32,12 @@ create:
   # Default: "folder"
   mode: "folder"
 
-  # verify: PAR2 must pass verification as part of PAR2 creation
+  # verify: PAR2 sets must pass verification as part of creation
   # Changeable as needed for individual sets using the marker configuration
   # Recommended to enable this when using --duration for the "verify" command
   #
-  # Default: false
-  verify: false
+  # Default: true
+  verify: true
 
   # hidden: Create all PAR2 sets and their related files as hidden (dotfiles)
   # Changeable as needed for individual sets using the marker configuration
@@ -61,7 +61,7 @@ verify:
   # Default: [] (empty)
   args: []
 
-  # age: Time between re-verifications; do not verify if last verified < age
+  # age: Minimum time between re-verifications (skip if verified within this period)
   # Any PAR2 sets verified more recently than this will be skipped over instead
   #
   # Format: Go duration string (e.g., "12h", "2d", "7d")
@@ -91,9 +91,9 @@ verify:
   # Default: false
   skip-not-created: false
 
-  # calc-run-interval: How often you run par2cron (to calculate backlog warnings)
+  # calc-run-interval: How often you run par2cron verify (for backlog calculations)
   # Used to calculate and warn about verification backlog growing out of control
-  # Set this to the interval you run your cronjobs at (usually daily)
+  # Set this to the interval you run your verify cronjobs at (usually daily)
   #
   # Format: Go duration string (e.g., "12h", "24h", "7d")
   # Default: "24h"
@@ -115,11 +115,11 @@ repair:
   # Default: [] (empty)
   args: []
 
-  # verify: PAR2 must pass verification as part of PAR2 repair
+  # verify: PAR2 sets must pass verification as part of repair
   # Recommended to ensure that performed repairs were successful
   #
-  # Default: false
-  verify: false
+  # Default: true
+  verify: true
 
   # duration: Time budget per run (best effort/soft limit)
   # This is a best-effort limit; overshooting repairs won't be interrupted
@@ -128,7 +128,7 @@ repair:
   # Default: "" (no time limit)
   duration: ""
 
-  # min-tested: Repair only when at least X times verified as corrupted
+  # min-tested: Repair only when verified as corrupted at least X times
   # Helps to avoid false positives by requiring multiple such verifications
   #
   # Default: 0
@@ -195,7 +195,8 @@ info:
   # Default: false
   skip-not-created: false
 
-  # calc-run-interval: How often you run par2cron verification
+  # calc-run-interval: How often you run par2cron verify (for backlog calculations)
+  # Used to calculate and warn about verification backlog growing out of control
   # Set this to the interval you run your verify cronjobs at (usually daily)
   #
   # Format: Go duration string (e.g., "12h", "24h", "7d")
