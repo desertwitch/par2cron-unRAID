@@ -1,11 +1,11 @@
 Menu="dwpar2cron:4"
-Title="par2cron Guide"
+Title="par2cron Quick Guide"
 Tag="book"
 Markdown="false"
 ---
 
 <style>
-  .p2c { font-size: 14px; line-height: 1.5; }
+  .p2c { line-height: 1.5; }
   .p2c h2 { font-size: 1.1em; margin: 1.2em 0 0.4em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
   .p2c h3 { font-size: 1em; margin: 0.8em 0 0.3em; }
   .p2c code { background: #f4f4f4; padding: 1px 4px; font-size: 0.95em; }
@@ -37,7 +37,7 @@ par2cron will create PAR2 parity data, periodically verify integrity, and repair
 <p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
 
 <h2>Marker file name modifiers (optional):</h2>
-<p>Append <code>par2</code> arguments to the marker file name to override creation defaults for that folder:</p>
+<p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank">arguments</a> to the marker file name to override creation defaults for that folder:</p>
 <table>
   <tr><th>Marker file name</th><th>Resulting arguments (assuming defaults: <code>-r15 -n1</code>)</th></tr>
   <tr><td><code>_par2cron</code></td><td>Uses defaults: <code>-r15 -n1</code></td></tr>
@@ -47,7 +47,7 @@ par2cron will create PAR2 parity data, periodically verify integrity, and repair
 </table>
 
 <h2>Marker file content modifiers (optional):</h2>
-<p>For full control, you can put YAML directives inside the marker file:</p>
+<p>For full override control, you can put YAML directives inside the marker file:</p>
 <pre>name: "Ubuntu"        # PAR2 set name (folder mode only)
 args: ["-r30", "-n1"] # Replaces default par2 arguments
 glob: "*.iso"         # Protect only the matching files
