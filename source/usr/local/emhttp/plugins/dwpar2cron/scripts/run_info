@@ -17,12 +17,19 @@
 #
 umask 000
 
-echo
-echo "Please wait, this process may take a while..."
-echo "DO NOT CLOSE THE WINDOW UNTIL COMPLETION IS REPORTED"
-echo
+log_json() {
+    local level="${1:-INFO}"
+    local msg="$2"
+    local op="${3:-}"
+    local path="${4:-}"
+    
+    local timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
+    
+    printf '{"time":"%s","level":"%s","msg":"%s","op":"%s","path":"%s"}\n' \
+        "$timestamp" "$level" "$msg" "$op" "$path" >> /tmp/dwpar2cron.json
+}
 
-echo "Scanning filesystem for jobs..."
+log_json "INFO" "Scanning filesystem for jobs..." "info" "/mnt/user"
 
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
@@ -34,29 +41,20 @@ RET=$?
 
 case "$RET" in
 0)
-    echo "Operation finished (return code: $RET - success)"
+    log_json "INFO" "Operation finished (return code: $RET - success)" "info" "/mnt/user"
     ;;
 1)
-    echo "Operation finished (return code: $RET - partial failure)"
+    log_json "ERROR" "Operation finished (return code: $RET - partial failure)" "info" "/mnt/user"
     ;;
 2)
-    echo "Operation finished (return code: $RET - bad invocation)"
+    log_json "ERROR" "Operation finished (return code: $RET - bad invocation)" "info" "/mnt/user"
     ;;
 5)
-    echo "Operation finished (return code: $RET - unclassified error)"
+    log_json "ERROR" "Operation finished (return code: $RET - unclassified error)" "info" "/mnt/user"
     ;;
 *)
-    echo "Operation finished (return code: $RET - unexpected return code)"
+    log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info" "/mnt/user"
     ;;
 esac
 
-echo
-echo "It is now safe to close the window using the button"
-if [ "$RET" -eq 0 ]; then
-    echo "You can find the information report after the page refreshes"
-    echo "It is located in the middle of the page, so scroll down a bit"
-else
-    echo "Please retry later and/or report the failure to the developers"
-fi
-echo
-
+sleep 1

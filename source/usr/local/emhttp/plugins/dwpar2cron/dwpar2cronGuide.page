@@ -27,6 +27,7 @@ It is a condensed guide meant to get you started and as a cheatsheet.</p>
 <h2>Getting started:</h2>
 <p>Place a <code>_par2cron</code> marker file in any folder you want protected.<br>
 par2cron will create PAR2 parity data, periodically verify integrity, and repair corruption.</p>
+<p><b>par2cron is suitable mostly only for non-changing content (such as media/backups).</b></p>
 
 <h2>Protecting a folder:</h2>
 <ol>
@@ -73,10 +74,9 @@ hidden: true          # Create PAR2 set as hidden (dotfiles)</pre>
 <p>If you added/changed/removed protected files:</p>
 <ol>
   <li>Delete existing PAR2-related files (see below)</li>
-  <li>Create an empty marker file named <code>_par2cron</code></li>
+  <li>Create again a marker file named <code>_par2cron</code></li>
   <li>Done - a new PAR2 set is created on the next scheduled run</li>
 </ol>
-<p><b>Beware: par2cron is aimed primarily at non-changing content (media/backups).</b></p>
 
 <h2>Explanation of the generated files:</h2>
 <pre>Pictures/
