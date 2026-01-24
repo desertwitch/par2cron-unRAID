@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Copyright Derek Macias (parts of code from NUT package)
+# Copyright macester (parts of code from NUT package)
+# Copyright gfjardim (parts of code from NUT package)
+# Copyright SimonF (parts of code from NUT package)
+# Copyright Lime Technology (any and all other parts of Unraid)
+#
+# Copyright desertwitch (as author and maintainer of this file)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License 2
+# as published by the Free Software Foundation.
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+umask 000
+
+log_json() {
+    local level="${1:-INFO}"
+    local msg="$2"
+    local op="${3:-}"
+    local path="${4:-}"
+    
+    local timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
+    
+    printf '{"time":"%s","level":"%s","msg":"%s","op":"%s","path":"%s"}\n' \
+        "$timestamp" "$level" "$msg" "$op" "$path" >> /tmp/dwpar2cron.json
+}
+
+rm -f /tmp/dwpar2cron.json
+rm -f /tmp/dwpar2cron.log
+
+log_json "INFO" "Scanning filesystem for jobs..." "info" "/mnt/user"
+
+/usr/bin/par2cron info \
+    -c /boot/config/plugins/dwpar2cron/config.yaml \
+    --json \
+    /mnt/user \
+    </dev/null \
+    >> /usr/local/emhttp/plugins/dwpar2cron/info.json \
+    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
+RET=$?
+
+case "$RET" in
+0)
+    log_json "INFO" "Operation finished (return code: $RET - success)" "info" "/mnt/user"
+    ;;
+1)
+    log_json "ERROR" "Operation finished (return code: $RET - partial failure)" "info" "/mnt/user"
+    ;;
+2)
+    log_json "ERROR" "Operation finished (return code: $RET - bad invocation)" "info" "/mnt/user"
+    ;;
+5)
+    log_json "ERROR" "Operation finished (return code: $RET - unclassified error)" "info" "/mnt/user"
+    ;;
+*)
+    log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info" "/mnt/user"
+    ;;
+esac
+
+sleep 1

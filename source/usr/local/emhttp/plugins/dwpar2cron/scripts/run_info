@@ -17,44 +17,9 @@
 #
 umask 000
 
-log_json() {
-    local level="${1:-INFO}"
-    local msg="$2"
-    local op="${3:-}"
-    local path="${4:-}"
-    
-    local timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
-    
-    printf '{"time":"%s","level":"%s","msg":"%s","op":"%s","path":"%s"}\n' \
-        "$timestamp" "$level" "$msg" "$op" "$path" >> /tmp/dwpar2cron.json
-}
+echo "Starting par2cron (Info Mode)..."
+echo "Starting par2cron (Info Mode)..." | logger -t "par2cron-plugin"
 
-log_json "INFO" "Scanning filesystem for jobs..." "info" "/mnt/user"
-
-/usr/bin/par2cron info \
-    -c /boot/config/plugins/dwpar2cron/config.yaml \
-    --json \
-    /mnt/user \
-    2>&1 \
-    > /usr/local/emhttp/plugins/dwpar2cron/info.json
-RET=$?
-
-case "$RET" in
-0)
-    log_json "INFO" "Operation finished (return code: $RET - success)" "info" "/mnt/user"
-    ;;
-1)
-    log_json "ERROR" "Operation finished (return code: $RET - partial failure)" "info" "/mnt/user"
-    ;;
-2)
-    log_json "ERROR" "Operation finished (return code: $RET - bad invocation)" "info" "/mnt/user"
-    ;;
-5)
-    log_json "ERROR" "Operation finished (return code: $RET - unclassified error)" "info" "/mnt/user"
-    ;;
-*)
-    log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info" "/mnt/user"
-    ;;
-esac
+nohup /usr/local/emhttp/plugins/dwpar2cron/scripts/info </dev/null >/dev/null 2>&1 &
 
 sleep 1
