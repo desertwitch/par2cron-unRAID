@@ -49,7 +49,8 @@ Markdown="false"
                     <img src="/plugins/dwpar2cron/images/dwpar2cron.png" width="100px">
                     <div style="margin-top:10px;">
                     <span style="font-size:1.5rem;font-weight:bold;">par2cron</span><br>
-                    Batch Integrity & Self-Repair Engine
+                    PAR2 Integrity & Self-Repair Engine<br>
+                    Selective automated protection for directory trees
                     </div>
                 </div>
             </td>

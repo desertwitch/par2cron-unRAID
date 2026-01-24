@@ -1,3 +1,3 @@
 **par2cron for UNRAID**
 
-Batch Integrity & Self-Repair Engine
+PAR2 Integrity & Self-Repair Engine
