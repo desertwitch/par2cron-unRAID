@@ -29,9 +29,6 @@ log_json() {
         "$timestamp" "$level" "$msg" "$op" "$path" >> /tmp/dwpar2cron.json
 }
 
-rm -f /tmp/dwpar2cron.json
-rm -f /tmp/dwpar2cron.log
-
 log_json "INFO" "Scanning filesystem for jobs..." "info" "/mnt/user"
 
 /usr/bin/par2cron info \
