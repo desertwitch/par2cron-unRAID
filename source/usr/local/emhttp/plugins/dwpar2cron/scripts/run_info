@@ -25,4 +25,4 @@ rm -f /tmp/dwpar2cron.log
 
 nohup /usr/local/emhttp/plugins/dwpar2cron/scripts/info </dev/null >/dev/null 2>&1 &
 
-sleep 1
+sleep 2
