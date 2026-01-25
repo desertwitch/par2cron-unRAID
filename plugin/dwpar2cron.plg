@@ -28,9 +28,9 @@
 <MD5>bf28a10b8977f87e0f7e1a606b5ebf30</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.1.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.1.0-x86_64-1.txz</URL>
-<MD5>71e3373a7da0e7d55dcadd20bfb382ac</MD5>
+<FILE Name="&plgPATH;/par2cron-0.1.1-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.1.1-x86_64-1.txz</URL>
+<MD5>5dc26e497c930d7d8ab781f48d02000c</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
