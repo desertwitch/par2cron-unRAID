@@ -9,8 +9,8 @@
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "mirsht-2025.08.21-x86_64-1">
-<!ENTITY plgMD5    "e807eb9fa34c1648f38901560847e50b">
+<!ENTITY plgNAME   "dwpar2cron-2026.01.25-x86_64-1">
+<!ENTITY plgMD5    "6e4a0adf2ead7bf0d39a82456ebae6e6">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
