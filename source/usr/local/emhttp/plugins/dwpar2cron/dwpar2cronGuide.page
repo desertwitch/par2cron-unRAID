@@ -58,8 +58,8 @@ par2cron will create parity data, periodically verify integrity, and repair corr
 <p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
 <p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
 
-<h2>Marker file name modifiers (optional):</h2>
-<p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank">arguments</a> to the marker file name to override creation defaults for that folder:</p>
+<h2>Marker filename modifiers (optional):</h2>
+<p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank">arguments</a> to the marker filename to influence creation defaults (for that folder):</p>
 <table>
   <tr><th>Marker file name</th><th>Resulting arguments (assuming defaults: <code>-r15 -n1</code>)</th></tr>
   <tr><td><code>_par2cron</code></td><td>Uses defaults: <code>-r15 -n1</code></td></tr>
@@ -68,7 +68,7 @@ par2cron will create parity data, periodically verify integrity, and repair corr
   <tr><td><code>_par2cron_r30_q</code></td><td>Both changes: <code>-r30 -n1 -q</code></td></tr>
 </table>
 
-<h2>Marker file content modifiers (optional):</h2>
+<h2>Marker content modifiers (optional):</h2>
 <p>For full override control, you can put YAML directives inside the marker file:</p>
 <pre>name: "Ubuntu"        # PAR2 set name (folder mode only)
 args: ["-r30", "-n1"] # Replaces default par2 arguments
@@ -77,6 +77,7 @@ mode: "folder"        # "folder" or "file" (see below)
 verify: true          # Verify PAR2 set as part of creation
 hidden: true          # Create PAR2 set as hidden (dotfiles)</pre>
 <p>All directives are optional - only specify what you need to override.</p>
+<p>Beware that also applies only for the individual creation job (the folder with the marker file).</p>
 
 <h2>Creation modes:</h2>
 <ul>
