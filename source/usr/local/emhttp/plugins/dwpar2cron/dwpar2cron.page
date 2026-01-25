@@ -110,7 +110,7 @@ Markdown="false"
                         <span class="ms-filter-btn" id="ms-select-all">Select All</span>
                         <span class="ms-filter-btn" id="ms-select-none">Select None</span>
                         <span class="ms-filter-btn" id="ms-view-logs">
-                            <a href="openTerminal('log','dwpar2cron','dwpar2cron.log')" style="all: unset; cursor: pointer;" target="_blank">Background Log</a>
+                            <a onclick="openTerminal('log','dwpar2cron','dwpar2cron.log')" style="all: unset; cursor: pointer;" target="_blank">Background Log</a>
                         </span>
                         <span class="ms-filter-btn" id="ms-download-logs">
                             <a href="/plugins/dwpar2cron/include/dwpar2cron_download.php" style="all: unset; cursor: pointer;" target="_blank">Download Log</a>
