@@ -22,11 +22,11 @@ log_json() {
     local msg="$2"
     local op="${3:-}"
     local path="${4:-}"
-    
+
     local timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
-    
+
     printf '{"time":"%s","level":"%s","msg":"%s","op":"%s","path":"%s"}\n' \
-        "$timestamp" "$level" "$msg" "$op" "$path" >> /tmp/dwpar2cron.json
+        "$timestamp" "$level" "$msg" "$op" "$path" >> /var/log/dwpar2cron.json
 }
 
 log_json "INFO" "Scanning filesystem for jobs..." "info" "/mnt/user"
@@ -37,7 +37,7 @@ log_json "INFO" "Scanning filesystem for jobs..." "info" "/mnt/user"
     /mnt/user \
     </dev/null \
     >> /usr/local/emhttp/plugins/dwpar2cron/info.json \
-    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
+    2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
 RET=$?
 
 case "$RET" in

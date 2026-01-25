@@ -73,8 +73,8 @@ if [ "$PARITYSTART" != "enable" ] && [ -r "/var/local/emhttp/var.ini" ]; then
     fi
 fi
 
-rm -f /tmp/dwpar2cron.log
-rm -f /tmp/dwpar2cron.json
+rm -f /var/log/dwpar2cron.log
+rm -f /var/log/dwpar2cron.json
 
 if [ "$CRONCREATE" == "enable" ]; then
     echo "create: started" | logger -s -t "par2cron-cron"
@@ -87,16 +87,16 @@ if [ "$CRONCREATE" == "enable" ]; then
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
         /mnt/user \
-        >> /tmp/dwpar2cron.log \
-        2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
+        >> /var/log/dwpar2cron.log \
+        2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
 
     sleep 3
     sync
 
-    CREATE_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
-    CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
-    CREATE_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null)
+    CREATE_STARTED=$(grep -c '"msg":"Job started"' /var/log/dwpar2cron.json 2>/dev/null)
+    CREATE_SUCCESS=$(grep -c '"msg":"Job completed with success"' /var/log/dwpar2cron.json 2>/dev/null)
+    CREATE_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /var/log/dwpar2cron.json 2>/dev/null)
 
     case "$RET" in
     0)
@@ -137,21 +137,21 @@ if [ "$CRONVERIFY" == "enable" ]; then
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
         /mnt/user \
-        >> /tmp/dwpar2cron.log \
-        2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
+        >> /var/log/dwpar2cron.log \
+        2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
 
     sleep 3
     sync
 
-    TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
-    TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
-    TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null)
+    TOTAL_STARTED=$(grep -c '"msg":"Job started"' /var/log/dwpar2cron.json 2>/dev/null)
+    TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /var/log/dwpar2cron.json 2>/dev/null)
+    TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /var/log/dwpar2cron.json 2>/dev/null)
 
     VERIFY_STARTED=$((TOTAL_STARTED - CREATE_STARTED))
     VERIFY_SUCCESS=$((TOTAL_SUCCESS - CREATE_SUCCESS))
     VERIFY_FAILED=$((TOTAL_FAILED - CREATE_FAILED))
-    VERIFY_CORRUPTED=$(grep -c '"msg":"Job completed with corruption detected"' /tmp/dwpar2cron.json 2>/dev/null)
+    VERIFY_CORRUPTED=$(grep -c '"msg":"Job completed with corruption detected"' /var/log/dwpar2cron.json 2>/dev/null)
 
     case "$RET" in
     0)
@@ -200,16 +200,16 @@ if [ "$CRONREPAIR" == "enable" ]; then
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
         /mnt/user \
-        >> /tmp/dwpar2cron.log \
-        2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
+        >> /var/log/dwpar2cron.log \
+        2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
 
     sleep 3
     sync
 
-    TOTAL_STARTED=$(grep -c '"msg":"Job started"' /tmp/dwpar2cron.json 2>/dev/null)
-    TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /tmp/dwpar2cron.json 2>/dev/null)
-    TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /tmp/dwpar2cron.json 2>/dev/null)
+    TOTAL_STARTED=$(grep -c '"msg":"Job started"' /var/log/dwpar2cron.json 2>/dev/null)
+    TOTAL_SUCCESS=$(grep -c '"msg":"Job completed with success"' /var/log/dwpar2cron.json 2>/dev/null)
+    TOTAL_FAILED=$(grep -c '"msg":"Job failure (will retry next run)"' /var/log/dwpar2cron.json 2>/dev/null)
 
     REPAIR_STARTED=$((TOTAL_STARTED - CREATE_STARTED - VERIFY_STARTED))
     REPAIR_SUCCESS=$((TOTAL_SUCCESS - CREATE_SUCCESS - VERIFY_SUCCESS))
@@ -250,7 +250,7 @@ echo "info: started" | logger -s -t "par2cron-cron"
     --json \
     /mnt/user \
     > /usr/local/emhttp/plugins/dwpar2cron/info.json \
-    2> >(tee -a /tmp/dwpar2cron.json >> /tmp/dwpar2cron.log 2>&1)
+    2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
 RET=$?
 
 case "$RET" in

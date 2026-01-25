@@ -18,5 +18,5 @@
 echo "Clearing par2cron logfiles..."
 echo "Clearing par2cron logfiles..." | logger -t "par2cron-plugin"
 
-rm -f /tmp/dwpar2cron.json
-rm -f /tmp/dwpar2cron.log
+rm -f /var/log/dwpar2cron.json
+rm -f /var/log/dwpar2cron.log

@@ -20,8 +20,8 @@ umask 000
 echo "Starting par2cron (Info Mode)..."
 echo "Starting par2cron (Info Mode)..." | logger -t "par2cron-plugin"
 
-rm -f /tmp/dwpar2cron.json
-rm -f /tmp/dwpar2cron.log
+rm -f /var/log/dwpar2cron.json
+rm -f /var/log/dwpar2cron.log
 
 nohup /usr/local/emhttp/plugins/dwpar2cron/scripts/info </dev/null >/dev/null 2>&1 &
 
