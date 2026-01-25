@@ -5,4 +5,4 @@
 
 **Installation:** https://raw.githubusercontent.com/desertwitch/par2cron-unRAID/main/plugin/dwpar2cron.plg
 
-**MirrorShuttle Documentation**: https://github.com/desertwitch/par2cron
+**par2cron Documentation**: https://github.com/desertwitch/par2cron
