@@ -53,11 +53,8 @@ if [[ "$CRON" != "hourly" && "$CRON" != "daily" && "$CRON" != "weekly" && "$CRON
     exit 0
 fi
 
-if [ "$CRONCREATE" != "enable" ] && [ "$CRONVERIFY" != "enable" ]; then
-    exit 0
-fi
-
 if ! mountpoint -q /mnt/user; then
+    echo "array is not started; exiting" | logger -s -t "par2cron-cron"
     exit 0
 fi
 
