@@ -56,7 +56,7 @@ par2cron will create parity data, periodically verify integrity, and repair corr
   <li>Done - a PAR2 set is created on the next scheduled run!</li>
 </ol>
 <p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
-<p>PAR2 sets are periodically verified and repaired with according to the schedule.</p>
+<p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
 
 <h2>Marker file name modifiers (optional):</h2>
 <p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank">arguments</a> to the marker file name to override creation defaults for that folder:</p>
