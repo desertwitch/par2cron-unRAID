@@ -52,7 +52,8 @@ Cond="@filesize('/usr/local/emhttp/plugins/dwpar2cron/info.json')"
 </div>
 
 <div>
-    <i class="fa fa-lightbulb-o"></i> Beware repaired jobs may still show as corrupted until the next verification run confirms the repair.
+    <i class="fa fa-clock-o"></i> This report is updated either as part of any scheduled execution or a manual "info" command run.<br>
+    <i class="fa fa-exclamation-circle"></i> Beware that repaired jobs may still show as corrupted until the next verification run confirms the repair.
 </div>
 
 <script>
