@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.01.25c">
+<!ENTITY version   "2026.01.25d">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwpar2cron-2026.01.25-x86_64-4">
-<!ENTITY plgMD5    "80f6be9aecf61f2d85ce63780678ea5e">
+<!ENTITY plgNAME   "dwpar2cron-2026.01.25-x86_64-5">
+<!ENTITY plgMD5    "314eca52bdf8a9b0b07fdd6f4babc117">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
