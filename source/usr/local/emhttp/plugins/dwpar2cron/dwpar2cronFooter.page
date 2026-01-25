@@ -1,0 +1,62 @@
+Menu="Buttons:197"
+Link="nav-user"
+---
+<?
+/* Copyright Derek Macias (parts of code from NUT package)
+ * Copyright macester (parts of code from NUT package)
+ * Copyright gfjardim (parts of code from NUT package)
+ * Copyright SimonF (parts of code from NUT package)
+ * Copyright Dan Landon (parts of code from Web GUI)
+ * Copyright Bergware International (parts of code from Web GUI)
+ * Copyright Lime Technology (any and all other parts of Unraid)
+ *
+ * Copyright desertwitch (as author and maintainer of this file)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License 2
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ */
+?>
+
+<style type="text/css">
+#dwpar2cron_footer {
+    float: right;
+    <?if(version_compare(parse_ini_file('/etc/unraid-version')['version'],'7.1.99', '<')):?>
+    margin-right: 24px;
+    <?endif;?>
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: none;
+}
+</style>
+
+<script type="text/javascript">
+function getDwpar2cronFooter() {
+    $.get('/plugins/dwpar2cron/include/dwpar2cron_status.php', function(data) {
+        if (data && data.running) {
+            $('#dwpar2cron_footer').show();
+        } else {
+            $('#dwpar2cron_footer').hide();
+        }
+    }, 'json');
+    clearTimeout(timers.getDwpar2cronFooter);
+    timers.getDwpar2cronFooter = setTimeout(getDwpar2cronFooter, 3000);
+    $('#dwpar2cron_footer').click(function() {
+        location = '/Settings/dwpar2cron';
+    });
+}
+$(function()
+{
+    var dwpar2cron_footer = $("<span id='dwpar2cron_footer'><i class='fa fa-cog fa-spin'></i> PAR2</span>");
+    <?if(version_compare(parse_ini_file('/etc/unraid-version')['version'],'7.1.99', '>')):?>
+    dwpar2cron_footer.appendTo(".footer-right");
+    <?else:?>
+    dwpar2cron_footer.insertAfter("#footer > span#copyright");
+    <?endif;?>
+    getDwpar2cronFooter();
+});
+</script>
