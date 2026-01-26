@@ -151,7 +151,7 @@ repair:
 
   # purge-backups: Remove backup files (.1, .2, ...) after successful repair
   # These backup files are created by par2cmdline before repairing damaged files
-  # When enabled obsolete backup files will be removed, being no longer needed
+  # When enabled obsolete backup files will be removed as being no longer needed
   #
   # Default: true
   purge-backups: true
