@@ -14,11 +14,11 @@
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="" min="6.10">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/196782-plugin-par2cron-for-unraid/" min="6.10">
 
 <CHANGES>
 ## par2cron for UNRAID
-###2026.01.25
+###2026.01.26
 - release note: welcome to the first version of the par2cron package.
 - release note: please report any problems in the support topic.
 </CHANGES>
