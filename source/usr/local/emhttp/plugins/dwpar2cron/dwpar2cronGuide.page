@@ -41,7 +41,7 @@ Markdown="false"
 
 <div class="p2c">
 
-<p><b>This is not a replacement for the <a href="https://github.com/desertwitch/par2cron" target="_blank">full documentation (on GitHub)</a>.</b><br>
+<p><b>This is not a replacement for the <a href="https://github.com/desertwitch/par2cron#readme" target="_blank">full documentation (on GitHub)</a>.</b><br>
 It is a condensed guide meant to get you started and as a cheatsheet.</p>
 
 <h2>Getting started:</h2>
@@ -59,7 +59,7 @@ par2cron will create parity data, periodically verify integrity, and repair corr
 <p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
 
 <h2>Marker filename modifiers (optional):</h2>
-<p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank">arguments</a> to the marker filename to influence creation defaults (for that folder):</p>
+<p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank"><b>arguments</b></a> to the marker filename to influence creation defaults (for that folder):</p>
 <table>
   <tr><th>Marker file name</th><th>Resulting arguments (assuming defaults: <code>-r15 -n1</code>)</th></tr>
   <tr><td><code>_par2cron</code></td><td>Uses defaults: <code>-r15 -n1</code></td></tr>
