@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.01.27">
+<!ENTITY version   "2026.01.27a">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwpar2cron-2026.01.27-x86_64-1">
-<!ENTITY plgMD5    "62eb34f4836f5a9ac89e2231d4a73fc9">
+<!ENTITY plgNAME   "dwpar2cron-2026.01.27-x86_64-2">
+<!ENTITY plgMD5    "b9a8b0c0c72011574a0c8661d668b276">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -20,7 +20,7 @@
 ## par2cron for UNRAID
 ###2026.01.27a
 - new: par2cmdline backend was updated to release version 1.1.0
-- fix: guide colors in dark mode (thanks to Synd for the report)
+- fix: invisible guide colors in dark mode (thanks to Synd for the report)
 ###2026.01.27
 - new: par2cron backend was updated to release version 0.1.3
 ###2026.01.26b
