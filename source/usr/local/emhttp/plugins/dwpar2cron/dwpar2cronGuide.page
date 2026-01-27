@@ -54,9 +54,22 @@ par2cron will create parity data, periodically verify integrity, and repair corr
   <li>Create an empty "marker" file named <code>_par2cron</code></li>
   <li>Done - a PAR2 set is created on the next scheduled run!</li>
 </ol>
+
 <p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
 <p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
-<p>To support a "one PAR2 per folder" mental model, the created PAR2 <u>does not</u> include subfolders.</p>
+
+<div style="display: inline-block; margin: 15px 0; border: 1px solid; border-radius: 4px; overflow: hidden; opacity: 0.9;">
+  <div style="padding: 4px 12px; font-weight: bold; font-size: 0.9em; border-bottom: 1px solid;">
+    MENTAL MODEL: ONE PAR2 PER FOLDER
+  </div>
+  <div style="padding: 10px 12px; font-size: 0.95em; line-height: 1.4;">
+    To keep protection predictable, creation <u>does not</u> recurse into subfolders.
+    <br>The flat scope ensures you always know exactly which files a PAR2 set covers.
+    <div style="margin-top: 5px; font-style: italic; font-size: 0.9em;">
+      To protect a directory tree, simply place a marker file in each of the specific folders.
+    </div>
+  </div>
+</div>
 
 <h2>Marker filename modifiers (optional):</h2>
 <p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank"><b>arguments</b></a> to the marker filename to influence creation defaults (for that folder):</p>
