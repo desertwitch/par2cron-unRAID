@@ -26,13 +26,12 @@ Markdown="false"
 
 <style>
   .p2c { line-height: 1.5; }
-  .p2c h2 { font-size: 1.1em; margin: 1.2em 0 0.4em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+  .p2c h2 { font-size: 1.1em; margin: 1.2em 0 0.4em; border-bottom: 1px solid; padding-bottom: 0.2em; }
   .p2c h3 { font-size: 1em; margin: 0.8em 0 0.3em; }
-  .p2c code { background: #f4f4f4; padding: 1px 4px; font-size: 0.95em; }
-  .p2c pre { background: #f4f4f4; padding: 8px 10px; overflow-x: auto; font-size: 0.9em; margin: 0.4em 0; }
+  .p2c code { padding: 1px 4px; font-size: 0.95em; }
+  .p2c pre { padding: 8px 10px; overflow-x: auto; font-size: 0.9em; margin: 0.4em 0; }
   .p2c table { border-collapse: collapse; width: 100%; margin: 0.5em 0; font-size: 0.9em; }
-  .p2c th, .p2c td { border: 1px solid #ccc; padding: 4px 8px; text-align: left; }
-  .p2c th { background: #f4f4f4; }
+  .p2c th, .p2c td { border: 1px solid; padding: 4px 8px; text-align: left; }
   .p2c ul { margin: 0.4em 0; padding-left: 1.4em; }
   .p2c ol { margin: 0.4em 0; padding-left: 1.4em; }
   .p2c li { margin: 0.2em 0; }
@@ -57,6 +56,7 @@ par2cron will create parity data, periodically verify integrity, and repair corr
 </ol>
 <p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
 <p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
+<p><b>To promote a clear mental model ("one PAR2 per folder"), creation does not consider subfolders.</b></p>
 
 <h2>Marker filename modifiers (optional):</h2>
 <p>Append <code>par2</code> <a href="https://github.com/Parchive/par2cmdline#using-par2cmdline" target="_blank"><b>arguments</b></a> to the marker filename to influence creation defaults (for that folder):</p>
