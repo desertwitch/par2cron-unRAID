@@ -58,6 +58,12 @@ par2cron will create parity data, periodically verify integrity, and repair corr
 <p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
 <p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
 
+<pre>Pictures/
+|-- Nature/
+|-- _par2cron  <-- par2cron marker file
+|-- beach.jpg  <-- will be protected using PAR2
++-- sunset.jpg <-- will be protected using PAR2</pre>
+
 <div style="display: inline-block; margin: 15px 0; border: 1px solid; border-radius: 4px; overflow: hidden; opacity: 0.9;">
   <div style="padding: 4px 12px; font-weight: bold; font-size: 0.9em; border-bottom: 1px solid;">
     MENTAL MODEL: ONE PAR2 PER FOLDER
