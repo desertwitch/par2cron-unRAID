@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.01.28
+- new: par2cron backend was updated to release version 0.1.4
+- new: quick guide was updated with more information about creation
 ###2026.01.27b
 - new: par2cmdline backend was updated to release version 1.1.0
 - fix: invisible guide colors in dark mode (thanks to Synd for the report)
