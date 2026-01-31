@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.01.28">
+<!ENTITY version   "2026.01.31">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.01.31
+- new: par2cron backend was updated to release version 0.1.5
+- changelog: https://github.com/desertwitch/par2cron/releases/tag/v0.1.5
 ###2026.01.28
 - new: par2cron backend was updated to release version 0.1.4
 - new: quick guide was updated with more information about creation
@@ -36,9 +39,9 @@
 <MD5>864a1e757ffe6e8713644d89f13f310e</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.1.4-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.1.4-x86_64-1.txz</URL>
-<MD5>6181a275824cbed7515b41c44bc7d0bc</MD5>
+<FILE Name="&plgPATH;/par2cron-0.1.5-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.1.5-x86_64-1.txz</URL>
+<MD5>e6fe1b25e37c83f76b12ce4924990ba5</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
