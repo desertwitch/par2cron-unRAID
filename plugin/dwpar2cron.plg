@@ -20,7 +20,7 @@
 ## par2cron for UNRAID
 ###2026.01.31
 - new: par2cron backend was updated to release version 0.1.5
-- changelog: https://github.com/desertwitch/par2cron/releases/tag/v0.1.5
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.1.5
 ###2026.01.28
 - new: par2cron backend was updated to release version 0.1.4
 - new: quick guide was updated with more information about creation
