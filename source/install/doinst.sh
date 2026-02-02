@@ -33,7 +33,7 @@ echo "Patching configuration files (ignore failures here)..."
 
 # Apply patches for outdated configuration files
 for p in "$DOCROOT"/defaults/patches/*.patch; do
-    [ -f "$p" ] && patch -p0 -d / -N -l -r /dev/null 2>&1 < "$p"
+    [ -f "$p" ] && patch -p0 -d / -N -r /dev/null < "$p" &>/dev/null
 done
 
 exit 0
