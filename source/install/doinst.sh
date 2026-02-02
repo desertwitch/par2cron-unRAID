@@ -28,3 +28,13 @@ chmod 755 $DOCROOT/scripts/*
 
 cp -n $DOCROOT/default.cfg $BOOT/dwpar2cron.cfg
 cp -n $DOCROOT/defaults/default.yaml $BOOT/config.yaml
+
+# Apply patches for outdated configuration files
+(
+    cd /
+    for p in "$DOCROOT"/defaults/patches/*.patch; do
+        [ -f "$p" ] && patch -p0 -N -l -r - < "$p" &>/dev/null
+    done
+)
+
+exit 0
