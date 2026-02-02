@@ -30,11 +30,8 @@ cp -n $DOCROOT/default.cfg $BOOT/dwpar2cron.cfg
 cp -n $DOCROOT/defaults/default.yaml $BOOT/config.yaml
 
 # Apply patches for outdated configuration files
-(
-    cd /
-    for p in "$DOCROOT"/defaults/patches/*.patch; do
-        [ -f "$p" ] && patch -p0 -N -l -r /dev/null < "$p" &>/dev/null
-    done
-)
+for p in /usr/local/emhttp/plugins/dwpar2cron/defaults/patches/*.patch; do
+    [ -f "$p" ] && patch -p0 -d / -N -l -r /dev/null < "$p"
+done
 
 exit 0
