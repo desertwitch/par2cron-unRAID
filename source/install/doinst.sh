@@ -33,7 +33,7 @@ cp -n $DOCROOT/defaults/default.yaml $BOOT/config.yaml
 (
     cd /
     for p in "$DOCROOT"/defaults/patches/*.patch; do
-        [ -f "$p" ] && patch -p0 -N -l -r - < "$p" &>/dev/null
+        [ -f "$p" ] && patch -p0 -N -l -r /dev/null < "$p" &>/dev/null
     done
 )
 
