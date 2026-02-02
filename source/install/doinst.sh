@@ -29,9 +29,11 @@ chmod 755 $DOCROOT/scripts/*
 cp -n $DOCROOT/default.cfg $BOOT/dwpar2cron.cfg
 cp -n $DOCROOT/defaults/default.yaml $BOOT/config.yaml
 
+echo "Patching configuration files (ignore failures here)..."
+
 # Apply patches for outdated configuration files
 for p in /usr/local/emhttp/plugins/dwpar2cron/defaults/patches/*.patch; do
-    [ -f "$p" ] && patch -p0 -d / -N -l -r /dev/null < "$p"
+    [ -f "$p" ] && patch -p0 -d / -N -l -r /dev/null 2>&1 < "$p"
 done
 
 exit 0
