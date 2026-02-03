@@ -1,6 +1,6 @@
 --- boot/config/plugins/dwpar2cron/config.yaml
 +++ boot/config/plugins/dwpar2cron/config.yaml
-@@ -31,6 +31,7 @@
+@@ -31,5 +31,6 @@
 -  # mode: PAR2 creation mode; per-file or per-folder
 +  # mode: PAR2 creation mode; per-file, per-folder or recursive
    # Changeable as needed for individual sets using the marker configuration
