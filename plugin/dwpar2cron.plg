@@ -18,6 +18,10 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.02.03
+- new: quick guide was updated to include new recursive mode
+- new: par2cron backend was updated to release version 0.1.6
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.1.6
 ###2026.01.31
 - new: par2cron backend was updated to release version 0.1.5
 - changes: https://github.com/desertwitch/par2cron/releases/tag/v0.1.5
@@ -39,9 +43,9 @@
 <MD5>864a1e757ffe6e8713644d89f13f310e</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.1.5-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.1.5-x86_64-1.txz</URL>
-<MD5>e6fe1b25e37c83f76b12ce4924990ba5</MD5>
+<FILE Name="&plgPATH;/par2cron-0.1.6-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.1.6-x86_64-1.txz</URL>
+<MD5>97100e8f03492204a824b91c710d7ee4</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
