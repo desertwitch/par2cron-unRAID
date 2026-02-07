@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.02.03">
+<!ENTITY version   "2026.02.07">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.02.07
+- new: par2cmdline backend was updated to release version 1.1.1
+- changes: https://github.com/Parchive/par2cmdline/releases/tag/v1.1.1
 ###2026.02.03
 - new: quick guide was updated to include new recursive mode
 - new: par2cron backend was updated to release version 0.1.6
@@ -38,9 +41,9 @@
 - release note: please report any problems in the support topic.
 </CHANGES>
 
-<FILE Name="&plgPATH;/par2cmdline-1.1.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cmdline-1.1.0-x86_64-1.txz</URL>
-<MD5>864a1e757ffe6e8713644d89f13f310e</MD5>
+<FILE Name="&plgPATH;/par2cmdline-1.1.1-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cmdline-1.1.1-x86_64-1.txz</URL>
+<MD5>b824535f9d1a692817c7726996545033</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/par2cron-0.1.6-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
