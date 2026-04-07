@@ -1,0 +1,18 @@
+diff --git a/par2cron.yaml b/par2cron.yaml
+index d9f9da9..6435b8c 100644
+--- a/par2cron.yaml
++++ b/par2cron.yaml
+@@ -17,5 +17,12 @@ create:
+ 
+-  # glob: File matching pattern for files to include in PAR2 sets
++  # glob: Matching pattern for paths to include in PAR2 sets
++  # Supports complex inclusion/exclusion patterns for granular control
+   # Changeable as needed for individual sets using the marker configuration
+   #
++  # See here for a list of supported patterns:
++  # https://github.com/bmatcuk/doublestar#patterns
++  #
++  # Beware all deep glob patterns (/) only work in non-recursive creation modes
++  # Refer to the par2cron documentation for more information on this limitation
++  #
+   # Default: "*" (all files)

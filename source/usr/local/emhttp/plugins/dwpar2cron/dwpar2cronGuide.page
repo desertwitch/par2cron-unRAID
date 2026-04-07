@@ -98,6 +98,7 @@ mode: "folder"        # "folder", "file" or "recursive"
 verify: true          # Verify PAR2 set as part of creation
 hidden: true          # Create PAR2 set as hidden (dotfiles)</pre>
 <p>All directives are optional - only specify what you need to override.</p>
+<p>Refer to <a href="https://github.com/desertwitch/par2cron?tab=readme-ov-file#creation-glob-patterns" target="_blank">Creation Glob Patterns"</a> in documentation for supported patterns.</p>
 <p>Beware that this applies only for the individual creation job (the folder with the marker file).</p>
 
 <h2>Creation modes:</h2>
