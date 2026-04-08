@@ -25,7 +25,7 @@ function dwpar2cron_share_options($selected = ''){
     $dwpar2cron_options = '<option value="/mnt/user"';
     if($selected === '/mnt/user')
         $dwpar2cron_options .= ' selected';
-    $dwpar2cron_options .= '>Whole Array</option>';
+    $dwpar2cron_options .= '>Array</option>';
 
     foreach ($shares as $share) {
         $value = '/mnt/user/' . $share["name"];
