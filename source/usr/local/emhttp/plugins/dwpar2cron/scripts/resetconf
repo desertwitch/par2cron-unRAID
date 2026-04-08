@@ -24,6 +24,7 @@ echo "Resetting par2cron configuration..." | logger -t "par2cron-plugin"
 rm -f /var/log/dwpar2cron.json
 rm -f /var/log/dwpar2cron.log
 rm -f /usr/local/emhttp/plugins/dwpar2cron/info.json
+rm -f /tmp/par2cron-pprof-*.pb.gz
 
 cp -f $DOCROOT/default.cfg $BOOT/dwpar2cron.cfg
 cp -f $DOCROOT/defaults/default.yaml $BOOT/config.yaml
