@@ -15,29 +15,8 @@
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
 #
-umask 000
+echo "Deleting diagnostic profile..."
 
-DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
-source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
-
-echo "Starting par2cron (Verify Mode)..."
-echo "Starting par2cron (Verify Mode)..." | logger -t "par2cron-plugin"
-
-rm -f /var/log/dwpar2cron.json
-rm -f /var/log/dwpar2cron.log
 rm -f /tmp/par2cron-pprof-*.pb.gz
 
-if [ "$PPROF" == "enable" ]; then
-    PPROFARG="--pprof /tmp/par2cron-pprof-verify-$(date +%Y%m%d-%H%M%S).pb.gz"
-fi
-
-nohup /usr/bin/par2cron verify \
-    $PPROFARG \
-    -c /boot/config/plugins/dwpar2cron/config.yaml \
-    --json \
-    /mnt/user \
-    </dev/null \
-    >> /var/log/dwpar2cron.log \
-    2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1) &
-
-sleep 1
+echo "Diagnostic profile deleted, you may close this window now."

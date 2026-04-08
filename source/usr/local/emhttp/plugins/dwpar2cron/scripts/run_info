@@ -23,6 +23,7 @@ echo "Starting par2cron (Info Mode)..." | logger -t "par2cron-plugin"
 rm -f /var/log/dwpar2cron.json
 rm -f /var/log/dwpar2cron.log
 rm -f /usr/local/emhttp/plugins/dwpar2cron/info.json
+rm -f /tmp/par2cron-pprof-*.pb.gz
 
 nohup /usr/local/emhttp/plugins/dwpar2cron/scripts/info </dev/null >/dev/null 2>&1 &
 

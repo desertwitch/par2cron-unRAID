@@ -20,6 +20,8 @@
 $dwpar2cron_cfg = file_exists("/boot/config/plugins/dwpar2cron/dwpar2cron.cfg") ? parse_ini_file("/boot/config/plugins/dwpar2cron/dwpar2cron.cfg") : [];
 
 $dwpar2cron_cron = trim(isset($dwpar2cron_cfg['CRON']) ? htmlspecialchars($dwpar2cron_cfg['CRON']) : 'disable');
+$dwpar2cron_pprof = trim(isset($dwpar2cron_cfg['PPROF']) ? htmlspecialchars($dwpar2cron_cfg['PPROF']) : 'disable');
+
 $dwpar2cron_cronhour = trim(isset($dwpar2cron_cfg['CRONHOUR']) ? htmlspecialchars($dwpar2cron_cfg['CRONHOUR']) : '1');
 $dwpar2cron_crondow = trim(isset($dwpar2cron_cfg['CRONDOW']) ? htmlspecialchars($dwpar2cron_cfg['CRONDOW']) : '0');
 $dwpar2cron_crondom = trim(isset($dwpar2cron_cfg['CRONDOM']) ? htmlspecialchars($dwpar2cron_cfg['CRONDOM']) : '1');

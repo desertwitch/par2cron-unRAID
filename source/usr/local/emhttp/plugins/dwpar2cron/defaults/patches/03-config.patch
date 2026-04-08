@@ -1,0 +1,21 @@
+diff --git a/par2cron.yaml b/par2cron.yaml
+index 6435b8c..0eb3814 100644
+--- a/par2cron.yaml
++++ b/par2cron.yaml
+@@ -24,4 +24,4 @@ create:
+   #
+-  # Beware all deep glob patterns (/) only work in non-recursive creation modes
+-  # Refer to the par2cron documentation for more information on this limitation
++  # Beware deep glob patterns (/) only work in non-recursive creation modes
++  # Refer to par2cron documentation for detailed information on creation modes
+   #
+@@ -37,3 +37,3 @@ create:
+ 
+-  # mode: PAR2 creation mode; per-file, per-folder or recursive
++  # mode: PAR2 creation mode controlling granularity of PAR2 sets
+   # Changeable as needed for individual sets using the marker configuration
+@@ -41,3 +41,3 @@ create:
+   #
+-  # Options: "file" (per file), "folder" (per folder), "recursive" (per tree)
++  # Options: "folder", "nested", "file", "recursive"
+   # Default: "folder"

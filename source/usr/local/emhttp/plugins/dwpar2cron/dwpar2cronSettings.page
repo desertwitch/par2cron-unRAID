@@ -276,6 +276,31 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </div>
 
     <dl>
+        <dt><strong>Diagnostic Profile:</strong></dt>
+        <dd>
+            <select class="dwpar2cron-run" id="PPROF" name="PPROF" size="1">
+                <?=mk_option($dwpar2cron_pprof, "disable", "No");?>
+                <?=mk_option($dwpar2cron_pprof, "enable", "Yes");?>
+            </select>
+            <?if(glob("/tmp/par2cron-pprof-*.pb.gz")):?>
+            <a href="/plugins/dwpar2cron/include/dwpar2cron_pprof.php" style="color:inherit;margin-left:5px;cursor:pointer;">
+                <i class="fa fa-download" title="Download Diagnostic Profile"></i>
+                <?if(version_compare(parse_ini_file('/etc/unraid-version')['version'],'7.1.99', '>')):?> Download Diagnostic Profile<?endif;?>
+            </a>
+            <span id="DELPROF" style="margin-left:5px;cursor:pointer;">
+                <i class="fa fa-trash" title="Delete Diagnostic Profile"></i>
+                <?if(version_compare(parse_ini_file('/etc/unraid-version')['version'],'7.1.99', '>')):?> Delete Diagnostic Profile<?endif;?>
+            </span>
+            <?endif;?>
+        </dd>
+    </dl>
+
+    <blockquote class="inline_help">
+    <p>This setting controls if a diagnostic profile should be generated for manual executions.</p>
+    <p>You should keep this <strong>disabled</strong> unless wanting to report a problem to the developers.</p>
+    </blockquote>
+
+    <dl>
         <dt>
             <span>
                 <input id="RESETCONF" class="dwpar2cron-run dwpar2cron-tip" type="button" value="Reset Config" title="Reverts the whole configuration to its default state, including the program configuration.">
@@ -324,6 +349,10 @@ function dwpar2cronResetConfig() {
     $('#dwpar2cron-set-cmd').val('');
     openBox('/plugins/dwpar2cron/scripts/resetconf', 'par2cron Configuration Reset', 600, 600, true);
 }
+function dwpar2cronDeleteProfile() {
+    $('#dwpar2cron-set-cmd').val('');
+    openBox('/plugins/dwpar2cron/scripts/delete_pprof', 'par2cron', 600, 600, true);
+}
 $(function() {
     showStatus('par2cron');
 
@@ -331,7 +360,8 @@ $(function() {
 
     $("#CRON").change(dwpar2cronCronSettings);
     $('#RESETCONF').click(function(){ swal({title:"Are you sure?",text:"This action will return any existing configuration to their defaults!",type:"warning",html:true,showCancelButton:true}, dwpar2cronResetConfig); });
-
+    $('#DELPROF').click(function(){ swal({title:"Are you sure?",text:"This action will delete your existing diagnostic profile!",type:"warning",html:true,showCancelButton:true}, dwpar2cronDeleteProfile); });
+    
     $('.dwpar2cron-tip').tooltipster({
         maxWidth: 300
     });

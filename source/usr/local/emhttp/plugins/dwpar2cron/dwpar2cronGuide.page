@@ -55,7 +55,7 @@ par2cron will create parity data, periodically verify integrity, and repair corr
   <li>Done - a PAR2 set is created on the next scheduled run!</li>
 </ol>
 
-<p>After creation of the PAR2 set, the marker file is deleted automatically.</p>
+<p>After creation of the PAR2 set, the marker file is normally deleted automatically.</p>
 <p>PAR2 sets are then periodically verified and repaired with according to the schedule.</p>
 
 <pre>Pictures/
@@ -72,7 +72,8 @@ par2cron will create parity data, periodically verify integrity, and repair corr
     For more predictable protection, subfolders <u>are not</u> recursed into by default.
     <br>The flat scope ensures you always know exactly which files a PAR2 set covers.
     <div style="margin-top: 5px; font-style: italic; font-size: 0.9em;">
-      To protect a directory tree, recursive mode is best enabled per-job using the marker files.
+      For subfolder protection, choose between <a href="https://github.com/desertwitch/par2cron/tree/devel?tab=readme-ov-file#deep-patterns-containing-" target="_blank">deep glob patterns</a> and <a href="https://github.com/desertwitch/par2cron/tree/devel?tab=readme-ov-file#recursive-mode" target="_blank">recursive mode</a>.
+      <br>Be advised that these modes are best set on a per-job basis via marker configuration.
     </div>
   </div>
 </div>
@@ -93,20 +94,24 @@ par2cron will create parity data, periodically verify integrity, and repair corr
 <p>For more defaults override control, you can put YAML directives inside the marker file:</p>
 <pre>name: "Ubuntu"        # PAR2 set name (folder mode only)
 args: ["-r30", "-n1"] # Replaces default par2 arguments
-glob: "*.iso"         # Protect only the matching paths
-mode: "folder"        # "folder", "file" or "recursive"
+glob: "*.iso"         # Protect only the matching files
+mode: "folder"        # "folder", "nested", "file" or "recursive"
 verify: true          # Verify PAR2 set as part of creation
-hidden: true          # Create PAR2 set as hidden (dotfiles)</pre>
+hidden: true          # Create PAR2 set as hidden (dotfiles)
+persist: true         # Do not delete marker file after creation
+</pre>
 <p>All directives are optional - only specify what you need to override.</p>
 <p>Refer to <a href="https://github.com/desertwitch/par2cron?tab=readme-ov-file#creation-glob-patterns" target="_blank">"Creation Glob Patterns"</a> in documentation for supported patterns.</p>
 <p>Beware that this applies only for the individual creation job (the folder with the marker file).</p>
 
 <h2>Creation modes:</h2>
 <ul>
-  <li><strong>folder</strong> (default): One combined PAR2 set for all files in the folder</li>
-  <li><strong>file</strong>: Creates a separate PAR2 set for each file (useful for large files)</li>
-  <li><strong>recursive</strong>: One combined PAR2 set for all files and folders (directory tree)</li>
+  <li><strong>folder</strong> (default): One PAR2 set for all matching files</li>
+  <li><strong>nested</strong>: One PAR2 set per folder containing matching files</li>
+  <li><strong>file</strong>: One PAR2 set per matching file</li>
+  <li><strong>recursive</strong>: One PAR2 set, using <code>par2</code>'s own internal recursion</li>
 </ul>
+<p>Refer to <a href="https://github.com/desertwitch/par2cron?tab=readme-ov-file#creation-modes" target="_blank">"Creation Modes"</a> in documentation for more in-depth explanations.</p>
 
 <h2>Ignoring folders:</h2>
 <ul>
@@ -122,6 +127,7 @@ hidden: true          # Create PAR2 set as hidden (dotfiles)</pre>
   <li>Create again a marker file named <code>_par2cron</code></li>
   <li>Done - a new PAR2 set is created on the next scheduled run!</li>
 </ol>
+<p>Second step does not apply when marker file was set to <code>persist</code>.</p>
 
 <h2>Explanation of the generated files:</h2>
 <pre>Pictures/
