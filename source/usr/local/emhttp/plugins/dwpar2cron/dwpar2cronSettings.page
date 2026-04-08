@@ -276,7 +276,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </div>
 
     <dl>
-        <dt>Diagnostic Profile:</dt>
+        <dt>Generate Diagnostic Profile:</dt>
         <dd>
             <select class="dwpar2cron-run" id="PPROF" name="PPROF" size="1">
                 <?=mk_option($dwpar2cron_pprof, "disable", "No");?>
