@@ -276,7 +276,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </div>
 
     <dl>
-        <dt><strong>Diagnostic Profile:</strong></dt>
+        <dt>Diagnostic Profile:</dt>
         <dd>
             <select class="dwpar2cron-run" id="PPROF" name="PPROF" size="1">
                 <?=mk_option($dwpar2cron_pprof, "disable", "No");?>
@@ -297,7 +297,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <blockquote class="inline_help">
     <p>This setting controls if a diagnostic profile should be generated for manual executions.</p>
-    <p>You should keep this <strong>disabled</strong> unless wanting to report a problem to the developers.</p>
+    <p>You should keep this <strong>disabled</strong> unless wanting to report a performance problem to the developers.</p>
     </blockquote>
 
     <dl>

@@ -23,8 +23,6 @@ Cond="@filesize('/usr/local/emhttp/plugins/dwpar2cron/info.json')"
  * included in all copies or substantial portions of the Software.
  *
  */
-require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_config.php';
-require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.php';
 ?>
 
 <style>
@@ -48,14 +46,6 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     font-weight: normal;
 }
 </style>
-
-<?if ($dwpar2cron_pprof == "enable"):?>
-<div class="red-text" style="border: 1px solid red;padding: 5px;">
-    Diagnostic profiling is enabled, disable it as soon as you are done.<br>
-    A diagnostic profile will be generated for every manually executed operation.<br>
-    You can then find the download link next to the diagnostic profile setting further below.
-</div><br>
-<?endif;?>
 
 <div id="par2cron-info">
     <i class="fa fa-spinner fa-spin"></i> Please wait, retrieving information...
