@@ -59,7 +59,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </dl>
 
     <dl>
-        <dt>Scope:</dt>
+        <dt>Operation Scope:</dt>
         <dd>
             <select class="dwpar2cron-run" id="OPSCOPE" name="OPSCOPE" size="1">
                 <?=dwpar2cron_share_options($dwpar2cron_opscope);?>
@@ -68,7 +68,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </dl>
 
     <blockquote class="inline_help">
-    <p>This setting controls which scope the par2cron operations will have.</p>
+    <p>This setting controls the scope for par2cron operations.</p>
     <p>It is recommended to let par2cron search the whole array for par2cron marker files.</p>
     </blockquote>
 
