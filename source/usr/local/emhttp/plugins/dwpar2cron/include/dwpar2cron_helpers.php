@@ -17,6 +17,27 @@
  * included in all copies or substantial portions of the Software.
  *
  */
+function dwpar2cron_share_options($selected = ''){
+    $shares = parse_ini_file('state/shares.ini', true);
+    if(!is_array($shares)) $shares = [];
+    uksort($shares, 'strnatcasecmp');
+
+    $dwpar2cron_options = '<option value="/mnt/user"';
+    if($selected === '/mnt/user')
+        $dwpar2cron_options .= ' selected';
+    $dwpar2cron_options .= '>Whole Array</option>';
+
+    foreach ($shares as $share) {
+        $value = '/mnt/user/' . $share["name"];
+        $dwpar2cron_options .= '<option value="' . $value . '"';
+        if($selected === $value)
+            $dwpar2cron_options .= ' selected';
+        $dwpar2cron_options .= '>Share: ' . $share["name"] . '</option>';
+    }
+
+    return $dwpar2cron_options;
+}
+
 function dwpar2cron_hour_options($time){
     $dwpar2cron_options = '';
         for($i = 0; $i <= 23; $i++){

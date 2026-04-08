@@ -35,7 +35,7 @@ nohup /usr/bin/par2cron repair \
     $PPROFARG \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    /mnt/user \
+    "${OPSCOPE:-/mnt/user}" \
     </dev/null \
     >> /var/log/dwpar2cron.log \
     2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1) &

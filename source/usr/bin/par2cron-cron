@@ -86,7 +86,7 @@ if [ "$CRONCREATE" == "enable" ]; then
     /usr/bin/par2cron create \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        /mnt/user \
+        "${OPSCOPE:-/mnt/user}" \
         >> /var/log/dwpar2cron.log \
         2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
@@ -136,7 +136,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
     /usr/bin/par2cron verify \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        /mnt/user \
+        "${OPSCOPE:-/mnt/user}" \
         >> /var/log/dwpar2cron.log \
         2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
@@ -199,7 +199,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
     /usr/bin/par2cron repair \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        /mnt/user \
+        "${OPSCOPE:-/mnt/user}" \
         >> /var/log/dwpar2cron.log \
         2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
@@ -248,7 +248,7 @@ echo "info: started" | logger -s -t "par2cron-cron"
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    /mnt/user \
+    "${OPSCOPE:-/mnt/user}" \
     > /usr/local/emhttp/plugins/dwpar2cron/info.json \
     2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
 RET=$?
