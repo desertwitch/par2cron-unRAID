@@ -61,9 +61,14 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     <dl>
         <dt><strong>Operation Scope:</strong></dt>
         <dd>
+            <?if(@parse_ini_file('state/shares.ini', true)):?>
             <select class="dwpar2cron-run" id="OPSCOPE" name="OPSCOPE" size="1">
                 <?=dwpar2cron_share_options($dwpar2cron_opscope);?>
             </select>
+            <?else:?>
+                <code><?=$dwpar2cron_opscope?></code><br>
+                <span class="red-text">Start array to modify this setting.</span>
+            <?endif;?>
         </dd>
     </dl>
 
