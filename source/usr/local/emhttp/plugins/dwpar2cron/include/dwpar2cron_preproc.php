@@ -25,10 +25,10 @@ foreach ($_POST as $key => $value) {
             if (empty($value) || in_array('/mnt/user', $value, true)) {
                 $_POST[$key] = '/mnt/user';
             } else {
-                $_POST[$key] = implode('\n', $value);
+                $_POST[$key] = implode("\n", $value);
             }
         } else {
-            $_POST[$key] = implode('\n', $value);
+            $_POST[$key] = implode("\n", $value);
         }
     }
 }
