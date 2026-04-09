@@ -387,7 +387,7 @@ $(function() {
     });
 
     $('#OPSCOPE').dropdownchecklist({
-        emptyText:"_(None)_",
+        emptyText:"_(All)_",
         explicitClose:"..._(close)_",
         firstItemChecksAll: true,
         width: 300
