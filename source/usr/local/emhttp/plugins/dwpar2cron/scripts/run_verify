@@ -17,7 +17,6 @@
 #
 umask 000
 
-DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
 
 echo "Starting par2cron (Verify Mode)..."
@@ -31,11 +30,13 @@ if [ "$PPROF" == "enable" ]; then
     PPROFARG="--pprof /tmp/par2cron-pprof-verify-$(date +%Y%m%d-%H%M%S).pb.gz"
 fi
 
+mapfile -t OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
+
 nohup /usr/bin/par2cron verify \
     $PPROFARG \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    "${OPSCOPE:-/mnt/user}" \
+    "${OPSCOPE_ARRAY[@]}" \
     </dev/null \
     >> /var/log/dwpar2cron.log \
     2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1) &

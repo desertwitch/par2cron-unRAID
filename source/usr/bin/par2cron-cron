@@ -48,6 +48,7 @@ fi
 
 # shellcheck disable=SC1091
 source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+mapfile -t OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 if [[ "$CRON" != "hourly" && "$CRON" != "daily" && "$CRON" != "weekly" && "$CRON" != "monthly" ]]; then
     exit 0
@@ -86,7 +87,7 @@ if [ "$CRONCREATE" == "enable" ]; then
     /usr/bin/par2cron create \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        "${OPSCOPE:-/mnt/user}" \
+        "${OPSCOPE_ARRAY[@]}" \
         >> /var/log/dwpar2cron.log \
         2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
@@ -136,7 +137,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
     /usr/bin/par2cron verify \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        "${OPSCOPE:-/mnt/user}" \
+        "${OPSCOPE_ARRAY[@]}" \
         >> /var/log/dwpar2cron.log \
         2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
@@ -199,7 +200,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
     /usr/bin/par2cron repair \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
-        "${OPSCOPE:-/mnt/user}" \
+        "${OPSCOPE_ARRAY[@]}" \
         >> /var/log/dwpar2cron.log \
         2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
     RET=$?
@@ -248,7 +249,7 @@ echo "info: started" | logger -s -t "par2cron-cron"
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    "${OPSCOPE:-/mnt/user}" \
+    "${OPSCOPE_ARRAY[@]}" \
     > /usr/local/emhttp/plugins/dwpar2cron/info.json \
     2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
 RET=$?

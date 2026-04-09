@@ -17,32 +17,31 @@
 #
 umask 000
 
-DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
 
 log_json() {
     local level="${1:-INFO}"
     local msg="$2"
     local op="${3:-}"
-    local path="${4:-}"
-
     local timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
 
-    printf '{"time":"%s","level":"%s","msg":"%s","op":"%s","path":"%s"}\n' \
-        "$timestamp" "$level" "$msg" "$op" "$path" >> /var/log/dwpar2cron.json
+    printf '{"time":"%s","level":"%s","msg":"%s","op":"%s"}\n' \
+        "$timestamp" "$level" "$msg" "$op" >> /var/log/dwpar2cron.json
 }
 
 if [ "$PPROF" == "enable" ]; then
     PPROFARG="--pprof /tmp/par2cron-pprof-info-$(date +%Y%m%d-%H%M%S).pb.gz"
 fi
 
-log_json "INFO" "Scanning filesystem for jobs..." "info" "${OPSCOPE:-/mnt/user}"
+log_json "INFO" "Scanning filesystem for jobs..." "info"
+
+mapfile -t OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 /usr/bin/par2cron info \
     $PPROFARG \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    "${OPSCOPE:-/mnt/user}" \
+    "${OPSCOPE_ARRAY[@]}" \
     </dev/null \
     >> /usr/local/emhttp/plugins/dwpar2cron/info.json \
     2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
@@ -50,19 +49,19 @@ RET=$?
 
 case "$RET" in
 0)
-    log_json "INFO" "Operation finished (return code: $RET - success)" "info" "${OPSCOPE:-/mnt/user}"
+    log_json "INFO" "Operation finished (return code: $RET - success)" "info"
     ;;
 1)
-    log_json "ERROR" "Operation finished (return code: $RET - partial failure)" "info" "${OPSCOPE:-/mnt/user}"
+    log_json "ERROR" "Operation finished (return code: $RET - partial failure)" "info"
     ;;
 2)
-    log_json "ERROR" "Operation finished (return code: $RET - bad invocation)" "info" "${OPSCOPE:-/mnt/user}"
+    log_json "ERROR" "Operation finished (return code: $RET - bad invocation)" "info"
     ;;
 5)
-    log_json "ERROR" "Operation finished (return code: $RET - unclassified error)" "info" "${OPSCOPE:-/mnt/user}"
+    log_json "ERROR" "Operation finished (return code: $RET - unclassified error)" "info"
     ;;
 *)
-    log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info" "${OPSCOPE:-/mnt/user}"
+    log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info"
     ;;
 esac
 
