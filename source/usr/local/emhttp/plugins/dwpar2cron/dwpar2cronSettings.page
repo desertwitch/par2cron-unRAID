@@ -390,7 +390,7 @@ $(function() {
         emptyText:"_(None)_",
         explicitClose:"..._(close)_",
         firstItemChecksAll: true,
-        width: 300
+        width: 250
     });
 
     if ( typeof caPluginUpdateCheck === "function" ) {
