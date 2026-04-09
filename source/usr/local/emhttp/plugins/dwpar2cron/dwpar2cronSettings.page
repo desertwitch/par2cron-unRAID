@@ -388,9 +388,9 @@ $(function() {
 
     $('#OPSCOPE').dropdownchecklist({
         emptyText:"_(None)_",
-        explicitClose:"..._(close)_"
+        explicitClose:"..._(close)_",
         firstItemChecksAll: true,
-        width: 300,
+        width: 300
     });
 
     if ( typeof caPluginUpdateCheck === "function" ) {
