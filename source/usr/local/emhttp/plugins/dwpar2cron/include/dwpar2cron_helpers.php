@@ -19,7 +19,7 @@
  */
 function dwpar2cron_share_options($selected = '') {
     if (is_string($selected)) {
-        $selected_values = explode(',', $selected);
+        $selected_values = explode('\n', $selected);
     } elseif (is_array($selected)) {
         $selected_values = $selected;
     } else {
