@@ -21,6 +21,7 @@ foreach ($_POST as $key => $value) {
     if ($key[0] !== '#' && is_array($value)) {
         if ($key === 'OPSCOPE') {
             $value = array_map('trim', $value);
+            $value = array_filter($value, 'strlen');
 
             if (empty($value) || in_array('/mnt/user', $value, true)) {
                 $_POST[$key] = '/mnt/user';
