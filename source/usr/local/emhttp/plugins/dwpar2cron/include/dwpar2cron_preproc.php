@@ -22,7 +22,7 @@ foreach ($_POST as $key => $value) {
         if ($key === 'OPSCOPE') {
             $value = array_map('trim', $value);
 
-            if (in_array('/mnt/user', $value, true)) {
+            if (empty($value) || in_array('/mnt/user', $value, true)) {
                 $_POST[$key] = '/mnt/user';
             } else {
                 $_POST[$key] = implode(',', $value);
