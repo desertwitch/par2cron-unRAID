@@ -17,25 +17,36 @@
  * included in all copies or substantial portions of the Software.
  *
  */
-function dwpar2cron_share_options($selected = ''){
-    $shares = parse_ini_file('state/shares.ini', true);
-    if(!is_array($shares)) $shares = [];
-    uksort($shares, 'strnatcasecmp');
-
-    $dwpar2cron_options = '<option value="/mnt/user"';
-    if($selected === '/mnt/user')
-        $dwpar2cron_options .= ' selected';
-    $dwpar2cron_options .= '>Array</option>';
-
-    foreach ($shares as $share) {
-        $value = '/mnt/user/' . $share["name"];
-        $dwpar2cron_options .= '<option value="' . $value . '"';
-        if($selected === $value)
-            $dwpar2cron_options .= ' selected';
-        $dwpar2cron_options .= '>Share: ' . $share["name"] . '</option>';
+function dwpar2cron_share_options($selected = '') {
+    if (is_string($selected)) {
+        $selected_values = explode(',', $selected);
+    } elseif (is_array($selected)) {
+        $selected_values = $selected;
+    } else {
+        $selected_values = [];
     }
 
-    return $dwpar2cron_options;
+    $shares = parse_ini_file('state/shares.ini', true);
+    if (!$shares) $shares = [];
+
+    uksort($shares, 'strnatcasecmp');
+
+    $out = '';
+
+    $array_val = '/mnt/user';
+    $is_array_sel = in_array($array_val, $selected_values) ? ' selected' : '';
+    $out .= "<option value=\"$array_val\"$is_array_sel>Array</option>\n";
+
+    foreach ($shares as $share) {
+        $name = $share["name"];
+        $value = '/mnt/user/' . $name;
+
+        $sel = in_array($value, $selected_values) ? ' selected' : '';
+
+        $out .= "<option value=\"$value\"$sel>Share: $name</option>\n";
+    }
+
+    return $out;
 }
 
 function dwpar2cron_hour_options($time){

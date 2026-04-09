@@ -28,6 +28,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
 <form markdown="0" id="dwpar2cron-settings" name="dwpar2cron_settings" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="dwpar2cron-set-file" name="#file" value="dwpar2cron/dwpar2cron.cfg">
+    <input type="hidden" id="dwpar2cron-set-include" name="#include" value="/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_preproc.php">
     <input type="hidden" id="dwpar2cron-set-cmd" name="#command" value="/usr/local/emhttp/plugins/dwpar2cron/scripts/write_config">
 
     <dl>
@@ -62,7 +63,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         <dt><strong>Operation Scope:</strong></dt>
         <dd>
             <?if(@parse_ini_file('state/shares.ini', true)):?>
-            <select class="dwpar2cron-run" id="OPSCOPE" name="OPSCOPE" size="1">
+            <select class="dwpar2cron-run" id="OPSCOPE" name="OPSCOPE[]" size="6" multiple="multiple">
                 <?=dwpar2cron_share_options($dwpar2cron_opscope);?>
             </select>
             <?else:?>
@@ -380,7 +381,7 @@ $(function() {
     $("#CRON").change(dwpar2cronCronSettings);
     $('#RESETCONF').click(function(){ swal({title:"Are you sure?",text:"This action will return any existing configuration to their defaults!",type:"warning",html:true,showCancelButton:true}, dwpar2cronResetConfig); });
     $('#DELPROF').click(function(){ swal({title:"Are you sure?",text:"This action will delete your existing diagnostic profile!",type:"warning",html:true,showCancelButton:true}, dwpar2cronDeleteProfile); });
-    
+
     $('.dwpar2cron-tip').tooltipster({
         maxWidth: 300
     });
