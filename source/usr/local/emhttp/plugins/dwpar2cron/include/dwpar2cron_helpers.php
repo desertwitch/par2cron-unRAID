@@ -28,9 +28,14 @@ function dwpar2cron_share_options($selected = '') {
 
     $shares = parse_ini_file('state/shares.ini', true);
     if (!$shares) $shares = [];
+
     uksort($shares, 'strnatcasecmp');
 
     $out = '';
+
+    $array_val = '/mnt/user';
+    $is_array_sel = in_array($array_val, $selected_values) ? ' selected' : '';
+    $out .= "<option value=\"$array_val\"$is_array_sel>(Array)</option>\n";
 
     foreach ($shares as $share) {
         $name = $share["name"];

@@ -19,7 +19,17 @@
  */
 foreach ($_POST as $key => $value) {
     if ($key[0] !== '#' && is_array($value)) {
-        $_POST[$key] = implode(',', $value);
+        if ($key === 'OPSCOPE') {
+            $value = array_map('trim', $value);
+
+            if (in_array('/mnt/user', $value, true)) {
+                $_POST[$key] = '/mnt/user';
+            } else {
+                $_POST[$key] = implode(',', $value);
+            }
+        } else {
+            $_POST[$key] = implode(',', $value);
+        }
     }
 }
 ?>

@@ -19,7 +19,7 @@
  */
 $dwpar2cron_cfg = file_exists("/boot/config/plugins/dwpar2cron/dwpar2cron.cfg") ? parse_ini_file("/boot/config/plugins/dwpar2cron/dwpar2cron.cfg") : [];
 
-$dwpar2cron_opscope = trim(isset($dwpar2cron_cfg['OPSCOPE']) ? htmlspecialchars($dwpar2cron_cfg['OPSCOPE']) : '');
+$dwpar2cron_opscope = trim(isset($dwpar2cron_cfg['OPSCOPE']) ? htmlspecialchars($dwpar2cron_cfg['OPSCOPE']) : '/mnt/user');
 $dwpar2cron_cron = trim(isset($dwpar2cron_cfg['CRON']) ? htmlspecialchars($dwpar2cron_cfg['CRON']) : 'disable');
 $dwpar2cron_pprof = trim(isset($dwpar2cron_cfg['PPROF']) ? htmlspecialchars($dwpar2cron_cfg['PPROF']) : 'disable');
 
