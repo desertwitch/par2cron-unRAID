@@ -99,7 +99,7 @@ $(function() {
 
             html += '<table class="tablesorter shift par2cron-info-table">';
             html += '<tr><th colspan="2">Report Information</th></tr>';
-            if (data.root) html += row('Root', 'Root directory the report was requested for', data.root);
+            if (data.roots) html += row('Root', 'Root directory the report was requested for', Array.isArray(data.roots) ? data.roots.join('<br>') : data.roots);
             html += row('Generation Time', 'Timestamp of when this report was created', formatTime(data.time));
             html += '</table>';
 
