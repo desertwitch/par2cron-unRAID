@@ -48,7 +48,7 @@ fi
 
 # shellcheck disable=SC1091
 source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
-mapfile -t OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
+IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 if [[ "$CRON" != "hourly" && "$CRON" != "daily" && "$CRON" != "weekly" && "$CRON" != "monthly" ]]; then
     exit 0

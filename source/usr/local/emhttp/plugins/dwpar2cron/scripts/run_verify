@@ -30,7 +30,7 @@ if [ "$PPROF" == "enable" ]; then
     PPROFARG="--pprof /tmp/par2cron-pprof-verify-$(date +%Y%m%d-%H%M%S).pb.gz"
 fi
 
-mapfile -t OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
+IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 nohup /usr/bin/par2cron verify \
     $PPROFARG \

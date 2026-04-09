@@ -35,7 +35,7 @@ fi
 
 log_json "INFO" "Scanning filesystem for jobs..." "info"
 
-mapfile -t OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
+IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 /usr/bin/par2cron info \
     $PPROFARG \
