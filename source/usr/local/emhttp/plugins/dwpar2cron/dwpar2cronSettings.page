@@ -28,7 +28,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
 <form markdown="0" id="dwpar2cron-settings" name="dwpar2cron_settings" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="dwpar2cron-set-file" name="#file" value="dwpar2cron/dwpar2cron.cfg">
-    <input type="hidden" id="dwpar2cron-set-include" name="#include" value="/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_preproc.php">
+    <input type="hidden" id="dwpar2cron-set-include" name="#include" value="/plugins/dwpar2cron/include/dwpar2cron_preproc.php">
     <input type="hidden" id="dwpar2cron-set-cmd" name="#command" value="/usr/local/emhttp/plugins/dwpar2cron/scripts/write_config">
 
     <dl>
@@ -384,6 +384,13 @@ $(function() {
 
     $('.dwpar2cron-tip').tooltipster({
         maxWidth: 300
+    });
+
+    $('#OPSCOPE').dropdownchecklist({
+        emptyText:"_(None)_",
+        explicitClose:"..._(close)_"
+        firstItemChecksAll: true,
+        width: 300,
     });
 
     if ( typeof caPluginUpdateCheck === "function" ) {

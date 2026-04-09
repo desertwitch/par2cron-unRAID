@@ -35,7 +35,7 @@ function dwpar2cron_share_options($selected = '') {
 
     $array_val = '/mnt/user';
     $is_array_sel = in_array($array_val, $selected_values) ? ' selected' : '';
-    $out .= "<option value=\"$array_val\"$is_array_sel>Array</option>\n";
+    $out .= "<option value=\"$array_val\"$is_array_sel>(Array)</option>\n";
 
     foreach ($shares as $share) {
         $name = $share["name"];
@@ -43,7 +43,7 @@ function dwpar2cron_share_options($selected = '') {
 
         $sel = in_array($value, $selected_values) ? ' selected' : '';
 
-        $out .= "<option value=\"$value\"$sel>Share: $name</option>\n";
+        $out .= "<option value=\"$value\"$sel>$name</option>\n";
     }
 
     return $out;
