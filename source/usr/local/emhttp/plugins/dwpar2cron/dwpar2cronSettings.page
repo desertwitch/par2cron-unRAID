@@ -67,7 +67,11 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
                 <?=dwpar2cron_share_options($dwpar2cron_opscope);?>
             </select>
             <?else:?>
-                <code><?=$dwpar2cron_opscope?></code><br>
+                <ul>
+                <? foreach (explode("|", $dwpar2cron_opscope) as $path): ?>
+                    <li><?= htmlspecialchars($path) ?></li>
+                <? endforeach; ?>
+                </ul>
                 <span class="red-text">Start array to modify this setting.</span>
             <?endif;?>
         </dd>
