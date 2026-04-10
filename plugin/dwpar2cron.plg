@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.04.10c">
+<!ENTITY version   "2026.04.10d">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
@@ -18,9 +18,7 @@
 
 <CHANGES>
 ## par2cron for UNRAID
-###2026.04.10c
-- new: switched backend from par2cmdline to par2cmdline-turbo
-###2026.04.10b
+###2026.04.10d
 - new: allow selection of shares to run par2cron against
 - new: allow generation of diagnostic performance profiles
 - new: added creation mode nested for growing media libraries
@@ -60,10 +58,9 @@
 
 <FILE Run="/bin/bash">
 <INLINE>
-# Remove old par2cmdline backend in favor of par2cmdline-turbo
 for pkg in &plgPATH;/par2cmdline-*; do
     if [[ -f "$pkg" ]]; then
-        if [[ "$(basename "$pkg")" != par2cmdline-turbo* ]]; then
+        if [[ "$(basename "$pkg")" == par2cmdline-turbo* ]]; then
             removepkg "$pkg"
             rm -vf "$pkg"
         fi
@@ -73,9 +70,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cmdline-turbo-1.4.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cmdline-turbo-1.4.0-x86_64-1.txz</URL>
-<MD5>20c848766aa289b3b8cda92be7d9e6f4</MD5>
+<FILE Name="&plgPATH;/par2cmdline-1.1.1-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cmdline-1.1.1-x86_64-1.txz</URL>
+<MD5>b824535f9d1a692817c7726996545033</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/par2cron-0.3.1-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
