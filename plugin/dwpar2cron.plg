@@ -22,6 +22,7 @@
 - new: allow selection of shares to run par2cron against
 - new: allow generation of diagnostic performance profiles
 - new: added creation mode nested for growing media libraries
+- new: added marker config option to allow persisting marker files
 - fix: filesystem scanning performance significantly improved
 - new: par2cron backend was updated to release version 0.3.0
 - changes: https://github.com/desertwitch/par2cron/releases/tag/v0.3.0
