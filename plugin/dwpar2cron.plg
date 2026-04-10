@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.04.10a">
+<!ENTITY version   "2026.04.10b">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwpar2cron-2026.04.10-x86_64-2">
-<!ENTITY plgMD5    "7b1ebe0427aff1c7a092ba0f8ea36159">
+<!ENTITY plgNAME   "dwpar2cron-2026.04.10-x86_64-3">
+<!ENTITY plgMD5    "deb84526c74f365d070e68b792fc3d83">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,7 +18,7 @@
 
 <CHANGES>
 ## par2cron for UNRAID
-###2026.04.10a
+###2026.04.10b
 - new: allow selection of shares to run par2cron against
 - new: allow generation of diagnostic performance profiles
 - new: added creation mode nested for growing media libraries
