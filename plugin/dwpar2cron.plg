@@ -18,6 +18,13 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.04.10
+- new: allow selection of shares to run par2cron against
+- new: allow generation of diagnostic performance profiles
+- fix: filesystem scanning performance significantly improved
+- new: par2cron backend was updated to release version 0.3.0
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.3.0
+- release note: thanks to forum user Karools for their feedback and testing
 ###2026.04.07d
 - new: par2cron backend was updated to release version 0.2.2 (bugfix)
 - changes: https://github.com/desertwitch/par2cron/releases/tag/v0.2.2
@@ -52,9 +59,9 @@
 <MD5>b824535f9d1a692817c7726996545033</MD5>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.2.2-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.2.2-x86_64-1.txz</URL>
-<MD5>bdcfa97bfb7aa0ae73091c05a81439c4</MD5>
+<FILE Name="&plgPATH;/par2cron-0.3.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.3.0-x86_64-1.txz</URL>
+<MD5>4cf1a9031d47229389b5b61f73a24702</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
