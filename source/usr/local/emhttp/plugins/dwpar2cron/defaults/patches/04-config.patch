@@ -1,0 +1,9 @@
+diff --git a/par2cron.yaml b/par2cron.yaml
+index 0eb3814..2bd1294 100644
+--- a/par2cron.yaml
++++ b/par2cron.yaml
+@@ -24,3 +24,3 @@ create:
+   #
+-  # Beware deep glob patterns (/) only work in non-recursive creation modes
++  # Note deep glob patterns (/, **) only work in non-recursive creation modes
+   # Refer to par2cron documentation for detailed information on creation modes

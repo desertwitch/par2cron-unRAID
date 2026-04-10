@@ -72,7 +72,7 @@ par2cron will create parity data, periodically verify integrity, and repair corr
     For more predictable protection, subfolders <u>are not</u> recursed into by default.
     <br>The flat scope ensures you always know exactly which files a PAR2 set covers.
     <div style="margin-top: 5px; font-style: italic; font-size: 0.9em;">
-      For subfolder protection, choose between <a href="https://github.com/desertwitch/par2cron/tree/devel?tab=readme-ov-file#deep-patterns-containing-" target="_blank">deep glob patterns</a> and <a href="https://github.com/desertwitch/par2cron/tree/devel?tab=readme-ov-file#recursive-mode" target="_blank">recursive mode</a>.
+      For subfolder protection, choose between <a href="https://github.com/desertwitch/par2cron#deep-patterns-containing--or-" target="_blank">deep glob patterns</a> and <a href="https://github.com/desertwitch/par2cron#recursive-mode" target="_blank">recursive mode</a>.
       <br>Be advised that these modes are best set on a per-job basis via marker configuration.
     </div>
   </div>
