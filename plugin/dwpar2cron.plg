@@ -71,10 +71,28 @@ for pkg in &plgPATH;/par2cmdline-*; do
         fi
     fi
 done
-if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
+if compgen -G "&plgPATH;/custom/*" 1>/dev/null 2>/dev/null; then
+    # If a custom backend is present now, clean any default backends first.
     if compgen -G "&plgPATH;/par2cmdline-*" 1>/dev/null 2>/dev/null; then
         removepkg &plgPATH;/par2cmdline-*
     fi
+    # We always reinstall custom backends to avoid broken states...
+    if compgen -G "/tmp/par2cron-custom/*.txz" 1>/dev/null 2>/dev/null; then
+        removepkg /tmp/par2cron-custom/*.txz
+    fi
+    if [[ -f /tmp/par2cron-custom/par2 ]]; then
+        rm -f /usr/bin/par2
+    fi
+    rm -rf /tmp/par2cron-custom
+elif compgen -G "/tmp/par2cron-custom/*" 1>/dev/null 2>/dev/null; then
+    # If a custom backend was present but is no longer, clean any custom backends first.
+    if compgen -G "/tmp/par2cron-custom/*.txz" 1>/dev/null 2>/dev/null; then
+        removepkg /tmp/par2cron-custom/*.txz
+    fi
+    if [[ -f /tmp/par2cron-custom/par2 ]]; then
+        rm -f /usr/bin/par2
+    fi
+    rm -rf /tmp/par2cron-custom
 fi
 exit 0
 </INLINE>
@@ -89,19 +107,25 @@ exit 0
 <INLINE>
 echo ""
 if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
+    mkdir -p /tmp/par2cron-custom
     echo "A par2 backend was provided by the user, installing that instead..."
     echo "You can remove the &plgPATH;/custom/ folder to install the default one."
     upgradepkg --install-new &plgPATH;/custom/*.txz
+    cp -f &plgPATH;/custom/*.txz /tmp/par2cron-custom/
     if [[ -f &plgPATH;/custom/par2 ]]; then
         cp -f &plgPATH;/custom/par2 /usr/bin/par2
+        cp -f &plgPATH;/custom/par2 /tmp/par2cron-custom/
         chmod 755 /usr/bin/par2
     fi
 elif [[ -f &plgPATH;/custom/par2 ]]; then
+    mkdir -p /tmp/par2cron-custom
     echo "A par2 backend was provided by the user, installing that instead..."
     echo "You can remove the &plgPATH;/custom/ folder to install the default one."
     cp -f &plgPATH;/custom/par2 /usr/bin/par2
+    cp -f &plgPATH;/custom/par2 /tmp/par2cron-custom/
     chmod 755 /usr/bin/par2
 else
+    rm -rf /tmp/par2cron-custom
     echo "No par2 backend was provided by the user, installing the default..."
     echo "You can provide a custom par2 binary or .txz in: &plgPATH;/custom/"
     upgradepkg --install-new &plgPATH;/par2cmdline-1.1.1-x86_64-1.txz
@@ -151,6 +175,7 @@ killall par2cron >/dev/null 2>&amp;1
 removepkg &plgPATH;/*.txz
 
 if compgen -G "&plgPATH;/custom/*" 1>/dev/null 2>/dev/null; then
+    # The user has a custom backend, uninstall it but preserve it on USB.
     if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
         removepkg &plgPATH;/custom/*.txz
     fi
@@ -158,11 +183,21 @@ if compgen -G "&plgPATH;/custom/*" 1>/dev/null 2>/dev/null; then
         rm -f /usr/bin/par2
     fi
     rm -f &plgPATH;/*
+elif compgen -G "/tmp/par2cron-custom/*" 1>/dev/null 2>/dev/null; then
+    # The user removed their custom backend, ensure it is also uninstalled.
+    if compgen -G "/tmp/par2cron-custom/*.txz" 1>/dev/null 2>/dev/null; then
+        removepkg /tmp/par2cron-custom/*.txz
+    fi
+    if [[ -f /tmp/par2cron-custom/par2 ]]; then
+        rm -f /usr/bin/par2
+    fi
+    rm -rf &plgPATH;
 else
     rm -rf &plgPATH;
 fi
 
 rm -rf &emhttp;
+rm -rf /tmp/par2cron-custom
 
 rm -f /var/log/dwpar2cron.json
 rm -f /var/log/dwpar2cron.log
