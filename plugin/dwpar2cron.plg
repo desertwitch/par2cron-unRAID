@@ -67,7 +67,7 @@ for pkg in &plgPATH;/par2cmdline-*; do
     if [[ -f "$pkg" ]]; then
         if [[ "$(basename "$pkg")" == par2cmdline-turbo* ]]; then
             removepkg "$pkg"
-            rm -vf "$pkg"
+            rm -f "$pkg"
         fi
     fi
 done
@@ -182,7 +182,9 @@ if compgen -G "&plgPATH;/custom/*" 1>/dev/null 2>/dev/null; then
     if [[ -f &plgPATH;/custom/par2 ]]; then
         rm -f /usr/bin/par2
     fi
-    rm -f &plgPATH;/*
+    if [ -n "&plgPATH;" ]; then
+        rm -f &plgPATH;/*
+    fi
 elif compgen -G "/tmp/par2cron-custom/*" 1>/dev/null 2>/dev/null; then
     # The user removed their custom backend, ensure it is also uninstalled.
     if compgen -G "/tmp/par2cron-custom/*.txz" 1>/dev/null 2>/dev/null; then
