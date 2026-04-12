@@ -66,6 +66,11 @@ for pkg in &plgPATH;/par2cmdline-*; do
         fi
     fi
 done
+if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
+    if compgen -G "&plgPATH;/par2cmdline-*" 1>/dev/null 2>/dev/null; then
+        removepkg &plgPATH;/par2cmdline-*
+    fi
+fi
 exit 0
 </INLINE>
 </FILE>
@@ -86,6 +91,11 @@ if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
         mv &plgPATH;/custom/par2 /usr/bin/par2
         chmod 755 /usr/bin/par2
     fi
+elif [[ -f &plgPATH;/custom/par2 ]]; then
+    echo "A par2 backend was provided by the user, installing that instead..."
+    echo "You can remove the &plgPATH;/custom/ folder to install the default one."
+    mv &plgPATH;/custom/par2 /usr/bin/par2
+    chmod 755 /usr/bin/par2
 else
     echo "No par2 backend was provided by the user, installing the default..."
     echo "You can provide a custom par2 binary or .txz in: &plgPATH;/custom/"
@@ -134,7 +144,18 @@ killall par2cron >/dev/null 2>&amp;1
 
 removepkg &plgPATH;/*.txz
 
-rm -rf &plgPATH;
+if compgen -G "&plgPATH;/custom/*" 1>/dev/null 2>/dev/null; then
+    if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
+        removepkg &plgPATH;/custom/*.txz
+    fi
+    if [[ -f &plgPATH;/custom/par2 ]]; then
+        rm -f /usr/bin/par2
+    fi
+    rm -f &plgPATH;/*
+else
+    rm -rf &plgPATH;
+fi
+
 rm -rf &emhttp;
 
 rm -f /var/log/dwpar2cron.json
