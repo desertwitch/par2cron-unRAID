@@ -39,6 +39,8 @@ log_json "INFO" "Scanning filesystem for jobs..." "info"
 
 IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
+echo "info: started" | logger -t "par2cron-plugin"
+
 /usr/bin/par2cron info \
     $PPROFARG \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
