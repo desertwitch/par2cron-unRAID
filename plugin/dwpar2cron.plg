@@ -18,6 +18,11 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.04.12
+- new: allow sending notifications on completion of manual operations from GUI
+- new: allow providing custom par2 binary in /boot/config/plugins/dwpar2cron/custom folder
+- new: par2cron backend was updated to release version 0.3.2 (bugfix)
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.3.2
 ###2026.04.10d
 - new: allow selection of shares to run par2cron against
 - new: allow generation of diagnostic performance profiles
