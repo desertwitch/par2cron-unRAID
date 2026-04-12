@@ -39,7 +39,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </dl>
 
     <dl>
-        <dt>par2cron Backend:</dt>
+        <dt>par2cron Package:</dt>
         <dd>
             <strong><?= isset($dwpar2cron_par2cron_backend) && $dwpar2cron_par2cron_backend ? $dwpar2cron_par2cron_backend : "n/a" ?></strong>
         </dd>
@@ -53,7 +53,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </dl>
 
     <dl>
-        <dt>par2cmdline Backend:</dt>
+        <dt>par2cmdline Package:</dt>
         <dd>
             <strong><?= isset($dwpar2cron_par2_backend) && $dwpar2cron_par2_backend ? $dwpar2cron_par2_backend : "n/a" ?></strong>
         </dd>
