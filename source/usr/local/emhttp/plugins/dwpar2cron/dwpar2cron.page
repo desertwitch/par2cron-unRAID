@@ -174,7 +174,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-clear" value="CLEAR LOGS" title="Clears the par2cron logfiles and empties the operational output screen.">
             <div style="text-align:right;margin-right:15px;">Please always read and understand the documentation <strong>before</strong> running any operations.</div>
             <div style="text-align:right;margin-right:15px;margin-top:10px;" class="dwpar2cron-run-hidden">
-                <input type="checkbox" id="dwpar2cron-notifyme" value="dwpar2cron-notifyme" checked>
+                <input type="checkbox" id="dwpar2cron-notifyme" value="dwpar2cron-notifyme">
                 <label for="dwpar2cron-notifyme" title="Sends a notification when the manually started operation finishes (using Unraid's system-wide notification settings)." class="dwpar2cron-tip">Send me a notification once the operation completes.</label>
             </div>
             <br>
