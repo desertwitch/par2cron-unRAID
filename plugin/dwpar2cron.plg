@@ -101,6 +101,7 @@ else
     echo "You can provide a custom par2 binary or .txz in: &plgPATH;/custom/"
     upgradepkg --install-new &plgPATH;/par2cmdline-1.1.1-x86_64-1.txz
 fi
+echo ""
 exit 0
 </INLINE>
 </FILE>
