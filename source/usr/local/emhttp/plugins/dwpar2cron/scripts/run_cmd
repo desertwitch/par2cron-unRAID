@@ -17,28 +17,26 @@
 #
 umask 000
 
-source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+OPCMD="${1:-}"
+OPNOTIFY="${2:-}"
 
-echo "Starting par2cron (Verify Mode)..."
-echo "Starting par2cron (Verify Mode)..." | logger -t "par2cron-plugin"
+if [ -z "$OPCMD" ]; then
+    echo "Usage: $0 <command> [notify]" | logger -s -t "par2cron-plugin"
+    exit 1
+fi
+
+echo "Starting par2cron (${OPCMD^} Mode)..."
+echo "Starting par2cron (${OPCMD^} Mode)..." | logger -t "par2cron-plugin"
 
 rm -f /var/log/dwpar2cron.json
 rm -f /var/log/dwpar2cron.log
 rm -f /tmp/par2cron-pprof-*.pb.gz
 
-if [ "$PPROF" == "enable" ]; then
-    PPROFARG="--pprof /tmp/par2cron-pprof-verify-$(date +%Y%m%d-%H%M%S).pb.gz"
+if [ "$OPCMD" == "info" ]; then
+    rm -f /usr/local/emhttp/plugins/dwpar2cron/info.json
+    nohup /usr/local/emhttp/plugins/dwpar2cron/scripts/cmd_info "$OPNOTIFY" </dev/null >/dev/null 2>&1 &
+else
+    nohup /usr/local/emhttp/plugins/dwpar2cron/scripts/cmd_other "$OPCMD" "$OPNOTIFY" </dev/null >/dev/null 2>&1 &
 fi
 
-IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
-
-nohup /usr/bin/par2cron verify \
-    $PPROFARG \
-    -c /boot/config/plugins/dwpar2cron/config.yaml \
-    --json \
-    "${OPSCOPE_ARRAY[@]}" \
-    </dev/null \
-    >> /var/log/dwpar2cron.log \
-    2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1) &
-
-sleep 1
+sleep 2

@@ -1,0 +1,81 @@
+#!/bin/bash
+#
+# Copyright Derek Macias (parts of code from NUT package)
+# Copyright macester (parts of code from NUT package)
+# Copyright gfjardim (parts of code from NUT package)
+# Copyright SimonF (parts of code from NUT package)
+# Copyright Lime Technology (any and all other parts of Unraid)
+#
+# Copyright desertwitch (as author and maintainer of this file)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License 2
+# as published by the Free Software Foundation.
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+umask 000
+
+source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+
+OPCMD="${1:-}"
+OPNOTIFY="${2:-}"
+
+if [ "$PPROF" == "enable" ]; then
+    PPROFARG="--pprof /tmp/par2cron-pprof-${OPCMD}-$(date +%Y%m%d-%H%M%S).pb.gz"
+fi
+
+IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
+
+echo "${OPCMD}: started" | logger -t "par2cron-plugin"
+
+/usr/bin/par2cron "$OPCMD" \
+    $PPROFARG \
+    -c /boot/config/plugins/dwpar2cron/config.yaml \
+    --json \
+    "${OPSCOPE_ARRAY[@]}" \
+    </dev/null \
+    >> /var/log/dwpar2cron.log \
+    2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
+RET=$?
+
+sleep 1
+
+NOTIFY_BIN="/usr/local/emhttp/plugins/dynamix/scripts/notify"
+HOST=$(echo "$HOSTNAME" | awk '{print toupper($0)}')
+EVENT="par2cron-UI"
+SUBJECT="[${HOST}] par2cron-UI:"
+
+case "$RET" in
+0)
+    echo "${OPCMD}: finished (return code: ${RET} - success)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Notice ${SUBJECT} ${OPCMD^}: Success" -d "Operation has finished with success." -i "normal"
+    ;;
+1)
+    echo "${OPCMD}: finished (return code: ${RET} - partial failure)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Partial Failure" -d "Not all jobs could be processed." -i "alert"
+    ;;
+2)
+    echo "${OPCMD}: finished (return code: ${RET} - bad invocation)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Bad Invocation" -d "A bad invocation error was returned." -i "alert"
+    ;;
+3)
+    echo "${OPCMD}: finished (return code: ${RET} - repairable corruption)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Repairable Corruption" -d "Operation has detected repairable corruption." -i "alert"
+    ;;
+4)
+    echo "${OPCMD}: finished (return code: ${RET} - unrepairable corruption)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Unrepairable Corruption" -d "Operation has detected unrepairable corruption." -i "alert"
+    ;;
+5)
+    echo "${OPCMD}: finished (return code: ${RET} - unclassified error)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Unclassified Error" -d "An unclassified error was returned." -i "alert"
+    ;;
+*)
+    echo "${OPCMD}: finished (return code: ${RET} - unexpected return code)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Unexpected Code" -d "An unexpected exit code was returned." -i "alert"
+    ;;
+esac
+
+sleep 1

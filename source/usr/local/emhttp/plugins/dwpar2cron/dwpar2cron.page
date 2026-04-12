@@ -162,6 +162,8 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 <div style="margin-right:15px;">
     <form markdown="0" id="dwpar2cron-operations" name="dwpar2cron_operations" method="POST" action="/update.php" target="progressFrame">
         <input type="hidden" id="dwpar2cron-ops-cmd" name="#command" value="/usr/local/emhttp/plugins/dwpar2cron/scripts/none">
+        <input type="hidden" id="dwpar2cron-ops-arg1" name="#arg[1]" value="">
+        <input type="hidden" id="dwpar2cron-ops-arg2" name="#arg[2]" value="">
 
         <span style="float:right;text-align:right;">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-create" value="MANUAL CREATE" title="Creates PAR2 sets for each marker file found in the directory tree according to the user-configured settings.">
@@ -171,6 +173,10 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
             <input class="dwpar2cron-notrun dwpar2cron-tip" type="button" id="dwpar2cron-stop" value="STOP PROGRAM" title="Stops any running par2cron instances.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-clear" value="CLEAR LOGS" title="Clears the par2cron logfiles and empties the operational output screen.">
             <div style="text-align:right;margin-right:15px;">Please always read and understand the documentation <strong>before</strong> running any operations.</div>
+            <div style="text-align:right;margin-right:15px;margin-top:10px;">
+                <input class="dwpar2cron-run" type="checkbox" id="dwpar2cron-notifyme" value="dwpar2cron-notifyme" checked>
+                <label for="dwpar2cron-notifyme" title="Sends a notification when the manually started operation finishes (using Unraid's system-wide notification settings)." class="dwpar2cron-tip">Send me a notification once the operation completes.</label>
+            </div>
             <br>
         </span>
     </form>
@@ -588,32 +594,44 @@ $(document).ready(function() {
         }
     };
 
-    $('#dwpar2cron-clear').click(function(){
-        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/clear');
-        $('#dwpar2cron-operations').submit();
-    });
-
     $('#dwpar2cron-create').click(function(){
-        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_create');
+        $('#dwpar2cron-ops-arg1').val('create');
+        $('#dwpar2cron-ops-arg2').val($('#dwpar2cron-notifyme').is(':checked') ? '1' : '0');
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_cmd');
         $('#dwpar2cron-operations').submit();
     });
 
     $('#dwpar2cron-verify').click(function(){
-        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_verify');
+        $('#dwpar2cron-ops-arg1').val('verify');
+        $('#dwpar2cron-ops-arg2').val($('#dwpar2cron-notifyme').is(':checked') ? '1' : '0');
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_cmd');
         $('#dwpar2cron-operations').submit();
     });
 
     $('#dwpar2cron-repair').click(function(){
-        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_repair');
+        $('#dwpar2cron-ops-arg1').val('repair');
+        $('#dwpar2cron-ops-arg2').val($('#dwpar2cron-notifyme').is(':checked') ? '1' : '0');
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_cmd');
         $('#dwpar2cron-operations').submit();
     });
 
     $('#dwpar2cron-info').click(function(){
-        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_info');
+        $('#dwpar2cron-ops-arg1').val('info');
+        $('#dwpar2cron-ops-arg2').val($('#dwpar2cron-notifyme').is(':checked') ? '1' : '0');
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_cmd');
+        $('#dwpar2cron-operations').submit();
+    });
+
+    $('#dwpar2cron-clear').click(function(){
+        $('#dwpar2cron-ops-arg1').val('');
+        $('#dwpar2cron-ops-arg2').val('');
+        $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/clear');
         $('#dwpar2cron-operations').submit();
     });
 
     $('#dwpar2cron-stop').click(function(){
+        $('#dwpar2cron-ops-arg1').val('');
+        $('#dwpar2cron-ops-arg2').val('');
         $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/stop');
         $('#dwpar2cron-operations').submit();
     });

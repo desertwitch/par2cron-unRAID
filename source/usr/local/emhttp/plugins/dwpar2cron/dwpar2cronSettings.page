@@ -303,11 +303,11 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
             </select>
             <?if(!$dwpar2cron_running && @glob("/tmp/par2cron-pprof-*.pb.gz")):?>
             <a href="/plugins/dwpar2cron/include/dwpar2cron_pprof.php" style="color:inherit;margin-left:5px;cursor:pointer;" target="_blank">
-                <i class="fa fa-download" title="Download Diagnostic Profile"></i>
+                <i class="fa fa-download dwpar2cron-tip" title="Download Diagnostic Profile"></i>
                 <?if(version_compare(parse_ini_file('/etc/unraid-version')['version'],'7.1.99', '>')):?> Download Diagnostic Profile<?endif;?>
             </a>
             <span id="DELPROF" style="margin-left:5px;cursor:pointer;">
-                <i class="fa fa-trash" title="Delete Diagnostic Profile"></i>
+                <i class="fa fa-trash dwpar2cron-tip" title="Delete Diagnostic Profile"></i>
                 <?if(version_compare(parse_ini_file('/etc/unraid-version')['version'],'7.1.99', '>')):?> Delete Diagnostic Profile<?endif;?>
             </span>
             <?endif;?>
