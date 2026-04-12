@@ -88,13 +88,13 @@ if compgen -G "&plgPATH;/custom/*.txz" 1>/dev/null 2>/dev/null; then
     echo "You can remove the &plgPATH;/custom/ folder to install the default one."
     upgradepkg --install-new &plgPATH;/custom/*.txz
     if [[ -f &plgPATH;/custom/par2 ]]; then
-        mv &plgPATH;/custom/par2 /usr/bin/par2
+        cp -f &plgPATH;/custom/par2 /usr/bin/par2
         chmod 755 /usr/bin/par2
     fi
 elif [[ -f &plgPATH;/custom/par2 ]]; then
     echo "A par2 backend was provided by the user, installing that instead..."
     echo "You can remove the &plgPATH;/custom/ folder to install the default one."
-    mv &plgPATH;/custom/par2 /usr/bin/par2
+    cp -f &plgPATH;/custom/par2 /usr/bin/par2
     chmod 755 /usr/bin/par2
 else
     echo "No par2 backend was provided by the user, installing the default..."
