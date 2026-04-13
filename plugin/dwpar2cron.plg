@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.04.13">
+<!ENTITY version   "2026.04.13a">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
