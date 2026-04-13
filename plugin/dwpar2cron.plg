@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.04.13
+- fix: re-compile par2cmdline backend with important performance patch
+- release note: https://github.com/Parchive/par2cmdline/issues/275
 ###2026.04.12
 - new: allow sending notifications on completion of manual operations from GUI
 - new: allow custom par2 binary in "/boot/config/plugins/dwpar2cron/custom" folder
@@ -98,9 +101,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cmdline-1.1.1-x86_64-1.txz" Min="6.10">
-<URL>&pkgURL;/par2cmdline-1.1.1-x86_64-1.txz</URL>
-<MD5>b824535f9d1a692817c7726996545033</MD5>
+<FILE Name="&plgPATH;/par2cmdline-1.1.1-x86_64-2.txz" Min="6.10">
+<URL>&pkgURL;/par2cmdline-1.1.1-x86_64-2.txz</URL>
+<MD5>7d37238f0f67d6a6e203bf3d0212a327</MD5>
 </FILE>
 
 <FILE Run="/bin/bash">
@@ -128,7 +131,7 @@ else
     rm -rf /tmp/par2cron-custom
     echo "No par2 backend was provided by the user, installing the default..."
     echo "You can provide a custom par2 binary or .txz in: &plgPATH;/custom/"
-    upgradepkg --install-new &plgPATH;/par2cmdline-1.1.1-x86_64-1.txz
+    upgradepkg --install-new &plgPATH;/par2cmdline-1.1.1-x86_64-2.txz
 fi
 echo ""
 exit 0
