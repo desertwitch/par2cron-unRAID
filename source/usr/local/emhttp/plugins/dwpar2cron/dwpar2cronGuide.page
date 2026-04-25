@@ -99,6 +99,7 @@ mode: "folder"        # "folder", "nested", "file" or "recursive"
 verify: true          # Verify PAR2 set as part of creation
 hidden: true          # Create PAR2 set as hidden (dotfiles)
 persist: true         # Do not delete marker file after creation
+bundle: true          # Create only one file (embed manifest in PAR2)
 </pre>
 <p>All directives are optional - only specify what you need to override.</p>
 <p>Refer to <a href="https://github.com/desertwitch/par2cron?tab=readme-ov-file#creation-glob-patterns" target="_blank">"Creation Glob Patterns"</a> in documentation for supported glob patterns.</p>
@@ -137,6 +138,8 @@ persist: true         # Do not delete marker file after creation
 |-- Pictures.vol00+01.par2  # PAR2 recovery data
 |-- Pictures.par2.json      # par2cron manifest
 +-- Pictures.par2.lock      # par2cron lockfile</pre>
-<p>If the amount of visible files bothers you, you can switch on <code>hidden</code> creation.</p>
+
+<p>If the amount of files bothers you, you can use <a href="https://github.com/desertwitch/par2cron?tab=readme-ov-file#creation-as-bundle" target="_blank">bundle creation</a> instead.</p>
+<p>Alternatively, you can switch on <code>hidden</code> creation to hide these files from view.</p>
 
 </div>
