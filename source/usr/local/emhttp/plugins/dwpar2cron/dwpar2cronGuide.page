@@ -138,7 +138,6 @@ bundle: true          # Create only one file (embed manifest in PAR2)
 |-- Pictures.vol00+01.par2  # PAR2 recovery data
 |-- Pictures.par2.json      # par2cron manifest
 +-- Pictures.par2.lock      # par2cron lockfile</pre>
-
 <p>If the amount of files bothers you, you should use <a href="https://github.com/desertwitch/par2cron?tab=readme-ov-file#creation-as-bundle" target="_blank">bundle creation</a> instead.</p>
 <p>Alternatively, you can switch on <code>hidden</code> creation to hide these files from view.</p>
 
