@@ -18,6 +18,10 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.04.25
+- new: bundle feature (produce one single file per PAR2 set)
+- new: par2cron backend was updated to release version 0.4.0
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.4.0
 ###2026.04.13a
 - fix: re-compile par2cmdline backend with important performance patch
 - release note: https://github.com/Parchive/par2cmdline/issues/275
