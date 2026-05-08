@@ -21,8 +21,11 @@ header('Content-Type: application/json');
 $pidfile = "/var/run/dwpar2cron.pid";
 
 $running = false;
+$pidfile_exists = false;
 
 if (file_exists($pidfile)) {
+    $pidfile_exists = true;
+
     $pid = trim(file_get_contents($pidfile));
     if ($pid && file_exists("/proc/$pid")) {
         $running = true;
@@ -34,7 +37,7 @@ if (!$running) {
     $running = !empty($status);
 }
 
-if (!$running) {
+if ($pidfile_exists && !$running) {
     @unlink($pidfile);
 }
 
