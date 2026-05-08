@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 #
 # Copyright Derek Macias (parts of code from NUT package)
 # Copyright macester (parts of code from NUT package)
@@ -16,7 +17,7 @@
 # included in all copies or substantial portions of the Software.
 #
 DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
-source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg" || exit 2
 
 echo "Writing par2cron configuration..."
 echo "Writing par2cron configuration..." | logger -t "par2cron-plugin"

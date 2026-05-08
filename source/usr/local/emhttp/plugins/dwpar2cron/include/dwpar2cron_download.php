@@ -17,7 +17,7 @@
  * included in all copies or substantial portions of the Software.
  *
  */
-$logFile = "/var/log/dwpar2cron.log";
+$logFile = "/var/log/dwpar2cron/log/current";
 if(file_exists($logFile)) {
     header("Content-Disposition: attachment; filename=\"" . basename($logFile) . ".txt\"");
     header("Content-Type: application/octet-stream");
@@ -26,6 +26,6 @@ if(file_exists($logFile)) {
     readfile($logFile);
     exit;
 } else {
-    echo("There is no log file to download at: <code>/var/log/dwpar2cron.log</code>");
+    echo("There is no log file to download at: <code>/var/log/dwpar2cron/log/current</code>");
 }
 ?>

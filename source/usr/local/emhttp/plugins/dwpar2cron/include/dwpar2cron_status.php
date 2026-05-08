@@ -18,6 +18,25 @@
  *
  */
 header('Content-Type: application/json');
-$status = shell_exec("pgrep -x par2cron 2>/dev/null");
-echo json_encode(['running' => !empty($status)]);
+$pidfile = "/var/run/dwpar2cron.pid";
+
+$running = false;
+
+if (file_exists($pidfile)) {
+    $pid = trim(file_get_contents($pidfile));
+    if ($pid && file_exists("/proc/$pid")) {
+        $running = true;
+    }
+}
+
+if (!$running) {
+    $status = shell_exec("pgrep -x par2cron 2>/dev/null || pgrep -x par2cron-cron 2>/dev/null || pgrep -x cmd_info 2>/dev/null || pgrep -x cmd_other 2>/dev/null");
+    $running = !empty($status);
+}
+
+if (!$running) {
+    @unlink($pidfile);
+}
+
+echo json_encode(['running' => $running]);
 ?>

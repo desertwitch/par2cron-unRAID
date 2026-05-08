@@ -67,7 +67,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
                 <?=dwpar2cron_share_options($dwpar2cron_opscope);?>
             </select>
             <?else:?>
-                <span class="red-text">Start array to modify this setting!</span>
+                <span class="red-text" style="font-weight:bold;">Start array to modify this setting!</span>
             <?endif;?>
         </dd>
     </dl>
@@ -373,7 +373,7 @@ function dwpar2cronDeleteProfile() {
     openBox('/plugins/dwpar2cron/scripts/delete_pprof', 'par2cron', 600, 600, true);
 }
 $(function() {
-    showStatus('par2cron');
+    showStatus('pid','dwpar2cron');
 
     dwpar2cronCronSettings();
 

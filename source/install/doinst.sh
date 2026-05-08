@@ -21,6 +21,7 @@ DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 # Update file permissions of binaries
 chmod 755 /usr/bin/par2cron
 chmod 755 /usr/bin/par2cron-cron
+chmod 755 /usr/libexec/dwpar2cron/*
 
 # Update file permissions of scripts
 chmod 755 $DOCROOT/event/*

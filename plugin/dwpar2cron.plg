@@ -207,9 +207,8 @@ fi
 
 rm -rf &emhttp;
 rm -rf /tmp/par2cron-custom
+rm -rf /var/log/dwpar2cron
 
-rm -f /var/log/dwpar2cron.json
-rm -f /var/log/dwpar2cron.log
 rm -f /boot/config/plugins/dynamix/dwpar2cron.cron
 rm -f /tmp/par2cron-pprof-*.pb.gz
 

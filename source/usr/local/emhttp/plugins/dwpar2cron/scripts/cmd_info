@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 #
 # Copyright Derek Macias (parts of code from NUT package)
 # Copyright macester (parts of code from NUT package)
@@ -17,7 +18,19 @@
 #
 umask 000
 
-source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg"
+source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg" || exit 2
+source "/usr/libexec/dwpar2cron/const.sh" || exit 2
+
+if [ -f "$P2C_PID_FILE" ]; then
+    if kill -0 "$(cat "$P2C_PID_FILE")" 2>/dev/null; then
+        echo "par2cron is already running; exiting" | logger -s -t "par2cron-plugin"
+        exit 1
+    else
+        rm -f "$P2C_PID_FILE"
+    fi
+fi
+echo $$ > "$P2C_PID_FILE"
+trap 'rm -f "$P2C_PID_FILE"' EXIT
 
 OPNOTIFY="${1:-}"
 
@@ -28,7 +41,7 @@ log_json() {
     local timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
 
     printf '{"time":"%s","level":"%s","msg":"%s","op":"%s"}\n' \
-        "$timestamp" "$level" "$msg" "$op" >> /var/log/dwpar2cron.json
+        "$timestamp" "$level" "$msg" "$op" | tee >("$P2C_SVLOGD" "$P2C_JSON_DIR") | "$P2C_SVLOGD" "$P2C_LOG_DIR"
 }
 
 if [ "$PPROF" == "enable" ]; then
@@ -41,17 +54,23 @@ IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 echo "info: started" | logger -t "par2cron-plugin"
 
+wait
+sleep 3
+sync
+
 /usr/bin/par2cron info \
     $PPROFARG \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
     "${OPSCOPE_ARRAY[@]}" \
     </dev/null \
-    >> /usr/local/emhttp/plugins/dwpar2cron/info.json \
-    2> >(tee -a /var/log/dwpar2cron.json >> /var/log/dwpar2cron.log 2>&1)
+    > /usr/local/emhttp/plugins/dwpar2cron/info.json \
+    2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR") | "$P2C_SVLOGD" "$P2C_LOG_DIR")
 RET=$?
 
-sleep 1
+wait
+sleep 3
+sync
 
 case "$RET" in
 0)
@@ -70,8 +89,6 @@ case "$RET" in
     log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info"
     ;;
 esac
-
-sleep 1
 
 NOTIFY_BIN="/usr/local/emhttp/plugins/dynamix/scripts/notify"
 HOST=$(echo "$HOSTNAME" | awk '{print toupper($0)}')
@@ -108,5 +125,3 @@ case "$RET" in
     [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Info: Unexpected Code" -d "An unexpected exit code was returned." -i "alert"
     ;;
 esac
-
-sleep 1

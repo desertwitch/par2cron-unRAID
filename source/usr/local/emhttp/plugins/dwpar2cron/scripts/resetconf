@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 #
 # Copyright Derek Macias (parts of code from NUT package)
 # Copyright macester (parts of code from NUT package)
@@ -15,14 +16,16 @@
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
 #
+source "/usr/libexec/dwpar2cron/const.sh" || exit 2
+
 BOOT="/boot/config/plugins/dwpar2cron"
 DOCROOT="/usr/local/emhttp/plugins/dwpar2cron"
 
 echo "Resetting par2cron configuration..."
 echo "Resetting par2cron configuration..." | logger -t "par2cron-plugin"
 
-rm -f /var/log/dwpar2cron.json
-rm -f /var/log/dwpar2cron.log
+rm -f "$P2C_LOG_FILE"
+rm -f "$P2C_JSON_FILE"
 rm -f /usr/local/emhttp/plugins/dwpar2cron/info.json
 rm -f /tmp/par2cron-pprof-*.pb.gz
 

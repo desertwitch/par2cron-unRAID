@@ -112,7 +112,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
                         <span class="ms-filter-btn" id="ms-select-all">Select All</span>
                         <span class="ms-filter-btn" id="ms-select-none">Select None</span>
                         <span class="ms-filter-btn" id="ms-view-logs">
-                            <a onclick="openTerminal('log','dwpar2cron','dwpar2cron.log')" style="all: unset; cursor: pointer;" target="_blank">Verbose Log</a>
+                            <a onclick="openTerminal('log','dwpar2cron','dwpar2cron/log/current')" style="all: unset; cursor: pointer;" target="_blank">Verbose Log</a>
                         </span>
                         <span class="ms-filter-btn" id="ms-download-logs">
                             <a href="/plugins/dwpar2cron/include/dwpar2cron_download.php" style="all: unset; cursor: pointer;" target="_blank">Download Log</a>
@@ -166,10 +166,14 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         <input type="hidden" id="dwpar2cron-ops-arg2" name="#arg[2]" value="">
 
         <span style="float:right;text-align:right;">
+            <?if(@file_exists('/mnt/user')):?>
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-create" value="MANUAL CREATE" title="Creates PAR2 sets for each marker file found in the directory tree according to the user-configured settings.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-verify" value="MANUAL VERIFY" title="Verifies PAR2 sets in the directory tree according to the user-configured settings.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-repair" value="MANUAL REPAIR" title="Repairs (previously verified as corrupted) PAR2 sets in the directory tree according to the user-configured settings.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-info" value="MANUAL INFO" title="Refreshes the information about the verification cycle and current user configuration.">
+            <?else:?>
+            <span class="red-text" style="margin-right:10px;font-weight:bold;">Start array to run operations!</span>
+            <?endif;?>
             <input class="dwpar2cron-notrun dwpar2cron-tip" type="button" id="dwpar2cron-stop" value="STOP PROGRAM" title="Stops any running par2cron instances.">
             <input class="dwpar2cron-run dwpar2cron-tip" type="button" id="dwpar2cron-clear" value="CLEAR LOGS" title="Clears the par2cron logfiles and empties the operational output screen.">
             <div style="text-align:right;margin-right:15px;">Please always read and understand the documentation <strong>before</strong> running any operations.</div>
@@ -205,6 +209,7 @@ $(document).ready(function() {
         allLogs: [],
         clusterize: null,
         filteredLogs: [],
+        isRunning: false,
         isLoading: false,
         isRefreshing: true,
         lastLoadTime: 0,
@@ -447,7 +452,7 @@ $(document).ready(function() {
         buildUrl: function(action = 'load') {
             const params = new URLSearchParams();
             params.append('action', action);
-            params.append('file', '/var/log/dwpar2cron.json');
+            params.append('file', '/var/log/dwpar2cron/json/current');
             params.append('limit', this.config.loadLimit);
             params.append('t', Date.now());
 
@@ -556,6 +561,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: (response) => {
                     if (response.running) {
+                        this.isRunning = true;
                         $('.dwpar2cron-run').prop('disabled', true);
                         $('.dwpar2cron-run-hidden').hide();
                         $('.dwpar2cron-notrun').prop('disabled', false);
@@ -565,9 +571,10 @@ $(document).ready(function() {
                         $('.dwpar2cron-notrun').prop('disabled', true);
 
                         // Reload if the program previously running
-                        if ($("#progress").text().includes("Running")) {
+                        if (this.isRunning) {
                             window.location.href = "/Settings/dwpar2cron";
                         }
+                        this.isRunning = false;
 
                         if (this.isRefreshing) {
                             setTimeout(() => {
@@ -597,6 +604,7 @@ $(document).ready(function() {
         }
     };
 
+    <?if(@file_exists('/mnt/user')):?>
     $('#dwpar2cron-create').click(function(){
         $('#dwpar2cron-ops-arg1').val('create');
         $('#dwpar2cron-ops-arg2').val($('#dwpar2cron-notifyme').is(':checked') ? '1' : '0');
@@ -624,6 +632,7 @@ $(document).ready(function() {
         $('#dwpar2cron-ops-cmd').val('/usr/local/emhttp/plugins/dwpar2cron/scripts/run_cmd');
         $('#dwpar2cron-operations').submit();
     });
+    <?endif;?>
 
     $('#dwpar2cron-clear').click(function(){
         $('#dwpar2cron-ops-arg1').val('');
