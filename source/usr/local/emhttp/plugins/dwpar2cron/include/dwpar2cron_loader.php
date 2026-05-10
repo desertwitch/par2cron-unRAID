@@ -108,34 +108,15 @@ function generateRawFileRow($rawContent) {
 
 try {
     $logs = [];
-    $lines = [];
 
     if (file_exists($logFile)) {
-        $fp = fopen($logFile, 'r');
-        fseek($fp, 0, SEEK_END);
-        $pos = ftell($fp);
-        $buffer = '';
-
-        while ($pos > 0 && count($lines) < $limit * 2) {
-            $readSize = min(8192, $pos);
-            $pos -= $readSize;
-            fseek($fp, $pos);
-            $buffer = fread($fp, $readSize) . $buffer;
-
-            $chunks = explode("\n", $buffer);
-            $buffer = array_pop($chunks); // last partial
-            $lines = array_merge($chunks, $lines);
-        }
-
-        fclose($fp);
+        $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $lines = array_reverse($lines);
 
         $validJsonFound = false;
         $hasFilteredMatches = false;
 
-        foreach (array_reverse($lines) as $line) {
-            $line = trim($line);
-            if ($line === '') continue;
-
+        foreach ($lines as $line) {
             $entry = json_decode($line, true);
             if (json_last_error() !== JSON_ERROR_NONE) continue;
 
@@ -174,13 +155,13 @@ try {
         ]);
     }
 } catch (\Throwable $t) {
-        $return = json_encode([
-            'success' => false,
-            'error' => htmlspecialchars($t->getMessage()),
-            'rows' => [],
-            'logCount' => 0,
-            'fileExists' => false
-        ]);
+    $return = json_encode([
+        'success' => false,
+        'error' => htmlspecialchars($t->getMessage()),
+        'rows' => [],
+        'logCount' => 0,
+        'fileExists' => false
+    ]);
 } finally {
     header('Content-Type: application/json');
     echo $return;
