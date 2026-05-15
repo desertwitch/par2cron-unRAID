@@ -29,6 +29,10 @@ rm -f "$P2C_JSON_FILE"
 rm -f /usr/local/emhttp/plugins/dwpar2cron/info.json
 rm -f /tmp/par2cron-pprof-*.pb.gz
 
+rm -rf /mnt/user/system/par2cron
+rm -rf /dev/shm/par2cron
+rm -rf /tmp/par2cron
+
 cp -f $DOCROOT/default.cfg $BOOT/dwpar2cron.cfg
 cp -f $DOCROOT/defaults/default.yaml $BOOT/config.yaml
 
