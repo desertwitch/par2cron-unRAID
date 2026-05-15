@@ -43,7 +43,6 @@ if [ "$OPCMD" != "create" ]; then
     EXTRA_ARGS+=(--cache "$P2C_CACHE_DIR")
 fi
 
-
 IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 echo "${OPCMD}: started" | logger -t "par2cron-plugin"
