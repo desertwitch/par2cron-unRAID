@@ -39,7 +39,7 @@ EXTRA_ARGS=()
 if [ "$PPROF" == "enable" ]; then
     EXTRA_ARGS+=(--pprof "/tmp/par2cron-pprof-${OPCMD}-$(date +%Y%m%d-%H%M%S).pb.gz")
 fi
-if [ "$OPCMD" != "create" ]; then
+if [ -n "$P2C_CACHE_DIR" ] && [ "$OPCMD" != "create" ]; then
     EXTRA_ARGS+=(--cache "$P2C_CACHE_DIR")
 fi
 

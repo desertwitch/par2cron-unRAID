@@ -72,6 +72,11 @@ fi
 rm -f "$P2C_LOG_FILE"
 rm -f "$P2C_JSON_FILE"
 
+PAR2CRON_CACHE_ARGS=()
+if [ -n "$P2C_CACHE_DIR" ]; then
+    PAR2CRON_CACHE_ARGS+=(--cache "$P2C_CACHE_DIR")
+fi
+
 if [ "$CRONCREATE" == "enable" ]; then
     echo "create: started" | logger -s -t "par2cron-cron"
 
@@ -143,7 +148,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
         /usr/bin/par2cron verify \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             --json \
-            --cache "$P2C_CACHE_DIR" \
+            "${PAR2CRON_CACHE_ARGS[@]}" \
             "${OPSCOPE_ARRAY[@]}" \
             2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR"))
     } | "$P2C_SVLOGD" "$P2C_LOG_DIR"
@@ -212,7 +217,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
         /usr/bin/par2cron repair \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             --json \
-            --cache "$P2C_CACHE_DIR" \
+            "${PAR2CRON_CACHE_ARGS[@]}" \
             "${OPSCOPE_ARRAY[@]}" \
             2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR"))
     } | "$P2C_SVLOGD" "$P2C_LOG_DIR"
@@ -267,7 +272,7 @@ echo "info: started" | logger -s -t "par2cron-cron"
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
-    --cache "$P2C_CACHE_DIR" \
+    "${PAR2CRON_CACHE_ARGS[@]}" \
     "${OPSCOPE_ARRAY[@]}" \
     > /usr/local/emhttp/plugins/dwpar2cron/info.json \
     2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR") | "$P2C_SVLOGD" "$P2C_LOG_DIR")

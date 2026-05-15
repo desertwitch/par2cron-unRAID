@@ -48,6 +48,9 @@ EXTRA_ARGS=()
 if [ "$PPROF" == "enable" ]; then
     EXTRA_ARGS+=(--pprof "/tmp/par2cron-pprof-info-$(date +%Y%m%d-%H%M%S).pb.gz")
 fi
+if [ -n "$P2C_CACHE_DIR" ]; then
+    EXTRA_ARGS+=(--cache "$P2C_CACHE_DIR")
+fi
 
 log_json "INFO" "Scanning filesystem for jobs..." "info"
 
@@ -61,7 +64,6 @@ sync
 
 /usr/bin/par2cron info \
     "${EXTRA_ARGS[@]}" \
-    --cache "$P2C_CACHE_DIR" \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
     "${OPSCOPE_ARRAY[@]}" \
