@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.05.15
+- new: par2cron backend was updated to release version 0.5.0
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.5.0
 ###2026.05.10
 - fix: refactor frontend log streaming logic (performance)
 - new: par2cron backend was updated to release version 0.4.1
@@ -149,9 +152,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.4.1-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.4.1-x86_64-1.txz</URL>
-<MD5>cb3cde5912a6f32140ba26ea8112554a</MD5>
+<FILE Name="&plgPATH;/par2cron-0.5.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.5.0-x86_64-1.txz</URL>
+<MD5>60df083e53c7e82fc21f45dd79f0fd48</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
