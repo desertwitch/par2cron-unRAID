@@ -35,9 +35,14 @@ trap 'rm -f "$P2C_PID_FILE"' EXIT
 OPCMD="${1:-}"
 OPNOTIFY="${2:-}"
 
+EXTRA_ARGS=()
 if [ "$PPROF" == "enable" ]; then
-    PPROFARG="--pprof /tmp/par2cron-pprof-${OPCMD}-$(date +%Y%m%d-%H%M%S).pb.gz"
+    EXTRA_ARGS+=(--pprof "/tmp/par2cron-pprof-${OPCMD}-$(date +%Y%m%d-%H%M%S).pb.gz")
 fi
+if [ "$OPCMD" != "create" ]; then
+    EXTRA_ARGS+=(--cache "$P2C_CACHE_DIR")
+fi
+
 
 IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
@@ -45,7 +50,7 @@ echo "${OPCMD}: started" | logger -t "par2cron-plugin"
 
 {
     /usr/bin/par2cron "$OPCMD" \
-        $PPROFARG \
+        "${EXTRA_ARGS[@]}" \
         -c /boot/config/plugins/dwpar2cron/config.yaml \
         --json \
         "${OPSCOPE_ARRAY[@]}" \
@@ -87,6 +92,10 @@ case "$RET" in
 5)
     echo "${OPCMD}: finished (return code: ${RET} - unclassified error)" | logger -t "par2cron-plugin"
     [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Unclassified Error" -d "An unclassified error was returned." -i "alert"
+    ;;
+143)
+    echo "${OPCMD}: finished (return code: ${RET} - interrupted)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} ${OPCMD^}: Interrupted" -d "An interruption exit code was returned." -i "alert"
     ;;
 *)
     echo "${OPCMD}: finished (return code: ${RET} - unexpected return code)" | logger -t "par2cron-plugin"

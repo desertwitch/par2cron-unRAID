@@ -44,8 +44,9 @@ log_json() {
         "$timestamp" "$level" "$msg" "$op" | tee >("$P2C_SVLOGD" "$P2C_JSON_DIR") | "$P2C_SVLOGD" "$P2C_LOG_DIR"
 }
 
+EXTRA_ARGS=()
 if [ "$PPROF" == "enable" ]; then
-    PPROFARG="--pprof /tmp/par2cron-pprof-info-$(date +%Y%m%d-%H%M%S).pb.gz"
+    EXTRA_ARGS+=(--pprof "/tmp/par2cron-pprof-info-$(date +%Y%m%d-%H%M%S).pb.gz")
 fi
 
 log_json "INFO" "Scanning filesystem for jobs..." "info"
@@ -59,7 +60,8 @@ sleep 3
 sync
 
 /usr/bin/par2cron info \
-    $PPROFARG \
+    "${EXTRA_ARGS[@]}" \
+    --cache "$P2C_CACHE_DIR" \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
     "${OPSCOPE_ARRAY[@]}" \
@@ -84,6 +86,9 @@ case "$RET" in
     ;;
 5)
     log_json "ERROR" "Operation finished (return code: $RET - unclassified error)" "info"
+    ;;
+143)
+    log_json "ERROR" "Operation finished (return code: $RET - interrupted)" "info"
     ;;
 *)
     log_json "ERROR" "Operation finished (return code: $RET - unexpected return code)" "info"
@@ -119,6 +124,10 @@ case "$RET" in
 5)
     echo "info: finished (return code: ${RET} - unclassified error)" | logger -t "par2cron-plugin"
     [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Info: Unclassified Error" -d "An unclassified error was returned." -i "alert"
+    ;;
+143)
+    echo "info: finished (return code: ${RET} - interrupted)" | logger -t "par2cron-plugin"
+    [ "$OPNOTIFY" == "1" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Info: Interrupted" -d "An interruption exit code was returned." -i "alert"
     ;;
 *)
     echo "info: finished (return code: ${RET} - unexpected return code)" | logger -t "par2cron-plugin"

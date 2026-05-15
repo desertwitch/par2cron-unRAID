@@ -23,6 +23,11 @@ HOST=$(echo "$HOSTNAME" | awk '{print toupper($0)}')
 EVENT="par2cron"
 SUBJECT="[${HOST}] par2cron:"
 
+if ! mountpoint -q /mnt/user; then
+    echo "array is not started; exiting" | logger -s -t "par2cron-cron"
+    exit 0
+fi
+
 if [ ! -r "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg" ]; then
     echo "configuration file cannot be read; exiting" | logger -s -t "par2cron-cron"
     exit 0
@@ -46,11 +51,6 @@ trap 'wait; exit 130' INT
 IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 
 if [[ "$CRON" != "hourly" && "$CRON" != "daily" && "$CRON" != "weekly" && "$CRON" != "monthly" ]]; then
-    exit 0
-fi
-
-if ! mountpoint -q /mnt/user; then
-    echo "array is not started; exiting" | logger -s -t "par2cron-cron"
     exit 0
 fi
 
@@ -119,6 +119,10 @@ if [ "$CRONCREATE" == "enable" ]; then
         echo "create: finished (return code: $RET - unclassified error) ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
         [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create: Unclassified Error" -d "An unclassified error was returned ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)." -i "alert"
         ;;
+    143)
+        echo "create: finished (return code: $RET - interrupted) ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create: Interrupted" -d "An interruption exit code was returned ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)." -i "alert"
+        ;;
     *)
         echo "create: finished (return code: $RET - unexpected return code) ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
         [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create: Unexpected Code" -d "An unexpected exit code was returned ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)." -i "alert"
@@ -139,6 +143,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
         /usr/bin/par2cron verify \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             --json \
+            --cache "$P2C_CACHE_DIR" \
             "${OPSCOPE_ARRAY[@]}" \
             2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR"))
     } | "$P2C_SVLOGD" "$P2C_LOG_DIR"
@@ -183,6 +188,10 @@ if [ "$CRONVERIFY" == "enable" ]; then
         echo "verify: finished (return code: $RET - unclassified error) ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
         [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify: Unclassified Error" -d "An unclassified error was returned ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)." -i "alert"
         ;;
+    143)
+        echo "verify: finished (return code: $RET - interrupted) ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
+        [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify: Interrupted" -d "An interruption exit code was returned ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)." -i "alert"
+        ;;
     *)
         echo "verify: finished (return code: $RET - unexpected return code) ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
         [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify: Unexpected Code" -d "An unexpected exit code was returned ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)." -i "alert"
@@ -203,6 +212,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
         /usr/bin/par2cron repair \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             --json \
+            --cache "$P2C_CACHE_DIR" \
             "${OPSCOPE_ARRAY[@]}" \
             2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR"))
     } | "$P2C_SVLOGD" "$P2C_LOG_DIR"
@@ -239,6 +249,10 @@ if [ "$CRONREPAIR" == "enable" ]; then
         echo "repair: finished (return code: $RET - unclassified error) ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)" | logger -s -t "par2cron-cron"
         [[ "$ERRORNOTIFY" == "enable" || "$REPAIRNOTIFY" == "enable" ]] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Repair: Unclassified Error" -d "An unclassified error was returned ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)." -i "alert"
         ;;
+    143)
+        echo "repair: finished (return code: $RET - interrupted) ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)" | logger -s -t "par2cron-cron"
+        [[ "$ERRORNOTIFY" == "enable" || "$REPAIRNOTIFY" == "enable" ]] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Repair: Interrupted" -d "An interruption exit code was returned ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)." -i "alert"
+        ;;
     *)
         echo "repair: finished (return code: $RET - unexpected return code) ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)" | logger -s -t "par2cron-cron"
         [[ "$ERRORNOTIFY" == "enable" || "$REPAIRNOTIFY" == "enable" ]] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Repair: Unexpected Code" -d "An unexpected exit code was returned ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)." -i "alert"
@@ -253,6 +267,7 @@ echo "info: started" | logger -s -t "par2cron-cron"
 /usr/bin/par2cron info \
     -c /boot/config/plugins/dwpar2cron/config.yaml \
     --json \
+    --cache "$P2C_CACHE_DIR" \
     "${OPSCOPE_ARRAY[@]}" \
     > /usr/local/emhttp/plugins/dwpar2cron/info.json \
     2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR") | "$P2C_SVLOGD" "$P2C_LOG_DIR")
@@ -274,6 +289,9 @@ case "$RET" in
     ;;
 5)
     echo "info: finished (return code: $RET - unclassified error)" | logger -s -t "par2cron-cron"
+    ;;
+143)
+    echo "info: finished (return code: $RET - interrupted)" | logger -s -t "par2cron-cron"
     ;;
 *)
     echo "info: finished (return code: $RET - unexpected return code)" | logger -s -t "par2cron-cron"
