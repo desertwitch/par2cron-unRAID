@@ -55,7 +55,7 @@ echo "${OPCMD}: started" | logger -t "par2cron-plugin"
         "${OPSCOPE_ARRAY[@]}" \
         </dev/null \
         2> >(tee >("$P2C_SVLOGD" "$P2C_JSON_DIR"))
-} | tr '\r' '\n' | "$P2C_SVLOGD" "$P2C_LOG_DIR"
+} | "$P2C_SVLOGD" "$P2C_LOG_DIR"
 RET=${PIPESTATUS[0]}
 
 wait
