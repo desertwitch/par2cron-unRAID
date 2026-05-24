@@ -41,5 +41,13 @@ if ($pidfile_exists && !$running) {
     @unlink($pidfile);
 }
 
-echo json_encode(['running' => $running]);
+$progress = '';
+if ($running) {
+    $last = shell_exec("tail -c 4096 /var/log/dwpar2cron/log/current 2>/dev/null | tr '\\r' '\\n' | grep '%' | tail -1");
+    if (!empty($last)) {
+        $progress = trim($last);
+    }
+}
+
+echo json_encode(['running' => $running, 'progress' => $progress]);
 ?>
