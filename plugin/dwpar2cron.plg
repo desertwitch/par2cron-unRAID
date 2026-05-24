@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwpar2cron">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2026.05.24a">
+<!ENTITY version   "2026.05.24b">
 <!ENTITY launch    "Settings/dwpar2cron">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/par2cron-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwpar2cron-2026.05.24-x86_64-2">
-<!ENTITY plgMD5    "3fe9a5b62362c898e445bfd2ec0d5b32">
+<!ENTITY plgNAME   "dwpar2cron-2026.05.24-x86_64-3">
+<!ENTITY plgMD5    "3655a3f7225425dd40b8634173b02c90">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,7 +18,7 @@
 
 <CHANGES>
 ## par2cron for UNRAID
-###2026.05.24a
+###2026.05.24b
 - new: add last reported job progress to frontend
 - fix: correct treatment for negative values in frontend
 ###2026.05.20
