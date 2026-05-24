@@ -566,9 +566,7 @@ $(document).ready(function() {
                         $('.dwpar2cron-run').prop('disabled', true);
                         $('.dwpar2cron-run-hidden').hide();
                         $('.dwpar2cron-notrun').prop('disabled', false);
-                        if(response.progress) {
-                            $('#ms-progress').text(`( ${response.progress} )`);
-                        }
+                        $('#ms-progress').text(`( ${response.progress} )`);
                     } else {
                         $('.dwpar2cron-run').prop('disabled', false);
                         $('.dwpar2cron-run-hidden').show();
