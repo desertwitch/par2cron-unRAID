@@ -135,7 +135,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
                         <span id="ms-logCount"></span>
                         <span id="ms-visibleCount"></span>
                     </div>
-                    <div class="ms-status-info" id="ms-progress"></div>
+                    <div class="ms-status-info dwpar2cron-tip" id="ms-progress" title="Last reported progress of ongoing job, may jump nonsensical for shorter duration jobs."></div>
                     <div class="ms-refresh-control" id="ms-refreshControl">
                         <i id="ms-refreshIcon" class="fa fa-pause"></i>
                         <strong id="ms-refreshText">Pause Updates</strong>
@@ -566,7 +566,7 @@ $(document).ready(function() {
                         $('.dwpar2cron-run').prop('disabled', true);
                         $('.dwpar2cron-run-hidden').hide();
                         $('.dwpar2cron-notrun').prop('disabled', false);
-                        $('#ms-progress').text(response.progress);
+                        $('#ms-progress').text(`( ${response.progress} )`);
                     } else {
                         $('.dwpar2cron-run').prop('disabled', false);
                         $('.dwpar2cron-run-hidden').show();
