@@ -19,7 +19,7 @@
 <CHANGES>
 ## par2cron for UNRAID
 ###2026.05.24a
-- new: add last known/reported job progress to frontend
+- new: add last reported job progress to frontend
 - fix: correct treatment for negative values in frontend
 ###2026.05.20
 - new: par2cron backend was updated to release version 0.5.1
