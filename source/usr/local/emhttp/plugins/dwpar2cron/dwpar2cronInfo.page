@@ -121,7 +121,6 @@ $(function() {
                 if (o.run_interval) html += row('Run Interval', 'How often par2cron verification runs', o.run_interval);
                 html += row('Include External', 'Include PAR2 files without a par2cron manifest', o.include_external ? 'Yes' : 'No');
                 html += row('Skip Not Created', 'Skip PAR2 files without manifest and creation record', o.skip_not_created ? 'Yes' : 'No');
-                if (o.cache_dir) html += row('Cache', 'Directory of the optional manifest cache', o.cache_dir);
                 html += '</table>';
             }
 
