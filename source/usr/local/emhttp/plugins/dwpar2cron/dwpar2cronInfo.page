@@ -121,6 +121,7 @@ $(function() {
                 if (o.run_interval) html += row('Run Interval', 'How often par2cron verification runs', o.run_interval);
                 html += row('Include External', 'Include PAR2 files without a par2cron manifest', o.include_external ? 'Yes' : 'No');
                 html += row('Skip Not Created', 'Skip PAR2 files without manifest and creation record', o.skip_not_created ? 'Yes' : 'No');
+                if (o.cache_dir) html += row('Cache', 'Directory of the optional manifest cache', o.cache_dir);
                 html += '</table>';
             }
 
@@ -138,7 +139,8 @@ $(function() {
                 html += row('Unverified', 'Jobs not yet verified', s.unverifieds);
                 html += row('Avg Duration', 'Average verification duration across known jobs', formatDuration(s.avg_duration_ns));
                 html += row('Total Duration', 'Sum of all known verification durations', formatDuration(s.total_duration_ns));
-                if (s.last_verification) html += row('Last Verification', 'Timestamp of the most recent verification', formatTime(s.last_verification));
+                if (s.first_verification) html += row('Earliest Verification', 'Timestamp of the oldest verification', formatTime(s.first_verification));
+                if (s.last_verification) html += row('Latest Verification', 'Timestamp of the most recent verification', formatTime(s.last_verification));
                 if (s.warning) html += row('Warning', 'Issues with summary data', s.warning);
                 html += '</table>';
             }
