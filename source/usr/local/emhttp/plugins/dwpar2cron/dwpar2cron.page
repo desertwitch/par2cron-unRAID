@@ -571,6 +571,7 @@ $(document).ready(function() {
                         $('.dwpar2cron-run').prop('disabled', false);
                         $('.dwpar2cron-run-hidden').show();
                         $('.dwpar2cron-notrun').prop('disabled', true);
+                        $('#ms-progress').text("");
 
                         // Reload if the program previously running
                         if (this.isRunning) {
