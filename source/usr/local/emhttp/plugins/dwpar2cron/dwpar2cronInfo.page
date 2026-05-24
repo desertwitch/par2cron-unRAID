@@ -68,15 +68,23 @@ $(function() {
 
     function formatDuration(ns) {
         if (!ns) return '0 seconds';
+
+        const negative = ns < 0;
+        ns = Math.abs(ns);
+
         const sec = Math.floor(ns / 1e9);
         const days = Math.floor(sec / 86400);
         const hrs = Math.floor((sec % 86400) / 3600);
         const min = Math.floor((sec % 3600) / 60);
         const s = sec % 60;
-        if (days > 0) return days + ' days ' + hrs + ' hours';
-        if (hrs > 0) return hrs + ' hours ' + min + ' minutes';
-        if (min > 0) return min + ' minutes ' + s + ' seconds';
-        return s + ' seconds';
+
+        let result;
+        if (days > 0) result = days + ' days ' + hrs + ' hours';
+        else if (hrs > 0) result = hrs + ' hours ' + min + ' minutes';
+        else if (min > 0) result = min + ' minutes ' + s + ' seconds';
+        else result = s + ' seconds';
+
+        return negative ? '-' + result : result;
     }
 
     function row(label, desc, value) {
