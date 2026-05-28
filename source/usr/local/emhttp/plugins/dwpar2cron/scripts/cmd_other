@@ -60,7 +60,6 @@ RET=${PIPESTATUS[0]}
 
 wait
 sleep 3
-sync
 
 NOTIFY_BIN="/usr/local/emhttp/plugins/dynamix/scripts/notify"
 HOST=$(echo "$HOSTNAME" | awk '{print toupper($0)}')

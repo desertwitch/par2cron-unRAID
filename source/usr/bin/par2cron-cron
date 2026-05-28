@@ -95,7 +95,6 @@ if [ "$CRONCREATE" == "enable" ]; then
 
     wait
     sleep 3
-    sync
 
     _OP_LINE=$(grep '"op":"create"' "$P2C_JSON_FILE" 2>/dev/null | grep '"processedCount"' | tail -1)
     CREATE_STARTED=$(echo "$_OP_LINE" | grep -o '"selectedCount":[0-9]*' | grep -o '[0-9]*')
@@ -127,6 +126,7 @@ if [ "$CRONCREATE" == "enable" ]; then
     143)
         echo "create: finished (return code: $RET - interrupted) ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
         [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Create: Interrupted" -d "An interruption exit code was returned ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)." -i "alert"
+        exit 143
         ;;
     *)
         echo "create: finished (return code: $RET - unexpected return code) ($CREATE_STARTED started, $CREATE_SUCCESS created, $CREATE_FAILED failed)" | logger -s -t "par2cron-cron"
@@ -156,7 +156,6 @@ if [ "$CRONVERIFY" == "enable" ]; then
 
     wait
     sleep 3
-    sync
 
     _OP_LINE=$(grep '"op":"verify"' "$P2C_JSON_FILE" 2>/dev/null | grep '"processedCount"' | tail -1)
     VERIFY_STARTED=$(echo "$_OP_LINE" | grep -o '"selectedCount":[0-9]*' | grep -o '[0-9]*')
@@ -196,6 +195,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
     143)
         echo "verify: finished (return code: $RET - interrupted) ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
         [ "$ERRORNOTIFY" == "enable" ] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Verify: Interrupted" -d "An interruption exit code was returned ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)." -i "alert"
+        exit 143
         ;;
     *)
         echo "verify: finished (return code: $RET - unexpected return code) ($VERIFY_STARTED started, $VERIFY_SUCCESS verified, $VERIFY_FAILED failed)" | logger -s -t "par2cron-cron"
@@ -225,7 +225,6 @@ if [ "$CRONREPAIR" == "enable" ]; then
 
     wait
     sleep 3
-    sync
 
     _OP_LINE=$(grep '"op":"repair"' "$P2C_JSON_FILE" 2>/dev/null | grep '"processedCount"' | tail -1)
     REPAIR_STARTED=$(echo "$_OP_LINE" | grep -o '"selectedCount":[0-9]*' | grep -o '[0-9]*')
@@ -257,6 +256,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
     143)
         echo "repair: finished (return code: $RET - interrupted) ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)" | logger -s -t "par2cron-cron"
         [[ "$ERRORNOTIFY" == "enable" || "$REPAIRNOTIFY" == "enable" ]] && "$NOTIFY_BIN" -e "${EVENT}" -s "Alert ${SUBJECT} Repair: Interrupted" -d "An interruption exit code was returned ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)." -i "alert"
+        exit 143
         ;;
     *)
         echo "repair: finished (return code: $RET - unexpected return code) ($REPAIR_STARTED started, $REPAIR_SUCCESS repaired, $REPAIR_FAILED failed)" | logger -s -t "par2cron-cron"
@@ -280,7 +280,6 @@ RET=$?
 
 wait
 sleep 3
-sync
 
 case "$RET" in
 0)
@@ -297,11 +296,11 @@ case "$RET" in
     ;;
 143)
     echo "info: finished (return code: $RET - interrupted)" | logger -s -t "par2cron-cron"
+    exit 143
     ;;
 *)
     echo "info: finished (return code: $RET - unexpected return code)" | logger -s -t "par2cron-cron"
     ;;
 esac
 
-sync
 exit 0

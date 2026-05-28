@@ -60,7 +60,6 @@ echo "info: started" | logger -t "par2cron-plugin"
 
 wait
 sleep 3
-sync
 
 /usr/bin/par2cron info \
     "${EXTRA_ARGS[@]}" \
@@ -74,7 +73,6 @@ RET=$?
 
 wait
 sleep 3
-sync
 
 case "$RET" in
 0)
