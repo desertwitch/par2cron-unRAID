@@ -18,6 +18,10 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.05.29
+- fix: improve interrupt handling in cronjob and on array stop
+- new: par2cron backend was updated to release version 0.5.2
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.5.2
 ###2026.05.24b
 - new: add last reported job progress to frontend
 - fix: correct treatment for negative values in frontend
@@ -158,9 +162,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.5.1-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.5.1-x86_64-1.txz</URL>
-<MD5>924bf46f3f58217de085a70ee7bd7b8a</MD5>
+<FILE Name="&plgPATH;/par2cron-0.5.2-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.5.2-x86_64-1.txz</URL>
+<MD5>415a36e2267907002c7c83d5ff81a575</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
