@@ -19,7 +19,7 @@
 <CHANGES>
 ## par2cron for UNRAID
 ###2026.05.29
-- fix: improve interrupt handling in cronjob and on array stop
+- fix: improve interrupt handling in cronjob
 - new: par2cron backend was updated to release version 0.5.2
 - changes: https://github.com/desertwitch/par2cron/releases/tag/v0.5.2
 ###2026.05.24b
