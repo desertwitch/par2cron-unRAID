@@ -162,9 +162,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.5.2-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.5.2-x86_64-1.txz</URL>
-<MD5>415a36e2267907002c7c83d5ff81a575</MD5>
+<FILE Name="&plgPATH;/par2cron-0.5.3-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.5.3-x86_64-1.txz</URL>
+<MD5>2cd0e98cfc407ecd1c3e1a45d97a8c46</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
