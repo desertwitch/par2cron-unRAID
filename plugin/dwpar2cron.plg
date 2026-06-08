@@ -125,9 +125,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cmdline-1.1.1-x86_64-3.txz" Min="6.10">
-<URL>&pkgURL;/par2cmdline-1.1.1-x86_64-3.txz</URL>
-<MD5>90d40f9c34775b953f4ff1765dbdda5f</MD5>
+<FILE Name="&plgPATH;/par2cmdline-1.1.1-x86_64-4.txz" Min="6.10">
+<URL>&pkgURL;/par2cmdline-1.1.1-x86_64-4.txz</URL>
+<MD5>5a3bd70a7e5de437ba45d4483ad99ff4</MD5>
 </FILE>
 
 <FILE Run="/bin/bash">
@@ -155,7 +155,7 @@ else
     rm -rf /tmp/par2cron-custom
     echo "No par2 backend was provided by the user, installing the default..."
     echo "You can provide a custom par2 binary or .txz in: &plgPATH;/custom/"
-    upgradepkg --install-new &plgPATH;/par2cmdline-1.1.1-x86_64-3.txz
+    upgradepkg --install-new &plgPATH;/par2cmdline-1.1.1-x86_64-4.txz
 fi
 echo ""
 exit 0
