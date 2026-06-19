@@ -75,6 +75,20 @@ create:
   # Default: "info"
   log-level: "info"
 
+  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
+  # When set, all logs are sent both to console and to Seq over HTTP(S)
+  # Undeliverable log entries are dropped after retrying (non-blocking)
+  #
+  # Format: "http://your-seq-server/ingest/clef"
+  # Default: "" (disabled)
+  seq-url: ""
+
+  # seq-key: API key for the remote Seq logging server
+  # Only required if authentication is enabled on the Seq server
+  #
+  # Default: "" (no API key)
+  seq-key: ""
+
 # ==============================================================================
 # VERIFY COMMAND SETTINGS
 # ==============================================================================
@@ -132,6 +146,20 @@ verify:
   # Options: "debug", "info", "warn", "error"
   # Default: "info"
   log-level: "info"
+
+  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
+  # When set, all logs are sent both to console and to Seq over HTTP(S)
+  # Undeliverable log entries are dropped after retrying (non-blocking)
+  #
+  # Format: "http://your-seq-server/ingest/clef"
+  # Default: "" (disabled)
+  seq-url: ""
+
+  # seq-key: API key for the remote Seq logging server
+  # Only required if authentication is enabled on the Seq server
+  #
+  # Default: "" (no API key)
+  seq-key: ""
 
 # ==============================================================================
 # REPAIR COMMAND SETTINGS
@@ -200,6 +228,20 @@ repair:
   # Default: "info"
   log-level: "info"
 
+  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
+  # When set, all logs are sent both to console and to Seq over HTTP(S)
+  # Undeliverable log entries are dropped after retrying (non-blocking)
+  #
+  # Format: "http://your-seq-server/ingest/clef"
+  # Default: "" (disabled)
+  seq-url: ""
+
+  # seq-key: API key for the remote Seq logging server
+  # Only required if authentication is enabled on the Seq server
+  #
+  # Default: "" (no API key)
+  seq-key: ""
+
 # ==============================================================================
 # INFO COMMAND SETTINGS
 # Set always to the same values used for "verify" settings (where applicable)
@@ -246,3 +288,17 @@ info:
   # Options: "debug", "info", "warn", "error"
   # Default: "info"
   log-level: "info"
+
+  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
+  # When set, all logs are sent both to console and to Seq over HTTP(S)
+  # Undeliverable log entries are dropped after retrying (non-blocking)
+  #
+  # Format: "http://your-seq-server/ingest/clef"
+  # Default: "" (disabled)
+  seq-url: ""
+
+  # seq-key: API key for the remote Seq logging server
+  # Only required if authentication is enabled on the Seq server
+  #
+  # Default: "" (no API key)
+  seq-key: ""

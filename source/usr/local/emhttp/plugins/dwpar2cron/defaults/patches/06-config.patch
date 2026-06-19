@@ -1,0 +1,106 @@
+diff --git a/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml b/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml
+index 1a7d0d0..9230847 100755
+--- a/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml
++++ b/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml
+@@ -72,12 +72,26 @@ create:
+   # log-level: Minimum level of emitted logs
+   #
+   # Options: "debug", "info", "warn", "error"
+   # Default: "info"
+   log-level: "info"
+
++  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
++  # When set, all logs are sent both to console and to Seq over HTTP(S)
++  # Undeliverable log entries are dropped after retrying (non-blocking)
++  #
++  # Format: "http://your-seq-server/ingest/clef"
++  # Default: "" (disabled)
++  seq-url: ""
++
++  # seq-key: API key for the remote Seq logging server
++  # Only required if authentication is enabled on the Seq server
++  #
++  # Default: "" (no API key)
++  seq-key: ""
++
+ # ==============================================================================
+ # VERIFY COMMAND SETTINGS
+ # ==============================================================================
+ verify:
+   # args: Set arguments passed directly to the par2 command
+   #
+@@ -130,12 +144,26 @@ verify:
+   # log-level: Minimum level of emitted logs
+   #
+   # Options: "debug", "info", "warn", "error"
+   # Default: "info"
+   log-level: "info"
+
++  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
++  # When set, all logs are sent both to console and to Seq over HTTP(S)
++  # Undeliverable log entries are dropped after retrying (non-blocking)
++  #
++  # Format: "http://your-seq-server/ingest/clef"
++  # Default: "" (disabled)
++  seq-url: ""
++
++  # seq-key: API key for the remote Seq logging server
++  # Only required if authentication is enabled on the Seq server
++  #
++  # Default: "" (no API key)
++  seq-key: ""
++
+ # ==============================================================================
+ # REPAIR COMMAND SETTINGS
+ # ==============================================================================
+ repair:
+   # args: Set arguments passed directly to the par2 command
+   #
+@@ -197,12 +225,26 @@ repair:
+   # log-level: Minimum level of emitted logs
+   #
+   # Options: "debug", "info", "warn", "error"
+   # Default: "info"
+   log-level: "info"
+
++  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
++  # When set, all logs are sent both to console and to Seq over HTTP(S)
++  # Undeliverable log entries are dropped after retrying (non-blocking)
++  #
++  # Format: "http://your-seq-server/ingest/clef"
++  # Default: "" (disabled)
++  seq-url: ""
++
++  # seq-key: API key for the remote Seq logging server
++  # Only required if authentication is enabled on the Seq server
++  #
++  # Default: "" (no API key)
++  seq-key: ""
++
+ # ==============================================================================
+ # INFO COMMAND SETTINGS
+ # Set always to the same values used for "verify" settings (where applicable)
+ # ==============================================================================
+ info:
+   # age: Target cycle length (time between re-verifications)
+@@ -243,6 +285,20 @@ info:
+
+   # log-level: Minimum level of emitted logs
+   #
+   # Options: "debug", "info", "warn", "error"
+   # Default: "info"
+   log-level: "info"
++
++  # seq-url: CLEF ingestion endpoint of a remote Seq logging server
++  # When set, all logs are sent both to console and to Seq over HTTP(S)
++  # Undeliverable log entries are dropped after retrying (non-blocking)
++  #
++  # Format: "http://your-seq-server/ingest/clef"
++  # Default: "" (disabled)
++  seq-url: ""
++
++  # seq-key: API key for the remote Seq logging server
++  # Only required if authentication is enabled on the Seq server
++  #
++  # Default: "" (no API key)
++  seq-key: ""
