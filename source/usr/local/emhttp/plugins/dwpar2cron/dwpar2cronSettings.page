@@ -294,7 +294,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
     </div>
 
-<?if(@file_exists('/sys/fs/cgroup/par2/cpu.max')):?>
+<?if(@file_exists('/sys/fs/cgroup/par2/create/cpu.max')):?>
     <dl>
         <dt>CPU Limit - Create Operations:</dt>
         <dd>

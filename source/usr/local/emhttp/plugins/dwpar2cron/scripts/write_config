@@ -50,22 +50,21 @@ ensure_cpu_delegation() {
     retries=0
     while ! echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control 2>/dev/null; do
         retries=$((retries + 1))
-        [ "$retries" -ge 5 ] && break
+        [ "$retries" -ge 10 ] && break
         sleep 0.2
     done
 
+    sleep 1
     [ ! -d "/sys/fs/cgroup/par2" ] && mkdir -p "/sys/fs/cgroup/par2"
     sleep 1
+
 
     retries=0
     while ! echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>/dev/null; do
         retries=$((retries + 1))
-        [ "$retries" -ge 5 ] && break
+        [ "$retries" -ge 10 ] && break
         sleep 0.2
     done
-
-    echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control |& logger -t "par2cron-plugin"
-    echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control |& logger -t "par2cron-plugin"
 }
 
 set_cpu_limit() {
@@ -95,7 +94,7 @@ if grep -q cgroup2 /proc/mounts; then
     sleep 1
 
     if [ ! -e "/sys/fs/cgroup/par2/create/cpu.max" ]; then
-        echo "WARNING: CPU limits may not be applied (delegation failed)" | logger -t "par2cron-plugin"
+        echo "WARNING: CPU limits may not be available (delegation failed)" | logger -t "par2cron-plugin"
     fi
 else
     echo "WARNING: CPU limits may not be available (no cgroup v2 mount)" | logger -t "par2cron-plugin"

@@ -42,7 +42,7 @@ fi
 if [ -n "$P2C_CACHE_DIR" ] && [ "$OPCMD" != "create" ]; then
     EXTRA_ARGS+=(--cache "$P2C_CACHE_DIR")
 fi
-if [ -e /sys/fs/cgroup/par2/cpu.max ]; then
+if [ -e /sys/fs/cgroup/par2/create/cpu.max ]; then
     case "$OPCMD" in
         create) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/create") ;;
         verify) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/verify") ;;
