@@ -76,6 +76,10 @@ if grep -q cgroup2 /proc/mounts; then
         mkdir -p /sys/fs/cgroup/par2/create
         mkdir -p /sys/fs/cgroup/par2/verify
         mkdir -p /sys/fs/cgroup/par2/repair
+        echo "  create cgroup.controllers: $(cat /sys/fs/cgroup/par2/create/cgroup.controllers)"
+        echo "  verify cgroup.controllers: $(cat /sys/fs/cgroup/par2/verify/cgroup.controllers)"
+        echo "  repair cgroup.controllers: $(cat /sys/fs/cgroup/par2/repair/cgroup.controllers)"
+
         echo "  create cpu.max exists: $([ -f /sys/fs/cgroup/par2/create/cpu.max ] && echo yes || echo no)"
         echo "  verify cpu.max exists: $([ -f /sys/fs/cgroup/par2/verify/cpu.max ] && echo yes || echo no)"
         echo "  repair cpu.max exists: $([ -f /sys/fs/cgroup/par2/repair/cpu.max ] && echo yes || echo no)"

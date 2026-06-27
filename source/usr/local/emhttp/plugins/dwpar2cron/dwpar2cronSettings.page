@@ -295,6 +295,15 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </div>
 
     <dl>
+        <dt>CPU Limit - Available:</dt>
+        <dd><?=@file_exists('/sys/fs/cgroup/par2/create/cpu.max') ? 'Yes' : 'No'?></dd>
+    </dl>
+
+    <blockquote class="inline_help">
+    <p>The kernel control group needs to be available for CPU limits to be applicable.</p>
+    </blockquote>
+
+    <dl>
         <dt>CPU Limit - Create Operations:</dt>
         <dd>
             <select id="CREATECPU" name="CREATECPU" size="1">
