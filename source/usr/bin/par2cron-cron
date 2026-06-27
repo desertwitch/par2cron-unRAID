@@ -77,6 +77,12 @@ if [ -n "$P2C_CACHE_DIR" ]; then
     PAR2CRON_CACHE_ARGS+=(--cache "$P2C_CACHE_DIR")
 fi
 
+if [ -d /sys/fs/cgroup/par2 ]; then
+    CGROUP_CREATE="/sys/fs/cgroup/par2/create"
+    CGROUP_VERIFY="/sys/fs/cgroup/par2/verify"
+    CGROUP_REPAIR="/sys/fs/cgroup/par2/repair"
+fi
+
 if [ "$CRONCREATE" == "enable" ]; then
     echo "create: started" | logger -s -t "par2cron-cron"
 
@@ -86,7 +92,7 @@ if [ "$CRONCREATE" == "enable" ]; then
 
     {
         /usr/bin/par2cron create \
-            --cgroup /sys/fs/cgroup/par2/create \
+            ${CGROUP_CREATE:+--cgroup "$CGROUP_CREATE"} \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             --json \
             "${OPSCOPE_ARRAY[@]}" \
@@ -147,7 +153,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
 
     {
         /usr/bin/par2cron verify \
-            --cgroup /sys/fs/cgroup/par2/verify \
+            ${CGROUP_VERIFY:+--cgroup "$CGROUP_VERIFY"} \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             "${PAR2CRON_CACHE_ARGS[@]}" \
             --json \
@@ -217,7 +223,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
 
     {
         /usr/bin/par2cron repair \
-            --cgroup /sys/fs/cgroup/par2/repair \
+            ${CGROUP_REPAIR:+--cgroup "$CGROUP_REPAIR"} \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             "${PAR2CRON_CACHE_ARGS[@]}" \
             --json \

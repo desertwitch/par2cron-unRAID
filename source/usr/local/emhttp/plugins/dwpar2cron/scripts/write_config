@@ -67,14 +67,18 @@ set_cpu_limit() {
     fi
 }
 
-ensure_cpu_delegation
-sleep 1
+if grep -q cgroup2 /proc/mounts; then
+    ensure_cpu_delegation
+    sleep 1
 
-set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
-set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
-set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
-sleep 1
+    set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
+    set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
+    set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
+    sleep 1
 
-if [ ! -f "/sys/fs/cgroup/par2/create/cpu.max" ]; then
-    echo "WARNING: cpu controller delegation failed, CPU limits may not be applied" | logger -t "par2cron-plugin"
+    if [ ! -f "/sys/fs/cgroup/par2/create/cpu.max" ]; then
+        echo "WARNING: cpu controller delegation failed, CPU limits may not be applied" | logger -t "par2cron-plugin"
+    fi
+else
+    echo "WARNING: cgroup v2 not available" | logger -t "par2cron-plugin"
 fi
