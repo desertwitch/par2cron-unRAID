@@ -44,6 +44,12 @@ sleep 1
 update_cron
 sleep 1
 
+ensure_cpu_delegation() {
+    [ ! -d "/sys/fs/cgroup/par2" ] && mkdir -p "/sys/fs/cgroup/par2"
+    echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control 2>/dev/null
+    echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>/dev/null
+}
+
 set_cpu_limit() {
     local dir="$1"
     local pct="$2"
@@ -61,8 +67,14 @@ set_cpu_limit() {
     fi
 }
 
+ensure_cpu_delegation
+sleep 1
+
 set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
 set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
 set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
-
 sleep 1
+
+if [ ! -f "/sys/fs/cgroup/par2/create/cpu.max" ]; then
+    echo "WARNING: cpu controller delegation failed, CPU limits may not be applied" | logger -t "par2cron-plugin"
+fi
