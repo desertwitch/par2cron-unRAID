@@ -58,7 +58,6 @@ ensure_cpu_delegation() {
     [ ! -d "/sys/fs/cgroup/par2" ] && mkdir -p "/sys/fs/cgroup/par2"
     sleep 1
 
-
     retries=0
     while ! echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>/dev/null; do
         retries=$((retries + 1))
