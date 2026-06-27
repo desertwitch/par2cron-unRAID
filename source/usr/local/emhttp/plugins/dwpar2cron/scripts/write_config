@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC1091
+# shellcheck disable=SC1091,SC2320
 #
 # Copyright Derek Macias (parts of code from NUT package)
 # Copyright macester (parts of code from NUT package)
@@ -62,31 +62,31 @@ set_cpu_limit() {
 if grep -q cgroup2 /proc/mounts; then
     {
         echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control 2>&1
-        echo "root +cpu exit: $?"
-        echo "root subtree_control: $(cat /sys/fs/cgroup/cgroup.subtree_control)"
+        echo "  root +cpu exit: $?"
+        echo "  root subtree_control: $(cat /sys/fs/cgroup/cgroup.subtree_control)"
 
         mkdir -p /sys/fs/cgroup/par2
-        echo "par2 cgroup.controllers: $(cat /sys/fs/cgroup/par2/cgroup.controllers)"
-        echo "par2 cgroup.procs: $(cat /sys/fs/cgroup/par2/cgroup.procs)"
+        echo "  par2 cgroup.controllers: $(cat /sys/fs/cgroup/par2/cgroup.controllers)"
+        echo "  par2 cgroup.procs: $(cat /sys/fs/cgroup/par2/cgroup.procs)"
 
         echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>&1
-        echo "par2 +cpu exit: $?"
-        echo "par2 subtree_control: $(cat /sys/fs/cgroup/par2/cgroup.subtree_control)"
+        echo "  par2 +cpu exit: $?"
+        echo "  par2 subtree_control: $(cat /sys/fs/cgroup/par2/cgroup.subtree_control)"
 
         mkdir -p /sys/fs/cgroup/par2/create
         mkdir -p /sys/fs/cgroup/par2/verify
         mkdir -p /sys/fs/cgroup/par2/repair
-        echo "create cpu.max exists: $([ -f /sys/fs/cgroup/par2/create/cpu.max ] && echo yes || echo no)"
-        echo "verify cpu.max exists: $([ -f /sys/fs/cgroup/par2/verify/cpu.max ] && echo yes || echo no)"
-        echo "repair cpu.max exists: $([ -f /sys/fs/cgroup/par2/repair/cpu.max ] && echo yes || echo no)"
+        echo "  create cpu.max exists: $([ -f /sys/fs/cgroup/par2/create/cpu.max ] && echo yes || echo no)"
+        echo "  verify cpu.max exists: $([ -f /sys/fs/cgroup/par2/verify/cpu.max ] && echo yes || echo no)"
+        echo "  repair cpu.max exists: $([ -f /sys/fs/cgroup/par2/repair/cpu.max ] && echo yes || echo no)"
 
         set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
         set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
         set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
 
-        echo "create cpu.max: $(cat /sys/fs/cgroup/par2/create/cpu.max 2>&1)"
-        echo "verify cpu.max: $(cat /sys/fs/cgroup/par2/verify/cpu.max 2>&1)"
-        echo "repair cpu.max: $(cat /sys/fs/cgroup/par2/repair/cpu.max 2>&1)"
+        echo "  create cpu.max: $(cat /sys/fs/cgroup/par2/create/cpu.max 2>&1)"
+        echo "  verify cpu.max: $(cat /sys/fs/cgroup/par2/verify/cpu.max 2>&1)"
+        echo "  repair cpu.max: $(cat /sys/fs/cgroup/par2/repair/cpu.max 2>&1)"
     } 2>&1 | logger -t "par2cron-plugin"
 else
     echo "WARNING: CPU limits not available (no cgroup v2 mount)" | logger -t "par2cron-plugin"

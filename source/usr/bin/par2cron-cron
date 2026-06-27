@@ -81,6 +81,8 @@ if [ -e /sys/fs/cgroup/par2/create/cpu.max ]; then
     CGROUP_CREATE="/sys/fs/cgroup/par2/create"
     CGROUP_VERIFY="/sys/fs/cgroup/par2/verify"
     CGROUP_REPAIR="/sys/fs/cgroup/par2/repair"
+else
+    echo "WARNING: cgroup not active; cpu limits not available" | logger -s -t "par2cron-cron"
 fi
 
 if [ "$CRONCREATE" == "enable" ]; then

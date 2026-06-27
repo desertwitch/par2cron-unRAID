@@ -48,6 +48,8 @@ if [ -e /sys/fs/cgroup/par2/create/cpu.max ]; then
         verify) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/verify") ;;
         repair) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/repair") ;;
     esac
+else
+    echo "WARNING: cgroup not active; cpu limits not available" | logger -s -t "par2cron-plugin"
 fi
 
 IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"

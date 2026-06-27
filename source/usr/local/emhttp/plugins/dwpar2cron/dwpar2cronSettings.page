@@ -294,7 +294,6 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
         </blockquote>
     </div>
 
-<?if(@file_exists('/sys/fs/cgroup/par2/create/cpu.max')):?>
     <dl>
         <dt>CPU Limit - Create Operations:</dt>
         <dd>
@@ -333,7 +332,6 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     <blockquote class="inline_help">
     <p>Limits the CPU utilization for the <strong>repair</strong> operation across all CPU cores.</p>
     </blockquote>
-<?endif;?>
 
     <dl>
         <dt>Generate Diagnostic Profile:</dt>
