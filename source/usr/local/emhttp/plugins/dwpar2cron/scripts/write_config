@@ -44,58 +44,52 @@ sleep 1
 update_cron
 sleep 1
 
-ensure_cpu_delegation() {
-    local retries
-
-    retries=0
-    while ! echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control 2>/dev/null; do
-        retries=$((retries + 1))
-        [ "$retries" -ge 10 ] && break
-        sleep 0.2
-    done
-
-    sleep 1
-    [ ! -d "/sys/fs/cgroup/par2" ] && mkdir -p "/sys/fs/cgroup/par2"
-    sleep 1
-
-    retries=0
-    while ! echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>/dev/null; do
-        retries=$((retries + 1))
-        [ "$retries" -ge 10 ] && break
-        sleep 0.2
-    done
-}
-
 set_cpu_limit() {
     local dir="$1"
     local pct="$2"
     local cores
     cores=$(nproc 2>/dev/null || echo 1)
     local period=100000
-
     [ ! -d "$dir" ] && mkdir -p "$dir"
-
     if [ -n "$pct" ] && [ "$pct" -gt 0 ] 2>/dev/null; then
         local quota=$(( pct * period * cores / 100 ))
-        echo "$quota $period" > "$dir/cpu.max"
+        echo "$quota $period" > "$dir/cpu.max" 2>&1 || echo "ERROR: failed to set cpu.max in $dir" | logger -t "par2cron-plugin"
     else
-        echo "max $period" > "$dir/cpu.max"
+        echo "max $period" > "$dir/cpu.max" 2>&1 || echo "ERROR: failed to set cpu.max in $dir" | logger -t "par2cron-plugin"
     fi
 }
 
 if grep -q cgroup2 /proc/mounts; then
-    ensure_cpu_delegation
-    sleep 1
+    {
+        echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control 2>&1
+        echo "root +cpu exit: $?"
+        echo "root subtree_control: $(cat /sys/fs/cgroup/cgroup.subtree_control)"
 
-    if [ -e "/sys/fs/cgroup/par2/create/cpu.max" ]; then
+        mkdir -p /sys/fs/cgroup/par2
+        echo "par2 cgroup.controllers: $(cat /sys/fs/cgroup/par2/cgroup.controllers)"
+        echo "par2 cgroup.procs: $(cat /sys/fs/cgroup/par2/cgroup.procs)"
+
+        echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>&1
+        echo "par2 +cpu exit: $?"
+        echo "par2 subtree_control: $(cat /sys/fs/cgroup/par2/cgroup.subtree_control)"
+
+        mkdir -p /sys/fs/cgroup/par2/create
+        mkdir -p /sys/fs/cgroup/par2/verify
+        mkdir -p /sys/fs/cgroup/par2/repair
+        echo "create cpu.max exists: $([ -f /sys/fs/cgroup/par2/create/cpu.max ] && echo yes || echo no)"
+        echo "verify cpu.max exists: $([ -f /sys/fs/cgroup/par2/verify/cpu.max ] && echo yes || echo no)"
+        echo "repair cpu.max exists: $([ -f /sys/fs/cgroup/par2/repair/cpu.max ] && echo yes || echo no)"
+
         set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
         set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
         set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
-    else
-        echo "WARNING: CPU limits may not be available (delegation failed)" | logger -t "par2cron-plugin"
-    fi
+
+        echo "create cpu.max: $(cat /sys/fs/cgroup/par2/create/cpu.max 2>&1)"
+        echo "verify cpu.max: $(cat /sys/fs/cgroup/par2/verify/cpu.max 2>&1)"
+        echo "repair cpu.max: $(cat /sys/fs/cgroup/par2/repair/cpu.max 2>&1)"
+    } 2>&1 | logger -t "par2cron-plugin"
 else
-    echo "WARNING: CPU limits may not be available (no cgroup v2 mount)" | logger -t "par2cron-plugin"
+    echo "WARNING: CPU limits not available (no cgroup v2 mount)" | logger -t "par2cron-plugin"
 fi
 
 sleep 1
