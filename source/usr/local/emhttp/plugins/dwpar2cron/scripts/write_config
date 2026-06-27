@@ -76,7 +76,7 @@ if grep -q cgroup2 /proc/mounts; then
     set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
     sleep 1
 
-    if [ ! -f "/sys/fs/cgroup/par2/create/cpu.max" ]; then
+    if [ ! -e "/sys/fs/cgroup/par2/create/cpu.max" ]; then
         echo "WARNING: cpu controller delegation failed, CPU limits may not be applied" | logger -t "par2cron-plugin"
     fi
 else
