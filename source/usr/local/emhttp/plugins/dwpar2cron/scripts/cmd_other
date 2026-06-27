@@ -42,6 +42,11 @@ fi
 if [ -n "$P2C_CACHE_DIR" ] && [ "$OPCMD" != "create" ]; then
     EXTRA_ARGS+=(--cache "$P2C_CACHE_DIR")
 fi
+case "$OPCMD" in
+    create) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/create") ;;
+    verify) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/verify") ;;
+    repair) EXTRA_ARGS+=(--cgroup "/sys/fs/cgroup/par2/repair") ;;
+esac
 
 IFS='|' read -ra OPSCOPE_ARRAY <<< "${OPSCOPE:-/mnt/user}"
 

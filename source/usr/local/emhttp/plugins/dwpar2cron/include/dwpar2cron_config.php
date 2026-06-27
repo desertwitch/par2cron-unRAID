@@ -23,6 +23,10 @@ $dwpar2cron_opscope = trim(isset($dwpar2cron_cfg['OPSCOPE']) ? htmlspecialchars(
 $dwpar2cron_cron = trim(isset($dwpar2cron_cfg['CRON']) ? htmlspecialchars($dwpar2cron_cfg['CRON']) : 'disable');
 $dwpar2cron_pprof = trim(isset($dwpar2cron_cfg['PPROF']) ? htmlspecialchars($dwpar2cron_cfg['PPROF']) : 'disable');
 
+$dwpar2cron_create_cpu = trim(isset($dwpar2cron_cfg['CREATECPU']) ? htmlspecialchars($dwpar2cron_cfg['CREATECPU']) : '0');
+$dwpar2cron_verify_cpu = trim(isset($dwpar2cron_cfg['VERIFYCPU']) ? htmlspecialchars($dwpar2cron_cfg['VERIFYCPU']) : '0');
+$dwpar2cron_repair_cpu = trim(isset($dwpar2cron_cfg['REPAIRCPU']) ? htmlspecialchars($dwpar2cron_cfg['REPAIRCPU']) : '0');
+
 $dwpar2cron_cronhour = trim(isset($dwpar2cron_cfg['CRONHOUR']) ? htmlspecialchars($dwpar2cron_cfg['CRONHOUR']) : '1');
 $dwpar2cron_crondow = trim(isset($dwpar2cron_cfg['CRONDOW']) ? htmlspecialchars($dwpar2cron_cfg['CRONDOW']) : '0');
 $dwpar2cron_crondom = trim(isset($dwpar2cron_cfg['CRONDOM']) ? htmlspecialchars($dwpar2cron_cfg['CRONDOM']) : '1');

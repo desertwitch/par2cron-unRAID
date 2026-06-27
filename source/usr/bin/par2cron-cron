@@ -86,6 +86,7 @@ if [ "$CRONCREATE" == "enable" ]; then
 
     {
         /usr/bin/par2cron create \
+            --cgroup /sys/fs/cgroup/par2/create \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             --json \
             "${OPSCOPE_ARRAY[@]}" \
@@ -146,6 +147,7 @@ if [ "$CRONVERIFY" == "enable" ]; then
 
     {
         /usr/bin/par2cron verify \
+            --cgroup /sys/fs/cgroup/par2/verify \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             "${PAR2CRON_CACHE_ARGS[@]}" \
             --json \
@@ -215,6 +217,7 @@ if [ "$CRONREPAIR" == "enable" ]; then
 
     {
         /usr/bin/par2cron repair \
+            --cgroup /sys/fs/cgroup/par2/repair \
             -c /boot/config/plugins/dwpar2cron/config.yaml \
             "${PAR2CRON_CACHE_ARGS[@]}" \
             --json \

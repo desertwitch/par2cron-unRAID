@@ -78,6 +78,45 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     </blockquote>
 
     <dl>
+        <dt>CPU Limit - Create Operations:</dt>
+        <dd>
+            <select id="CREATECPU" name="CREATECPU" size="1">
+                <?=dwpar2cron_cpu_options($dwpar2cron_create_cpu);?>
+            </select>
+        </dd>
+    </dl>
+
+    <blockquote class="inline_help">
+    <p>Limits the CPU utilization for the <strong>create</strong> operation across all CPU cores.</p>
+    </blockquote>
+
+    <dl>
+        <dt>CPU Limit - Verify Operations:</dt>
+        <dd>
+            <select id="VERIFYCPU" name="VERIFYCPU" size="1">
+                <?=dwpar2cron_cpu_options($dwpar2cron_verify_cpu);?>
+            </select>
+        </dd>
+    </dl>
+
+    <blockquote class="inline_help">
+    <p>Limits the CPU utilization for the <strong>verify</strong> operation across all CPU cores.</p>
+    </blockquote>
+
+    <dl>
+        <dt>CPU Limit - Repair Operations:</dt>
+        <dd>
+            <select id="REPAIRCPU" name="REPAIRCPU" size="1">
+                <?=dwpar2cron_cpu_options($dwpar2cron_repair_cpu);?>
+            </select>
+        </dd>
+    </dl>
+
+    <blockquote class="inline_help">
+    <p>Limits the CPU utilization for the <strong>repair</strong> operation across all CPU cores.</p>
+    </blockquote>
+
+    <dl>
         <dt><strong>Schedule:</strong></dt>
         <dd>
             <select class="dwpar2cron-run" id="CRON" name="CRON" size="1">

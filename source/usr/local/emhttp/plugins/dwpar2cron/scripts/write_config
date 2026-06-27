@@ -43,3 +43,26 @@ fi
 sleep 1
 update_cron
 sleep 1
+
+set_cpu_limit() {
+    local dir="$1"
+    local pct="$2"
+    local cores
+    cores=$(nproc 2>/dev/null || echo 1)
+    local period=100000
+
+    [ ! -d "$dir" ] && mkdir -p "$dir"
+
+    if [ -n "$pct" ] && [ "$pct" -gt 0 ] 2>/dev/null; then
+        local quota=$(( pct * period * cores / 100 ))
+        echo "$quota $period" > "$dir/cpu.max"
+    else
+        echo "max $period" > "$dir/cpu.max"
+    fi
+}
+
+set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
+set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
+set_cpu_limit "/sys/fs/cgroup/par2/repair" "$REPAIRCPU"
+
+sleep 1

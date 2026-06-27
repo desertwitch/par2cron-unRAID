@@ -72,4 +72,19 @@ function dwpar2cron_dom_options($time){
         }
     return $dwpar2cron_options;
 }
+
+function dwpar2cron_cpu_options($pct) {
+    $dwpar2cron_options = '<option value="0"';
+    if (intval($pct) === 0)
+        $dwpar2cron_options .= ' selected';
+    $dwpar2cron_options .= '>No Limit</option>';
+    for ($i = 90; $i >= 10; $i -= 10) {
+        $dwpar2cron_options .= '<option value="'.$i.'"';
+        if (intval($pct) === $i)
+            $dwpar2cron_options .= ' selected';
+        $dwpar2cron_options .= '>'.$i.'%</option>';
+    }
+    return $dwpar2cron_options;
+}
+
 ?>
