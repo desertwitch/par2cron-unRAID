@@ -333,7 +333,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
     <blockquote class="inline_help">
     <p>Limits the CPU utilization for the <strong>repair</strong> operation across all CPU cores.</p>
     </blockquote>
-    <?endif;?>
+<?endif;?>
 
     <dl>
         <dt>Generate Diagnostic Profile:</dt>
