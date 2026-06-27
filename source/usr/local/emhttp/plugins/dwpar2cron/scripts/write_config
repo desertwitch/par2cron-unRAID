@@ -51,7 +51,7 @@ ensure_cpu_delegation() {
 
     while ! echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control 2>/dev/null; do
         retries=$((retries + 1))
-        [ "$retries" -ge 10 ] && break
+        [ "$retries" -ge 5 ] && break
         sleep 0.2
     done
 
@@ -59,9 +59,12 @@ ensure_cpu_delegation() {
 
     while ! echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control 2>/dev/null; do
         retries=$((retries + 1))
-        [ "$retries" -ge 10 ] && break
+        [ "$retries" -ge 5 ] && break
         sleep 0.2
     done
+
+    echo "+cpu" > /sys/fs/cgroup/cgroup.subtree_control |& logger -t "par2cron-plugin"
+    echo "+cpu" > /sys/fs/cgroup/par2/cgroup.subtree_control |& logger -t "par2cron-plugin"
 }
 
 set_cpu_limit() {
