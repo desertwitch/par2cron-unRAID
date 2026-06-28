@@ -18,6 +18,10 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.06.28
+- new: added setting to limit CPU usage of par2 operations
+- new: par2cron backend was updated to release version 0.7.0
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.7.0
 ###2026.06.19
 - new: par2cron backend was updated to release version 0.6.0
 - changes: https://github.com/desertwitch/par2cron/releases/tag/v0.6.0
@@ -169,9 +173,9 @@ exit 0
 </INLINE>
 </FILE>
 
-<FILE Name="&plgPATH;/par2cron-0.6.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
-<URL>&pkgURL;/par2cron-0.6.0-x86_64-1.txz</URL>
-<MD5>6447545975650caa7c30e03207507131</MD5>
+<FILE Name="&plgPATH;/par2cron-0.7.0-x86_64-1.txz" Min="6.10" Run="upgradepkg --install-new">
+<URL>&pkgURL;/par2cron-0.7.0-x86_64-1.txz</URL>
+<MD5>1a78d8407153a663f5d89494fdb8e141</MD5>
 </FILE>
 
 <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.10" Run="upgradepkg --install-new">
