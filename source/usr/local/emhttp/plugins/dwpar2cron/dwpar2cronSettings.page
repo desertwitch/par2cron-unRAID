@@ -296,7 +296,7 @@ require_once '/usr/local/emhttp/plugins/dwpar2cron/include/dwpar2cron_helpers.ph
 
     <dl>
         <dt>CPU Limit - Availability:</dt>
-        <dd><?=@file_exists('/sys/fs/cgroup/par2/create/cpu.max') ? 'Supported (Available)' : 'Unsupported (Not Available)'?></dd>
+        <dd><?=@file_exists('/sys/fs/cgroup/par2/create/cpu.max') ? 'Available (Supported)' : 'Not Available (Unsupported)'?></dd>
     </dl>
 
     <blockquote class="inline_help">
