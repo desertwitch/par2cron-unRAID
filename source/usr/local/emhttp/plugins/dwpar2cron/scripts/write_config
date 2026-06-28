@@ -81,9 +81,9 @@ if grep -q cgroup2 /proc/mounts; then
         echo "  verify cgroup.controllers: $(cat /sys/fs/cgroup/par2/verify/cgroup.controllers)"
         echo "  repair cgroup.controllers: $(cat /sys/fs/cgroup/par2/repair/cgroup.controllers)"
 
-        echo "  create cpu.max exists: $([ -f /sys/fs/cgroup/par2/create/cpu.max ] && echo yes || echo no)"
-        echo "  verify cpu.max exists: $([ -f /sys/fs/cgroup/par2/verify/cpu.max ] && echo yes || echo no)"
-        echo "  repair cpu.max exists: $([ -f /sys/fs/cgroup/par2/repair/cpu.max ] && echo yes || echo no)"
+        echo "  create cpu.max exists: $([ -e /sys/fs/cgroup/par2/create/cpu.max ] && echo yes || echo no)"
+        echo "  verify cpu.max exists: $([ -e /sys/fs/cgroup/par2/verify/cpu.max ] && echo yes || echo no)"
+        echo "  repair cpu.max exists: $([ -e /sys/fs/cgroup/par2/repair/cpu.max ] && echo yes || echo no)"
 
         set_cpu_limit "/sys/fs/cgroup/par2/create" "$CREATECPU"
         set_cpu_limit "/sys/fs/cgroup/par2/verify" "$VERIFYCPU"
