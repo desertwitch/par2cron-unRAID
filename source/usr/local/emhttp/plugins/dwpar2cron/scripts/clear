@@ -18,6 +18,10 @@
 #
 source "/usr/libexec/dwpar2cron/const.sh" || exit 2
 
+: "${P2C_PID_FILE:?}" "${P2C_LOG_FILE:?}" "${P2C_JSON_FILE:?}"
+: "${P2C_LOG_DIR:?}" "${P2C_JSON_DIR:?}" "${P2C_SVLOGD:?}"
+: "${P2C_CACHE_DIR:?}"
+
 echo "Clearing par2cron logfiles..."
 echo "Clearing par2cron logfiles..." | logger -t "par2cron-plugin"
 

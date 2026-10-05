@@ -1,0 +1,22 @@
+diff --git a/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml b/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml
+index 9230847..3b2deb3 100755
+--- a/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml
++++ b/source/usr/local/emhttp/plugins/dwpar2cron/defaults/default.yaml
+@@ -201,8 +201,17 @@ repair:
+   #
+   # Default: false
+   skip-not-created: true
+
++  # skip-maybe-edited: Skip PAR2 sets where protected files may have been edited
++  # A set is flagged by verification when files have newer mtimes than the last
++  # healthy verification (best-effort heuristic, not a guarantee of such edits)
++  # Beware files can have a changed mtime for various benign reasons, including
++  # when manually restored from backups to "fix" a previously unrepairable set
++  #
++  # Default: false
++  skip-maybe-edited: false
++
+   # attempt-unrepairables: Attempt to repair PAR2 sets verified as unrepairable
+   # Use with caution as will result in non-zero exit codes on (partial) failure
+   #
+   # Default: false

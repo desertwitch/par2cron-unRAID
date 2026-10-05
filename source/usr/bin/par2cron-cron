@@ -36,6 +36,10 @@ fi
 source "/boot/config/plugins/dwpar2cron/dwpar2cron.cfg" || exit 2
 source "/usr/libexec/dwpar2cron/const.sh" || exit 2
 
+: "${P2C_PID_FILE:?}" "${P2C_LOG_FILE:?}" "${P2C_JSON_FILE:?}"
+: "${P2C_LOG_DIR:?}" "${P2C_JSON_DIR:?}" "${P2C_SVLOGD:?}"
+: "${P2C_CACHE_DIR:?}"
+
 if [ -f "$P2C_PID_FILE" ]; then
     if kill -0 "$(cat "$P2C_PID_FILE")" 2>/dev/null; then
         echo "par2cron is already running; exiting" | logger -s -t "par2cron-cron"

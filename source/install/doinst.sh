@@ -38,5 +38,7 @@ patch -N -r /dev/null $BOOT/config.yaml $DOCROOT/defaults/patches/04-config.patc
 patch -N -r /dev/null $BOOT/config.yaml $DOCROOT/defaults/patches/05-a-config.patch &>/dev/null
 patch -N -r /dev/null $BOOT/config.yaml $DOCROOT/defaults/patches/05-b-config.patch &>/dev/null
 patch -N -r /dev/null $BOOT/config.yaml $DOCROOT/defaults/patches/06-config.patch &>/dev/null
+patch -N -r /dev/null $BOOT/config.yaml $DOCROOT/defaults/patches/07-a-config.patch &>/dev/null
+patch -N -r /dev/null $BOOT/config.yaml $DOCROOT/defaults/patches/07-b-config.patch &>/dev/null
 
 exit 0

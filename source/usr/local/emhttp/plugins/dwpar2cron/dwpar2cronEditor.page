@@ -50,7 +50,7 @@ try {
             echo "<span style='color:red'><i class='fa fa-times-circle '></i> The {$label} has failed for the most recently saved configuration file:<br><pre>" . htmlspecialchars($result) . "</pre></span>";
         }
     }
-    run_par2cron('par2cron check-config /boot/config/plugins/dwpar2cron/config.yaml', 'configuration check');
+    run_par2cron('par2cron config check /boot/config/plugins/dwpar2cron/config.yaml', 'configuration check');
 } catch (\Throwable $t) {
     error_log($t);
 }
