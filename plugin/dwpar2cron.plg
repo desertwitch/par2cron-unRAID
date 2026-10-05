@@ -18,6 +18,9 @@
 
 <CHANGES>
 ## par2cron for UNRAID
+###2026.10.05
+- new: par2cron backend was updated to release version 0.8.0
+- changes: https://github.com/desertwitch/par2cron/releases/tag/v0.8.0
 ###2026.06.28
 - new: added setting to limit CPU usage of par2 operations
 - new: par2cron backend was updated to release version 0.7.0
