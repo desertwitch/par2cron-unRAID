@@ -231,6 +231,12 @@ repair:
   # Default: true
   restore-backups: true
 
+  # no-restore-attributes: Do not restore pre-repair mode, times and ownership
+  # When enabled, repaired files will remain in their par2cmdline-produced state
+  #
+  # Default: false
+  no-restore-attributes: false
+
   # log-level: Minimum level of emitted logs
   #
   # Options: "debug", "info", "warn", "error"

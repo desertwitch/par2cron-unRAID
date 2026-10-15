@@ -1,0 +1,19 @@
+diff --git a/default.yaml b/default.yaml.new
+index 3b2deb3..fd50922 100755
+--- a/default.yaml
++++ b/default.yaml.new
+@@ -230,8 +230,14 @@ repair:
+   #
+   # Default: true
+   restore-backups: false
+
++  # no-restore-attributes: Do not restore pre-repair mode, times and ownership
++  # When enabled, repaired files will remain in their par2cmdline-produced state
++  #
++  # Default: false
++  no-restore-attributes: false
++
+   # log-level: Minimum level of emitted logs
+   #
+   # Options: "debug", "info", "warn", "error"
+   # Default: "info"
